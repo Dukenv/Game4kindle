@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Sample Game for Kindle Scribe — Ink &amp; Play</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#111111; --muted:#5a5a5a; --line:#111111; --line-soft:#c9c9c9;
+    --panel:#ffffff; --wash:#f2f2f2; --wash2:#e6e6e6; --fill:#111111; --fill-ink:#ffffff;
+    --present-bg:#ffffff; --absent-bg:#e9e9e9; --absent-ink:#777777;
+    --btn-bg:#ffffff; --btn-ink:#111111;
+    --radius:10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#101010; --ink:#f4f4f4; --muted:#b8b8b8; --line:#f4f4f4; --line-soft:#3a3a3a;
+      --panel:#161616; --wash:#1e1e1e; --wash2:#2a2a2a; --fill:#f4f4f4; --fill-ink:#111111;
+      --present-bg:#101010; --absent-bg:#262626; --absent-ink:#8a8a8a;
+      --btn-bg:#161616; --btn-ink:#f4f4f4;
+    }
+  }
+  *{box-sizing:border-box}
+  html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family: Georgia, "Times New Roman", Times, serif; line-height:1.5; }
+  button{ font-family: inherit; cursor:pointer; -webkit-tap-highlight-color: transparent; }
+  button:focus-visible, [tabindex]:focus-visible{ outline:3px solid var(--ink); outline-offset:2px; }
+  .wrap{ max-width:880px; margin:0 auto; padding:20px 18px 40px; }
+
+  /* header */
+  .kicker{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; border-bottom:3px solid var(--line); padding-bottom:10px; }
+  .kicker span:last-child{ letter-spacing:.08em; font-weight:600; color:var(--muted); text-transform:none; font-size:12px; }
+  h1{ font-size:52px; line-height:.95; letter-spacing:-.02em; margin:18px 0 8px; font-weight:800; }
+  h1 em{ font-style:italic; font-weight:400; }
+  .lede{ font-size:19px; line-height:1.45; margin:0; max-width:640px; }
+  .lede b{ background:var(--ink); color:var(--bg); padding:1px 6px; }
+  .specs{ display:flex; flex-wrap:wrap; gap:0; border:2px solid var(--line); margin:18px 0 0; }
+  .spec{ flex:1 1 180px; padding:12px 14px; border-right:1px solid var(--line-soft); }
+  .spec:last-child{ border-right:none; }
+  .spec strong{ display:block; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:13px; letter-spacing:.06em; text-transform:uppercase; }
+  .spec p{ margin:3px 0 0; font-size:14px; color:var(--muted); line-height:1.4; }
+
+  /* game switcher */
+  .switcher{ margin:22px 0 0; }
+  .switcher-label{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; margin-bottom:8px; }
+  .tabs{ display:flex; gap:8px; flex-wrap:wrap; }
+  .tab{ flex:1 1 150px; min-height:58px; background:var(--btn-bg); color:var(--btn-ink); border:2px solid var(--line); border-radius:var(--radius); padding:10px 12px; text-align:left; }
+  .tab strong{ display:block; font-size:18px; line-height:1.1; }
+  .tab span{ display:block; font-size:13px; color:var(--muted); margin-top:2px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  .tab[aria-selected="true"]{ background:var(--fill); color:var(--fill-ink); }
+  .tab[aria-selected="true"] span{ color:var(--fill-ink); opacity:.85; }
+
+  /* panels */
+  .panel{ border:2px solid var(--line); margin-top:14px; background:var(--panel); }
+  .panel-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; padding:16px 16px 12px; border-bottom:1px solid var(--line-soft); }
+  .panel-head h2{ margin:0; font-size:28px; line-height:1; }
+  .panel-head p{ margin:6px 0 0; font-size:15px; color:var(--muted); max-width:520px; }
+  .panel-body{ padding:16px; }
+  .status{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:14px; font-weight:700; border:2px solid var(--line); padding:9px 12px; min-width:170px; text-align:center; background:var(--wash); }
+  .status small{ display:block; font-weight:400; font-size:12px; color:var(--muted); margin-top:2px; }
+  .actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .btn{ min-height:50px; padding:0 18px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:999px; font-size:16px; font-weight:700; }
+  .btn.primary{ background:var(--fill); color:var(--fill-ink); }
+  .btn:active{ transform:translateY(1px); }
+  .hidden{ display:none !important; }
+
+  /* WORD GUESS */
+  .legend{ display:flex; gap:14px; flex-wrap:wrap; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:13px; margin-bottom:14px; }
+  .legend i{ display:inline-block; width:18px; height:18px; border:2px solid var(--line); vertical-align:-3px; margin-right:5px; font-style:normal; text-align:center; line-height:14px; font-size:11px; }
+  .legend .l-correct{ background:var(--fill); }
+  .legend .l-present{ background:var(--present-bg); border-style:double; border-width:3px; }
+  .legend .l-absent{ background:var(--absent-bg); border-color:var(--line-soft); }
+  .word-grid{ display:block; text-align:center; }
+  .word-row{ display:flex; justify-content:center; gap:6px; margin-bottom:6px; }
+  .tile{ width:56px; height:56px; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:30px; font-weight:800; text-transform:uppercase; background:var(--panel); position:relative; line-height:1; }
+  .tile.filled{ border-width:2px; }
+  .tile.correct{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
+  .tile.present{ background:var(--present-bg); color:var(--ink); border:3px double var(--line); }
+  .tile.present:after{ content:"●"; position:absolute; bottom:2px; right:4px; font-size:8px; }
+  .tile.absent{ background:var(--absent-bg); color:var(--absent-ink); border-color:var(--line-soft); }
+  .keyboard{ margin-top:16px; max-width:620px; margin-left:auto; margin-right:auto; }
+  .kb-row{ display:flex; justify-content:center; gap:5px; margin-bottom:5px; }
+  .key{ flex:1; max-width:52px; min-height:54px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:8px; font-size:17px; font-weight:800; text-transform:uppercase; padding:0; }
+  .key.wide{ flex:1.6; max-width:82px; font-size:13px; letter-spacing:.04em; }
+  .key.correct{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
+  .key.present{ background:var(--present-bg); border:3px double var(--line); }
+  .key.absent{ background:var(--absent-bg); color:var(--absent-ink); border-color:var(--line-soft); }
+
+  /* TIC TAC TOE */
+  .ttt-wrap{ display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; }
+  .ttt-board{ display:grid; grid-template-columns:repeat(3, 92px); grid-template-rows:repeat(3, 92px); gap:0; border:3px solid var(--line); width:fit-content; }
+  .ttt-cell{ border:1px solid var(--line); background:var(--panel); font-size:52px; font-weight:800; line-height:1; padding:0; }
+  .ttt-cell.win{ background:var(--fill); color:var(--fill-ink); }
+  .score{ flex:1 1 200px; border:2px solid var(--line); }
+  .score-row{ display:flex; justify-content:space-between; padding:11px 14px; border-bottom:1px solid var(--line-soft); font-size:16px; }
+  .score-row:last-child{ border-bottom:none; }
+  .score-row b{ font-size:20px; }
+
+  /* SUDOKU */
+  .sudoku-wrap{ display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; }
+  .sudoku-board{ border:3px solid var(--line); width:fit-content; background:var(--panel); }
+  .s-row{ display:flex; }
+  .s-cell{ width:52px; height:52px; border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); background:var(--panel); color:var(--ink); font-size:24px; font-weight:700; padding:0; line-height:1; }
+  .s-cell:nth-child(3n){ border-right:2px solid var(--line); }
+  .s-cell:nth-child(6n){ border-right:none; }
+  .s-row:nth-child(2n) .s-cell{ border-bottom:2px solid var(--line); }
+  .s-row:last-child .s-cell{ border-bottom:none; }
+  .s-cell.given{ background:var(--wash); font-weight:800; }
+  .s-cell.selected{ outline:3px solid var(--ink); outline-offset:-3px; background:var(--wash2); }
+  .s-cell.wrong{ text-decoration:line-through; }
+  .numpad{ display:flex; gap:6px; flex-wrap:wrap; max-width:340px; }
+  .num{ width:52px; height:52px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); font-size:22px; font-weight:800; border-radius:8px; }
+  .num.wide{ width:auto; padding:0 16px; font-size:15px; }
+
+  /* how to */
+  .how{ margin-top:22px; border-top:3px solid var(--line); padding-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .how h3{ margin:0 0 6px; font-size:20px; }
+  .how p, .how li{ font-size:15px; color:var(--muted); }
+  .how ol, .how ul{ margin:6px 0 0; padding-left:20px; }
+  .how li{ margin-bottom:5px; color:var(--ink); }
+  .how li span{ color:var(--muted); }
+  footer{ margin-top:24px; padding-top:14px; border-top:1px solid var(--line-soft); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+
+  @media (max-width:560px){
+    h1{ font-size:40px; }
+    .lede{ font-size:17px; }
+    .tile{ width:52px; height:52px; font-size:27px; }
+    .key{ min-height:50px; font-size:15px; }
+    .ttt-board{ grid-template-columns:repeat(3, 84px); grid-template-rows:repeat(3, 84px); }
+    .s-cell{ width:46px; height:46px; font-size:21px; }
+    .how{ grid-template-columns:1fr; }
+    .spec{ flex-basis:140px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
+  <h1>Ink <em>&amp;</em> Play</h1>
+  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just three turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
+
+  <div class="specs" aria-label="Designed for e-ink">
+    <div class="spec"><strong>✓ E-ink first</strong><p>Black, white &amp; grey only. Correct answers are told apart by fill and pattern, not colour.</p></div>
+    <div class="spec"><strong>✓ Stylus friendly</strong><p>Every button is at least 50px tall. Works with a finger tap or the Premium Pen.</p></div>
+    <div class="spec"><strong>✓ No flicker</strong><p>No animations, no auto-refresh, no video. The page only changes when you tap.</p></div>
+  </div>
+
+  <div class="switcher">
+    <div class="switcher-label">Pick a game — 1 of 3</div>
+    <div class="tabs" role="tablist" aria-label="Games">
+      <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5 letters · 6 tries</span></button>
+      <button class="tab" role="tab" id="tab-ttt" aria-selected="false" aria-controls="panel-ttt" onclick="showGame('ttt')"><strong>Tic-Tac-Toe</strong><span>You are X · vs. device</span></button>
+      <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Mini Sudoku</strong><span>6 × 6 · 3 puzzles</span></button>
+    </div>
+  </div>
+
+  <!-- WORD GUESS -->
+  <section class="panel" id="panel-word" role="tabpanel" aria-labelledby="tab-word">
+    <div class="panel-head">
+      <div><h2>Word Guess</h2><p>Guess the hidden 5-letter word. Type with the keys below — or your keyboard — then press ENTER.</p></div>
+      <div class="status" id="word-status">Guess 1 of 6<small>Start typing</small></div>
+    </div>
+    <div class="panel-body">
+      <div class="legend">
+        <span><i class="l-correct"></i> Right letter, right place — solid black</span>
+        <span><i class="l-present">●</i> In the word, wrong place — double border</span>
+        <span><i class="l-absent"></i> Not in the word — grey</span>
+      </div>
+      <div class="word-grid" id="word-grid" aria-label="Word grid"></div>
+      <div class="keyboard" id="keyboard" aria-label="Keyboard"></div>
+      <div class="actions">
+        <button class="btn primary" onclick="newWordGame()">↻ New word</button>
+        <button class="btn" onclick="giveUpWord()">Show answer</button>
+      </div>
+      <p style="font-size:14px;color:var(--muted);margin:12px 0 0">Tip for Scribe: tap keys slowly and let the screen settle between guesses — e-ink redraws the whole board at once on ENTER, which keeps ghosting down.</p>
+    </div>
+  </section>
+
+  <!-- TIC TAC TOE -->
+  <section class="panel hidden" id="panel-ttt" role="tabpanel" aria-labelledby="tab-ttt">
+    <div class="panel-head">
+      <div><h2>Tic-Tac-Toe</h2><p>You are <b>X</b>. Tap any empty square. The device plays O straight after — it will try to win, then block you, then take the centre.</p></div>
+      <div class="status" id="ttt-status">Your turn<small>Tap a square to start</small></div>
+    </div>
+    <div class="panel-body">
+      <div class="ttt-wrap">
+        <div class="ttt-board" id="ttt-board" aria-label="Tic tac toe board"></div>
+        <div style="flex:1 1 200px;min-width:200px">
+          <div class="score" aria-label="Score">
+            <div class="score-row"><span>You (X)</span><b id="score-you">0</b></div>
+            <div class="score-row"><span>Draws</span><b id="score-draw">0</b></div>
+            <div class="score-row"><span>Device (O)</span><b id="score-cpu">0</b></div>
+          </div>
+          <div class="actions">
+            <button class="btn primary" onclick="newTTT()">↻ New round</button>
+            <button class="btn" onclick="resetTTTScore()">Reset score</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUDOKU -->
+  <section class="panel hidden" id="panel-sudoku" role="tabpanel" aria-labelledby="tab-sudoku">
+    <div class="panel-head">
+      <div><h2>Mini Sudoku — 6 × 6</h2><p>Fill every row, column and 2×3 box with 1–6. Tap a white cell, then tap a number. Dark cells are given and can’t be changed.</p></div>
+      <div class="status" id="sudoku-status">Puzzle 1 of 3<small id="sudoku-sub">18 cells to fill</small></div>
+    </div>
+    <div class="panel-body">
+      <div class="sudoku-wrap">
+        <div class="sudoku-board" id="sudoku-board" aria-label="Sudoku board"></div>
+        <div>
+          <div class="switcher-label" style="margin-bottom:8px">Number pad</div>
+          <div class="numpad" id="numpad"></div>
+          <div class="actions">
+            <button class="btn primary" onclick="checkSudoku()">Check</button>
+            <button class="btn" onclick="nextSudoku()">Next puzzle →</button>
+            <button class="btn" onclick="clearSudoku()">Clear my numbers</button>
+          </div>
+          <p style="font-size:14px;color:var(--muted);max-width:320px">Perfect for the pen: tap with the pen tip to select, tap a number to write it in. Use ✕ to erase.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="how">
+    <div>
+      <h3>How to open this on your Scribe</h3>
+      <ol>
+        <li>Open this page on your phone / computer first <span>— you’re already here.</span></li>
+        <li>On the Scribe, open the <b>Web Browser</b> <span>from the Home / More menu.</span></li>
+        <li>Type this page’s address, or send it to your Kindle <span>via Send to Kindle and open the link.</span></li>
+        <li>Bookmark it <span>— the games work from the cached page and need no account.</span></li>
+      </ol>
+    </div>
+    <div>
+      <h3>Why this sample works on e-ink</h3>
+      <ul>
+        <li><b>Turn-based only</b> <span>— nothing moves until you tap, so there’s no blur or battery drain.</span></li>
+        <li><b>Plain HTML + tap buttons</b> <span>— no canvas, no heavy scripts, so the Scribe’s limited browser can run it.</span></li>
+        <li><b>Patterns, not colour</b> <span>— solid, double-border and grey read clearly in greyscale.</span></li>
+        <li><b>One page, three games</b> <span>— switching games doesn’t reload the page.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <footer><span>Ink &amp; Play — Sample for Kindle Scribe</span><span>Black &amp; white · No timers · Tap to play</span></footer>
+</div>
+
+<script>
+function showGame(name){
+  var games=['word','ttt','sudoku'];
+  for(var i=0;i<games.length;i++){
+    var p=document.getElementById('panel-'+games[i]);
+    var t=document.getElementById('tab-'+games[i]);
+    if(games[i]===name){ p.className=p.className.replace(' hidden',''); t.setAttribute('aria-selected','true'); }
+    else{ if(p.className.indexOf('hidden')===-1) p.className+=' hidden'; t.setAttribute('aria-selected','false'); }
+  }
+}
+
+/* ---------- WORD GUESS ---------- */
+var WORDS=["APPLE","BRAVE","CRANE","DELTA","EAGLE","FLAME","GRAPE","HOUSE","IVORY","JUMBO","KNEEL","LEMON","MANGO","NOBLE","OCEAN","PIANO","QUEEN","RIVER","STONE","TIGER","UMBRA","VIVID","WALTZ","YOUTH","ZEBRA","ABOUT","BRICK","CLOUD","DANCE","EARTH","FROST","GIANT","HEART","INDEX","JOINT","KOALA","LIGHT","MOUSE","NIGHT","OPERA","PLANT","QUILT","ROBOT","SOLAR","TRAIN","URBAN","VOICE","WATER","YIELD","BREAD","CHAIR","DREAM","ELBOW","FABLE","GLOBE"];
+var wordTarget="", wordGuesses=[], wordCurrent="", wordOver=false, keyState={};
+function pickWord(){ return WORDS[Math.floor(Math.random()*WORDS.length)]; }
+function renderWordGrid(){
+  var g=document.getElementById('word-grid'); g.innerHTML="";
+  for(var r=0;r<6;r++){
+    var row=document.createElement('div'); row.className='word-row';
+    var guess=wordGuesses[r]||"";
+    var isCurrent=(r===wordGuesses.length && !wordOver);
+    var text=isCurrent?wordCurrent:guess;
+    var result=(r<wordGuesses.length)?scoreGuess(guess,wordTarget):null;
+    for(var c=0;c<5;c++){
+      var d=document.createElement('div'); d.className='tile';
+      var ch=text.charAt(c)||""; d.textContent=ch;
+      if(ch) d.className+=' filled';
+      if(result) d.className+=' '+result[c];
+      row.appendChild(d);
+    }
+    g.appendChild(row);
+  }
+  var st=document.getElementById('word-status');
+  if(wordOver){
+    var last=wordGuesses[wordGuesses.length-1];
+    if(last===wordTarget) st.innerHTML='You got it in '+wordGuesses.length+'!<small>The word was '+wordTarget+'</small>';
+    else st.innerHTML='Out of guesses<small>The word was '+wordTarget+' — tap New word</small>';
+  } else {
+    st.innerHTML='Guess '+(wordGuesses.length+1)+' of 6<small>'+(wordCurrent?wordCurrent+' — press ENTER':'Start typing')+'</small>';
+  }
+  renderKeyboard();
+}
+function scoreGuess(guess,target){
+  var res=['absent','absent','absent','absent','absent']; var rem={};
+  for(var i=0;i<5;i++){ if(guess.charAt(i)===target.charAt(i)) res[i]='correct'; else { var t=target.charAt(i); rem[t]=(rem[t]||0)+1; } }
+  for(var j=0;j<5;j++){ if(res[j]==='correct') continue; var ch=guess.charAt(j); if(rem[ch]>0){ res[j]='present'; rem[ch]--; } }
+  return res;
+}
+function renderKeyboard(){
+  var rows=["QWERTYUIOP","ASDFGHJKL","ZXCVBNM"]; var kb=document.getElementById('keyboard'); kb.innerHTML="";
+  for(var r=0;r<rows.length;r++){
+    var rowEl=document.createElement('div'); rowEl.className='kb-row';
+    if(r===2){
+      var enter=document.createElement('button'); enter.className='key wide'; enter.textContent='ENTER'; enter.onclick=submitWord; rowEl.appendChild(enter);
+    }
+    var letters=rows[r];
+    for(var i=0;i<letters.length;i++){
+      (function(ch){
+        var b=document.createElement('button'); b.className='key'+(keyState[ch]?' '+keyState[ch]:''); b.textContent=ch; b.onclick=function(){ pressKey(ch); };
+        rowEl.appendChild(b);
+      })(letters.charAt(i));
+    }
+    if(r===2){
+      var del=document.createElement('button'); del.className='key wide'; del.textContent='⌫ DEL'; del.onclick=function(){ pressKey('DEL'); }; rowEl.appendChild(del);
+    }
+    kb.appendChild(rowEl);
+  }
+}
+function pressKey(k){
+  if(wordOver) return;
+  if(k==='DEL'){ wordCurrent=wordCurrent.slice(0,-1); }
+  else if(wordCurrent.length<5){ wordCurrent+=k; }
+  renderWordGrid();
+}
+function submitWord(){
+  if(wordOver) return;
+  if(wordCurrent.length!==5){ var st=document.getElementById('word-status'); st.innerHTML='Need 5 letters<small>You have '+wordCurrent.length+' — keep typing</small>'; return; }
+  var guess=wordCurrent; var res=scoreGuess(guess,wordTarget);
+  var rank={absent:0,present:1,correct:2};
+  for(var i=0;i<5;i++){ var ch=guess.charAt(i); if(!keyState[ch]||rank[res[i]]>rank[keyState[ch]]) keyState[ch]=res[i]; }
+  wordGuesses.push(guess); wordCurrent="";
+  if(guess===wordTarget||wordGuesses.length>=6) wordOver=true;
+  renderWordGrid();
+}
+function newWordGame(){ wordTarget=pickWord(); wordGuesses=[]; wordCurrent=""; wordOver=false; keyState={}; renderWordGrid(); }
+function giveUpWord(){ if(!wordOver){ wordOver=true; renderWordGrid(); } }
+document.addEventListener('keydown',function(e){
+  if(document.getElementById('panel-word').className.indexOf('hidden')!==-1) return;
+  if(e.key==='Enter') submitWord();
+  else if(e.key==='Backspace') pressKey('DEL');
+  else if(/^[a-zA-Z]$/.test(e.key)) pressKey(e.key.toUpperCase());
+});
+
+/* ---------- TIC TAC TOE ---------- */
+var tttBoard=['','','','','','','','',''], tttOver=false, scoreYou=0, scoreDraw=0, scoreCpu=0;
+var LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+function tttWinner(b){ for(var i=0;i<LINES.length;i++){ var L=LINES[i]; if(b[L[0]]&&b[L[0]]===b[L[1]]&&b[L[1]]===b[L[2]]) return {who:b[L[0]],line:L}; } return null; }
+function renderTTT(winLine){
+  var el=document.getElementById('ttt-board'); el.innerHTML="";
+  for(var i=0;i<9;i++){
+    (function(idx){
+      var b=document.createElement('button'); b.className='ttt-cell'+(winLine&&winLine.indexOf(idx)!==-1?' win':''); b.textContent=tttBoard[idx]; b.setAttribute('aria-label','Square '+(idx+1)+(tttBoard[idx]?': '+tttBoard[idx]:': empty'));
+      b.onclick=function(){ playTTT(idx); }; el.appendChild(b);
+    })(i);
+  }
+  document.getElementById('score-you').textContent=scoreYou;
+  document.getElementById('score-draw').textContent=scoreDraw;
+  document.getElementById('score-cpu').textContent=scoreCpu;
+}
+function setTTTStatus(main,sub){ document.getElementById('ttt-status').innerHTML=main+'<small>'+sub+'</small>'; }
+function playTTT(idx){
+  if(tttOver||tttBoard[idx]) return;
+  tttBoard[idx]='X';
+  var w=tttWinner(tttBoard);
+  if(w){ tttOver=true; scoreYou++; renderTTT(w.line); setTTTStatus('You win!','Tap New round to play again'); return; }
+  if(tttBoard.indexOf('')===-1){ tttOver=true; scoreDraw++; renderTTT(null); setTTTStatus('It\u2019s a draw','Tap New round to play again'); return; }
+  var cpu=cpuMove(); tttBoard[cpu]='O';
+  var w2=tttWinner(tttBoard);
+  if(w2){ tttOver=true; scoreCpu++; renderTTT(w2.line); setTTTStatus('Device wins','Tap New round to try again'); return; }
+  if(tttBoard.indexOf('')===-1){ tttOver=true; scoreDraw++; renderTTT(null); setTTTStatus('It\u2019s a draw','Tap New round to play again'); return; }
+  renderTTT(null); setTTTStatus('Your turn','Tap an empty square');
+}
+function cpuMove(){
+  var i,L;
+  for(var p=0;p<2;p++){ var mark=p===0?'O':'X'; for(i=0;i<LINES.length;i++){ L=LINES[i]; var vals=[tttBoard[L[0]],tttBoard[L[1]],tttBoard[L[2]]]; var cnt=0,empty=-1; for(var j=0;j<3;j++){ if(vals[j]===mark) cnt++; if(vals[j]==='') empty=L[j]; } if(cnt===2&&empty!==-1) return empty; } }
+  if(tttBoard[4]==='') return 4;
+  var empt=[]; for(i=0;i<9;i++) if(tttBoard[i]==='') empt.push(i);
+  return empt[Math.floor(Math.random()*empt.length)];
+}
+function newTTT(){ tttBoard=['','','','','','','','','']; tttOver=false; renderTTT(null); setTTTStatus('Your turn','Tap a square to start'); }
+function resetTTTScore(){ scoreYou=0; scoreDraw=0; scoreCpu=0; newTTT(); }
+
+/* ---------- SUDOKU 6x6 ---------- */
+var SUDOKU=[
+ {sol:[1,2,3,4,5,6,4,5,6,1,2,3,2,3,1,5,6,4,5,6,4,2,3,1,3,1,2,6,4,5,6,4,5,3,1,2], puz:[1,0,3,0,5,0,0,5,0,1,0,3,2,0,0,0,6,0,0,6,4,0,0,1,3,0,2,0,0,0,0,4,0,3,0,2]},
+ {sol:[2,1,4,3,6,5,3,6,5,2,1,4,1,4,2,5,3,6,5,3,6,1,4,2,4,2,1,6,5,3,6,5,3,4,2,1], puz:[0,1,0,3,0,5,3,0,5,0,0,4,1,0,0,5,0,0,0,3,6,0,4,0,4,0,1,0,0,3,0,5,0,4,0,0]},
+ {sol:[5,3,6,1,4,2,1,4,2,5,3,6,3,6,5,2,1,4,2,1,4,6,5,3,6,5,3,4,2,1,4,2,1,3,6,5], puz:[5,0,6,0,0,2,0,4,0,5,0,0,3,0,0,0,1,0,0,1,4,0,0,3,6,0,3,0,2,0,0,2,0,3,0,5]}
+];
+var sudokuIdx=0, sudokuVals=[], sudokuSelected=-1;
+function loadSudoku(){
+  sudokuVals=SUDOKU[sudokuIdx].puz.slice(); sudokuSelected=-1; renderSudoku();
+  var left=0; for(var i=0;i<36;i++) if(sudokuVals[i]===0) left++;
+  document.getElementById('sudoku-status').innerHTML='Puzzle '+(sudokuIdx+1)+' of 3<small>'+left+' cells to fill</small>';
+}
+function renderSudoku(){
+  var board=document.getElementById('sudoku-board'); board.innerHTML="";
+  for(var r=0;r<6;r++){
+    var row=document.createElement('div'); row.className='s-row';
+    for(var c=0;c<6;c++){
+      (function(idx){
+        var given=SUDOKU[sudokuIdx].puz[idx]!==0;
+        var b=document.createElement('button'); b.className='s-cell'+(given?' given':'')+(idx===sudokuSelected?' selected':'');
+        b.textContent=sudokuVals[idx]||''; b.setAttribute('aria-label','Row '+(Math.floor(idx/6)+1)+' column '+((idx%6)+1));
+        b.onclick=function(){ if(!given){ sudokuSelected=idx; renderSudoku(); } };
+        row.appendChild(b);
+      })(r*6+c);
+    }
+    board.appendChild(row);
+  }
+  var pad=document.getElementById('numpad'); pad.innerHTML="";
+  for(var n=1;n<=6;n++){ (function(num){ var b=document.createElement('button'); b.className='num'; b.textContent=num; b.onclick=function(){ setSudoku(num); }; pad.appendChild(b); })(n); }
+  var er=document.createElement('button'); er.className='num wide'; er.textContent='✕ Erase'; er.onclick=function(){ setSudoku(0); }; pad.appendChild(er);
+}
+function setSudoku(num){ if(sudokuSelected===-1) return; sudokuVals[sudokuSelected]=num; renderSudoku(); }
+function checkSudoku(){
+  var sol=SUDOKU[sudokuIdx].sol; var wrong=0, empty=0;
+  for(var i=0;i<36;i++){ if(sudokuVals[i]===0) empty++; else if(sudokuVals[i]!==sol[i]) wrong++; }
+  var st=document.getElementById('sudoku-status');
+  if(wrong===0&&empty===0) st.innerHTML='Solved! Well done<small>Tap Next puzzle for another</small>';
+  else if(wrong>0) st.innerHTML=wrong+' wrong<small>Wrong cells are the ones that don\u2019t match — try again</small>';
+  else st.innerHTML='So far, so good<small>'+empty+' cells left to fill</small>';
+  // mark wrong cells visually
+  var cells=document.querySelectorAll('.s-cell');
+  for(var j=0;j<36;j++){ if(sudokuVals[j]!==0&&sudokuVals[j]!==sol[j]) cells[j].className+=' wrong'; }
+}
+function clearSudoku(){ var puz=SUDOKU[sudokuIdx].puz; for(var i=0;i<36;i++) if(puz[i]===0) sudokuVals[i]=0; sudokuSelected=-1; renderSudoku(); loadSudokuStatusOnly(); }
+function loadSudokuStatusOnly(){ var left=0; for(var i=0;i<36;i++) if(sudokuVals[i]===0) left++; document.getElementById('sudoku-status').innerHTML='Puzzle '+(sudokuIdx+1)+' of 3<small>'+left+' cells to fill</small>'; }
+function nextSudoku(){ sudokuIdx=(sudokuIdx+1)%SUDOKU.length; loadSudoku(); }
+
+/* init */
+newWordGame();
+newTTT();
+loadSudoku();
+</script>
+</body>
+</html>
