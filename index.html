@@ -361,6 +361,7 @@
     </div>
     <div class="panel-body">
       <div id="adv-home">
+        <div id="adv-home-scene"></div>
         <div class="switcher-label" style="margin-bottom:8px">Play mode — choose how to play</div>
         <div class="level-row" role="group" aria-label="Beetle Quest mode" style="margin-bottom:16px">
           <button class="level-btn" id="adv-mode-solo" aria-pressed="false" onclick="advSetMode('solo')"><strong>Solo Quest</strong><span>1 player · the full adventure on this device</span></button>
@@ -1001,12 +1002,14 @@ function advSetMode(mode){
 function advShowHome(){
   var sBtn=document.getElementById('adv-mode-solo'), oBtn=document.getElementById('adv-mode-online');
   var homeEl=document.getElementById('adv-home'), playEl=document.getElementById('adv-play'), introEl=document.getElementById('adv-intro');
+  var homeSceneEl=document.getElementById('adv-home-scene');
   if(net.phase!=='lobby') netQuitToLobby();
   if(sBtn) sBtn.setAttribute('aria-pressed','false');
   if(oBtn) oBtn.setAttribute('aria-pressed','false');
   if(playEl) playEl.className='hidden';
   if(homeEl) homeEl.className='';
   if(introEl) introEl.className='';
+  if(homeSceneEl) homeSceneEl.innerHTML=advScene('forest');
   advSetStatus('Beetle Quest','Pick a play mode to start');
 }
 /* WebRTC detection: older iOS Safari exposes only the webkit-prefixed
