@@ -258,7 +258,7 @@
   <div class="switcher">
     <div class="switcher-label">Pick a game — 1 of 5</div>
     <div class="tabs" role="tablist" aria-label="Games">
-      <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5–8 letters · 6 tries</span></button>
+      <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5–8 letters · 5 tries</span></button>
       <button class="tab" role="tab" id="tab-ttt" aria-selected="false" aria-controls="panel-ttt" onclick="showGame('ttt')"><strong>Tic-Tac-Toe</strong><span>You are X · vs. device</span></button>
       <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Mini Sudoku</strong><span>6 × 6 · 3 puzzles</span></button>
       <button class="tab" role="tab" id="tab-othello" aria-selected="false" aria-controls="panel-othello" onclick="showGame('othello')"><strong>Othello</strong><span>8 × 8 · 3 levels · you are ●</span></button>
@@ -270,7 +270,7 @@
   <section class="panel" id="panel-word" role="tabpanel" aria-labelledby="tab-word">
     <div class="panel-head">
       <div><h2>Word Guess</h2><p>Guess the hidden word — you pick how long it is: 5, 6, 7 or 8 letters. Lots of easy words kids know — animals, food, colours, numbers and school words. Type with the big keys below — or your keyboard — then press ENTER.</p></div>
-      <div class="status" id="word-status">Guess 1 of 6<small>Start typing</small></div>
+      <div class="status" id="word-status">Guess 1 of 5<small>Start typing</small></div>
     </div>
     <div class="panel-body">
       <div class="switcher-label" style="margin-bottom:8px">Word length — tap to start a new word</div>
@@ -464,7 +464,7 @@ function setWordLen(n){
 }
 function renderWordGrid(){
   var g=document.getElementById('word-grid'); g.innerHTML="";
-  for(var r=0;r<6;r++){
+  for(var r=0;r<5;r++){
     var row=document.createElement('div'); row.className='word-row';
     var guess=wordGuesses[r]||"";
     var isCurrent=(r===wordGuesses.length && !wordOver);
@@ -485,7 +485,7 @@ function renderWordGrid(){
     if(last===wordTarget) st.innerHTML='You got it in '+wordGuesses.length+'!<small>The word was '+wordTarget+'</small>';
     else st.innerHTML='Out of guesses<small>The word was '+wordTarget+' — tap New word</small>';
   } else {
-    st.innerHTML='Guess '+(wordGuesses.length+1)+' of 6<small>'+(wordCurrent?wordCurrent+' — press ENTER':'Start typing')+'</small>';
+    st.innerHTML='Guess '+(wordGuesses.length+1)+' of 5<small>'+(wordCurrent?wordCurrent+' — press ENTER':'Start typing')+'</small>';
   }
   renderKeyboard();
 }
@@ -528,7 +528,7 @@ function submitWord(){
   var rank={absent:0,present:1,correct:2};
   for(var i=0;i<wordLen;i++){ var ch=guess.charAt(i); if(!keyState[ch]||rank[res[i]]>rank[keyState[ch]]) keyState[ch]=res[i]; }
   wordGuesses.push(guess); wordCurrent="";
-  if(guess===wordTarget||wordGuesses.length>=6) wordOver=true;
+  if(guess===wordTarget||wordGuesses.length>=5) wordOver=true;
   renderWordGrid();
 }
 function newWordGame(){ wordTarget=pickWord(); wordGuesses=[]; wordCurrent=""; wordOver=false; keyState={}; renderWordGrid(); }
