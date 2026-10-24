@@ -101,52 +101,77 @@ document.addEventListener('keydown',function(e){
   else if(/^[a-zA-Z]$/.test(e.key)) pressKey(e.key.toUpperCase());
 });
 
-/* ---------- SUDOKU 6x6 ---------- */
+/* ---------- SUDOKU 6x6 & 9x9 ---------- */
 var SUDOKU=[
  {sol:[1,2,3,4,5,6,4,5,6,1,2,3,2,3,1,5,6,4,5,6,4,2,3,1,3,1,2,6,4,5,6,4,5,3,1,2], puz:[1,0,3,0,5,0,0,5,0,1,0,3,2,0,0,0,6,0,0,6,4,0,0,1,3,0,2,0,0,0,0,4,0,3,0,2]},
  {sol:[2,1,4,3,6,5,3,6,5,2,1,4,1,4,2,5,3,6,5,3,6,1,4,2,4,2,1,6,5,3,6,5,3,4,2,1], puz:[0,1,0,3,0,5,3,0,5,0,0,4,1,0,0,5,0,0,0,3,6,0,4,0,4,0,1,0,0,3,0,5,0,4,0,0]},
  {sol:[5,3,6,1,4,2,1,4,2,5,3,6,3,6,5,2,1,4,2,1,4,6,5,3,6,5,3,4,2,1,4,2,1,3,6,5], puz:[5,0,6,0,0,2,0,4,0,5,0,0,3,0,0,0,1,0,0,1,4,0,0,3,6,0,3,0,2,0,0,2,0,3,0,5]}
 ];
-var sudokuIdx=0, sudokuVals=[], sudokuSelected=-1;
+/* 9x9 puzzles: 81 chars, row by row, "0" = blank; sol is the matching 81 digits. */
+var SUDOKU9_STR=[
+ {puz:"308501906690080074120609000814750200000294010250060703073016090902000800401000607", sol:"348571926695382174127649385814753269736294518259168743573816492962437851481925637"},
+ {puz:"908451700136907800050000192002745681005200370740083009510030007200070036070000400", sol:"928451763136927845457368192392745681865219374741683259514836927289174536673592418"},
+ {puz:"800752390923810500005093812208030601300520089501004003000200007000370008039100205", sol:"814752396923816574675493812248937651367521489591684723186245937452379168739168245"}
+];
+function sudokuStrToNums(s){ var a=[]; for(var i=0;i<s.length;i++) a.push(parseInt(s.charAt(i),10)); return a; }
+var SUDOKU9=[];
+for(var s9i=0;s9i<SUDOKU9_STR.length;s9i++) SUDOKU9.push({sol:sudokuStrToNums(SUDOKU9_STR[s9i].sol), puz:sudokuStrToNums(SUDOKU9_STR[s9i].puz)});
+var sudokuSize=6, sudokuIdx=0, sudokuIdx9=0, sudokuVals=[], sudokuSelected=-1;
+function sudokuData(){ return sudokuSize===9?SUDOKU9:SUDOKU; }
+function sudokuCurIdx(){ return sudokuSize===9?sudokuIdx9:sudokuIdx; }
+function sudokuTotal(){ return sudokuSize*sudokuSize; }
+function setSudokuSize(n){
+  if(n===sudokuSize) return;
+  sudokuSize=n;
+  document.getElementById('ssize-6').setAttribute('aria-pressed', n===6?'true':'false');
+  document.getElementById('ssize-9').setAttribute('aria-pressed', n===9?'true':'false');
+  var d=document.getElementById('sudoku-desc');
+  if(d) d.textContent = n===9
+    ? 'Fill every row, column and 3×3 box with 1–9. Tap a white cell, then tap a number. Dark cells are given and can\u2019t be changed.'
+    : 'Fill every row, column and 2×3 box with 1–6. Tap a white cell, then tap a number. Dark cells are given and can\u2019t be changed.';
+  loadSudoku();
+}
 function loadSudoku(){
-  sudokuVals=SUDOKU[sudokuIdx].puz.slice(); sudokuSelected=-1; renderSudoku();
-  var left=0; for(var i=0;i<36;i++) if(sudokuVals[i]===0) left++;
-  document.getElementById('sudoku-status').innerHTML='Puzzle '+(sudokuIdx+1)+' of 3<small>'+left+' cells to fill</small>';
+  sudokuVals=sudokuData()[sudokuCurIdx()].puz.slice(); sudokuSelected=-1; renderSudoku();
+  var total=sudokuTotal(), left=0; for(var i=0;i<total;i++) if(sudokuVals[i]===0) left++;
+  document.getElementById('sudoku-status').innerHTML='Puzzle '+(sudokuCurIdx()+1)+' of 3<small>'+left+' cells to fill</small>';
 }
 function renderSudoku(){
+  var n=sudokuSize, data=sudokuData()[sudokuCurIdx()];
   var board=document.getElementById('sudoku-board'); board.innerHTML="";
-  for(var r=0;r<6;r++){
+  board.className='sudoku-board'+(n===9?' s9':'');
+  for(var r=0;r<n;r++){
     var row=document.createElement('div'); row.className='s-row';
-    for(var c=0;c<6;c++){
+    for(var c=0;c<n;c++){
       (function(idx){
-        var given=SUDOKU[sudokuIdx].puz[idx]!==0;
+        var given=data.puz[idx]!==0;
         var b=document.createElement('button'); b.className='s-cell'+(given?' given':'')+(idx===sudokuSelected?' selected':'');
-        b.textContent=sudokuVals[idx]||''; b.setAttribute('aria-label','Row '+(Math.floor(idx/6)+1)+' column '+((idx%6)+1));
+        b.textContent=sudokuVals[idx]||''; b.setAttribute('aria-label','Row '+(Math.floor(idx/n)+1)+' column '+((idx%n)+1));
         b.onclick=function(){ if(!given){ sudokuSelected=idx; renderSudoku(); } };
         row.appendChild(b);
-      })(r*6+c);
+      })(r*n+c);
     }
     board.appendChild(row);
   }
   var pad=document.getElementById('numpad'); pad.innerHTML="";
-  for(var n=1;n<=6;n++){ (function(num){ var b=document.createElement('button'); b.className='num'; b.textContent=num; b.onclick=function(){ setSudoku(num); }; pad.appendChild(b); })(n); }
+  for(var k=1;k<=n;k++){ (function(num){ var b=document.createElement('button'); b.className='num'; b.textContent=num; b.onclick=function(){ setSudoku(num); }; pad.appendChild(b); })(k); }
   var er=document.createElement('button'); er.className='num wide'; er.textContent='✕ Erase'; er.onclick=function(){ setSudoku(0); }; pad.appendChild(er);
 }
 function setSudoku(num){ if(sudokuSelected===-1) return; sudokuVals[sudokuSelected]=num; renderSudoku(); }
 function checkSudoku(){
-  var sol=SUDOKU[sudokuIdx].sol; var wrong=0, empty=0;
-  for(var i=0;i<36;i++){ if(sudokuVals[i]===0) empty++; else if(sudokuVals[i]!==sol[i]) wrong++; }
+  var sol=sudokuData()[sudokuCurIdx()].sol; var total=sudokuTotal(); var wrong=0, empty=0;
+  for(var i=0;i<total;i++){ if(sudokuVals[i]===0) empty++; else if(sudokuVals[i]!==sol[i]) wrong++; }
   var st=document.getElementById('sudoku-status');
   if(wrong===0&&empty===0) st.innerHTML='Solved! Well done<small>Tap Next puzzle for another</small>';
   else if(wrong>0) st.innerHTML=wrong+' wrong<small>Wrong cells are the ones that don\u2019t match — try again</small>';
   else st.innerHTML='So far, so good<small>'+empty+' cells left to fill</small>';
   // mark wrong cells visually
   var cells=document.querySelectorAll('.s-cell');
-  for(var j=0;j<36;j++){ if(sudokuVals[j]!==0&&sudokuVals[j]!==sol[j]) cells[j].className+=' wrong'; }
+  for(var j=0;j<total;j++){ if(sudokuVals[j]!==0&&sudokuVals[j]!==sol[j]) cells[j].className+=' wrong'; }
 }
-function clearSudoku(){ var puz=SUDOKU[sudokuIdx].puz; for(var i=0;i<36;i++) if(puz[i]===0) sudokuVals[i]=0; sudokuSelected=-1; renderSudoku(); loadSudokuStatusOnly(); }
-function loadSudokuStatusOnly(){ var left=0; for(var i=0;i<36;i++) if(sudokuVals[i]===0) left++; document.getElementById('sudoku-status').innerHTML='Puzzle '+(sudokuIdx+1)+' of 3<small>'+left+' cells to fill</small>'; }
-function nextSudoku(){ sudokuIdx=(sudokuIdx+1)%SUDOKU.length; loadSudoku(); }
+function clearSudoku(){ var puz=sudokuData()[sudokuCurIdx()].puz; var total=sudokuTotal(); for(var i=0;i<total;i++) if(puz[i]===0) sudokuVals[i]=0; sudokuSelected=-1; renderSudoku(); loadSudokuStatusOnly(); }
+function loadSudokuStatusOnly(){ var total=sudokuTotal(), left=0; for(var i=0;i<total;i++) if(sudokuVals[i]===0) left++; document.getElementById('sudoku-status').innerHTML='Puzzle '+(sudokuCurIdx()+1)+' of 3<small>'+left+' cells to fill</small>'; }
+function nextSudoku(){ if(sudokuSize===9) sudokuIdx9=(sudokuIdx9+1)%SUDOKU9.length; else sudokuIdx=(sudokuIdx+1)%SUDOKU.length; loadSudoku(); }
 
 /* ---------- OTHELLO ---------- */
 /* board: 0 empty, 1 black (you), 2 white (device). Index = row*8+col */

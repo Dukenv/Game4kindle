@@ -104,6 +104,14 @@
   .num{ flex:1 1 0; max-width:64px; min-width:0; height:64px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); font-size:26px; font-weight:800; border-radius:8px; padding:0; }
   .num.wide{ flex:1.6 1 0; max-width:120px; font-size:15px; }
 
+  /* SUDOKU 9x9 — smaller cells so the board fits, thicker borders around each 3x3 box */
+  .sudoku-board.s9 .s-cell{ width:56px; height:56px; font-size:26px; }
+  .sudoku-board.s9 .s-cell:nth-child(6n){ border-right:2px solid var(--line); }
+  .sudoku-board.s9 .s-cell:nth-child(9n){ border-right:none; }
+  .sudoku-board.s9 .s-row:nth-child(2n) .s-cell{ border-bottom:1px solid var(--line-soft); }
+  .sudoku-board.s9 .s-row:nth-child(3n) .s-cell{ border-bottom:2px solid var(--line); }
+  .sudoku-board.s9 .s-row:last-child .s-cell{ border-bottom:none; }
+
   /* OTHELLO */
   .othello-wrap{ display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start; justify-content:center; }
   .othello-board{ display:grid; grid-template-columns:repeat(8, 76px); grid-template-rows:repeat(8, 76px); border:3px solid var(--line); width:fit-content; background:var(--panel); }
@@ -248,6 +256,7 @@
     .key.wide{ font-size:14px; }
     .o-cell.valid:after{ width:10px; height:10px; }
     .s-cell{ width:min(76px,15vw); height:min(76px,15vw); font-size:min(36px,7.5vw); }
+    .sudoku-board.s9 .s-cell{ width:min(56px,10vw); height:min(56px,10vw); font-size:min(26px,5.5vw); }
     .num{ height:56px; font-size:23px; }
     .othello-score .os-item{ padding:5px 4px; gap:4px; font-size:12.5px; min-height:32px; }
     .othello-score .os-item b{ font-size:14px; }

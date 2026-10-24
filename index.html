@@ -14,7 +14,7 @@
   <div class="switcher">
     <div class="tabs" role="tablist" aria-label="Games">
       <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5–8 letters · 5 tries</span></button>
-      <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Mini Sudoku</strong><span>6 × 6 · 3 puzzles</span></button>
+      <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Sudoku</strong><span>6 × 6 or 9 × 9 · 3 puzzles each</span></button>
       <button class="tab" role="tab" id="tab-othello" aria-selected="false" aria-controls="panel-othello" onclick="showGame('othello')"><strong>Othello</strong><span>8 × 8 · 3 levels · you are ●</span></button>
       <button class="tab" role="tab" id="tab-adventure" aria-selected="false" aria-controls="panel-adventure" onclick="showGame('adventure')"><strong>Beetle Quest</strong><span>Beetles + Baseball + Mining</span></button>
     </div>
@@ -52,10 +52,15 @@
   <!-- SUDOKU -->
   <section class="panel hidden" id="panel-sudoku" role="tabpanel" aria-labelledby="tab-sudoku">
     <div class="panel-head">
-      <div><h2>Mini Sudoku — 6 × 6</h2><p>Fill every row, column and 2×3 box with 1–6. Tap a white cell, then tap a number. Dark cells are given and can’t be changed.</p></div>
+      <div><h2>Sudoku</h2><p id="sudoku-desc">Fill every row, column and 2×3 box with 1–6. Tap a white cell, then tap a number. Dark cells are given and can’t be changed.</p></div>
       <div class="status" id="sudoku-status">Puzzle 1 of 3<small id="sudoku-sub">18 cells to fill</small></div>
     </div>
     <div class="panel-body">
+      <div class="switcher-label" style="margin-bottom:8px">Board size — tap to switch</div>
+      <div class="level-row" role="group" aria-label="Sudoku board size" style="margin-bottom:16px">
+        <button class="level-btn" id="ssize-6" aria-pressed="true" onclick="setSudokuSize(6)"><strong>6 × 6</strong><span>Mini — numbers 1–6, 2×3 boxes</span></button>
+        <button class="level-btn" id="ssize-9" aria-pressed="false" onclick="setSudokuSize(9)"><strong>9 × 9</strong><span>Classic — numbers 1–9, 3×3 boxes</span></button>
+      </div>
       <div class="sudoku-wrap">
         <div class="sudoku-board" id="sudoku-board" aria-label="Sudoku board"></div>
         <div>
