@@ -45,8 +45,8 @@
   /* game switcher */
   .switcher{ margin:6px 0 0; }
   .switcher-label{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; margin-bottom:8px; }
-  .tabs{ display:flex; gap:8px; flex-wrap:wrap; }
-  .tab{ flex:1 1 150px; min-height:54px; background:var(--btn-bg); color:var(--btn-ink); border:2px solid var(--line); border-radius:var(--radius); padding:8px 12px; text-align:left; }
+  .tabs{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .tab{ min-height:54px; background:var(--btn-bg); color:var(--btn-ink); border:2px solid var(--line); border-radius:var(--radius); padding:8px 12px; text-align:left; }
   .tab strong{ display:block; font-size:18px; line-height:1.1; }
   .tab span{ display:block; font-size:13px; color:var(--muted); margin-top:2px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
   .tab[aria-selected="true"]{ background:var(--fill); color:var(--fill-ink); }
@@ -99,10 +99,13 @@
   .score-row b{ font-size:20px; }
 
   /* SUDOKU */
-  .sudoku-wrap{ display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; }
+  .sudoku-wrap{ display:flex; flex-direction:column; gap:16px; align-items:center; }
   .sudoku-board{ border:3px solid var(--line); width:fit-content; background:var(--panel); }
+  .sudoku-wrap .actions{ justify-content:center; margin-top:0; }
+  .sudoku-tip{ font-size:14px; color:var(--muted); max-width:520px; margin:12px auto 0; text-align:center; }
+  .sudoku-pad{ width:100%; border-top:2px solid var(--line); padding-top:14px; }
   .s-row{ display:flex; }
-  .s-cell{ width:52px; height:52px; border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); background:var(--panel); color:var(--ink); font-size:24px; font-weight:700; padding:0; line-height:1; }
+  .s-cell{ width:76px; height:76px; border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); background:var(--panel); color:var(--ink); font-size:36px; font-weight:700; padding:0; line-height:1; }
   .s-cell:nth-child(3n){ border-right:2px solid var(--line); }
   .s-cell:nth-child(6n){ border-right:none; }
   .s-row:nth-child(2n) .s-cell{ border-bottom:2px solid var(--line); }
@@ -110,9 +113,9 @@
   .s-cell.given{ background:var(--wash); font-weight:800; }
   .s-cell.selected{ outline:3px solid var(--ink); outline-offset:-3px; background:var(--wash2); }
   .s-cell.wrong{ text-decoration:line-through; }
-  .numpad{ display:flex; gap:6px; flex-wrap:wrap; max-width:340px; }
-  .num{ width:52px; height:52px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); font-size:22px; font-weight:800; border-radius:8px; }
-  .num.wide{ width:auto; padding:0 16px; font-size:15px; }
+  .numpad{ display:flex; gap:8px; flex-wrap:nowrap; justify-content:center; width:100%; max-width:560px; margin:0 auto; }
+  .num{ flex:1 1 0; max-width:64px; min-width:0; height:64px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); font-size:26px; font-weight:800; border-radius:8px; padding:0; }
+  .num.wide{ flex:1.6 1 0; max-width:120px; font-size:15px; }
 
   /* OTHELLO */
   .othello-wrap{ display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start; justify-content:center; }
@@ -237,11 +240,15 @@
     .key.wide{ font-size:14px; }
     .ttt-board{ grid-template-columns:repeat(3, min(84px,26vw)); grid-template-rows:repeat(3, min(84px,26vw)); }
     .o-cell.valid:after{ width:10px; height:10px; }
-    .s-cell{ width:min(46px,12.5vw); height:min(46px,12.5vw); font-size:21px; }
+    .s-cell{ width:min(76px,15vw); height:min(76px,15vw); font-size:min(36px,7.5vw); }
+    .num{ height:56px; font-size:23px; }
     .othello-score .os-item{ padding:5px 4px; gap:4px; font-size:12.5px; min-height:32px; }
     .othello-score .os-item b{ font-size:14px; }
     .how{ grid-template-columns:1fr; }
     .spec{ flex-basis:140px; }
+    .tab strong{ font-size:15px; }
+    .tab span{ font-size:11.5px; }
+    .tab{ padding:7px 9px; }
   }
 </style>
 </head>
@@ -322,14 +329,16 @@
       <div class="sudoku-wrap">
         <div class="sudoku-board" id="sudoku-board" aria-label="Sudoku board"></div>
         <div>
-          <div class="switcher-label" style="margin-bottom:8px">Number pad</div>
-          <div class="numpad" id="numpad"></div>
           <div class="actions">
             <button class="btn primary" onclick="checkSudoku()">Check</button>
             <button class="btn" onclick="nextSudoku()">Next puzzle →</button>
             <button class="btn" onclick="clearSudoku()">Clear my numbers</button>
           </div>
-          <p style="font-size:14px;color:var(--muted);max-width:320px">Perfect for the pen: tap with the pen tip to select, tap a number to write it in. Use ✕ to erase.</p>
+          <p class="sudoku-tip">Perfect for the pen: tap with the pen tip to select, tap a number to write it in. Use ✕ to erase.</p>
+        </div>
+        <div class="sudoku-pad">
+          <div class="switcher-label" style="margin-bottom:8px;text-align:center">Number pad</div>
+          <div class="numpad" id="numpad"></div>
         </div>
       </div>
     </div>
