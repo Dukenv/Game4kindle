@@ -133,6 +133,37 @@
   .othello-legend{ display:flex; gap:16px; flex-wrap:wrap; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:13.5px; margin-bottom:14px; align-items:center; }
   .othello-legend .disc{ width:22px; height:22px; vertical-align:middle; display:inline-block; margin-right:5px; }
 
+  /* ADVENTURE */
+  .adv-progress{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+  .adv-step{ flex:1 1 110px; border:2px solid var(--line); padding:8px 10px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.05em; text-transform:uppercase; font-weight:700; text-align:center; background:var(--panel); }
+  .adv-step.done{ background:var(--wash2); }
+  .adv-step.now{ background:var(--fill); color:var(--fill-ink); }
+  .adv-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .adv-card{ border:2px solid var(--line); background:var(--panel); padding:16px 14px; text-align:left; min-height:150px; }
+  .adv-card strong{ display:block; font-size:20px; line-height:1.1; }
+  .adv-card span{ display:block; font-size:14px; color:var(--muted); margin-top:6px; line-height:1.45; }
+  .adv-card b{ display:inline-block; margin-top:8px; border:2px solid var(--line); padding:2px 8px; font-size:13px; }
+  .adv-big{ font-size:42px; line-height:1; display:block; margin-bottom:8px; }
+  .adv-mine{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:520px; }
+  .adv-block{ min-height:84px; border:2px solid var(--line); background:var(--wash); font-size:15px; font-weight:700; padding:10px; line-height:1.3; }
+  .adv-block small{ display:block; font-weight:400; color:var(--muted); font-size:13px; margin-top:4px; }
+  .adv-block.dug{ background:var(--panel); }
+  .adv-block.rare{ background:var(--fill); color:var(--fill-ink); }
+  .adv-block.rare small{ color:var(--fill-ink); opacity:.85; }
+  .adv-hud{ display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+  .adv-stat{ border:2px solid var(--line); padding:8px 12px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:14px; }
+  .adv-stat b{ font-size:18px; }
+  .adv-log{ border:2px solid var(--line); background:var(--wash); padding:12px 14px; font-size:16px; line-height:1.5; margin:12px 0; }
+  .adv-log p{ margin:0 0 6px; }
+  .adv-log p:last-child{ margin-bottom:0; }
+  .adv-bar{ height:18px; border:2px solid var(--line); background:var(--panel); margin:6px 0 12px; }
+  .adv-bar i{ display:block; height:100%; background:var(--fill); }
+  .adv-moves{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .adv-move{ min-height:68px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); padding:10px; text-align:left; }
+  .adv-move strong{ display:block; font-size:17px; }
+  .adv-move span{ display:block; font-size:13px; color:var(--muted); margin-top:2px; line-height:1.35; }
+  @media (max-width:560px){ .adv-cards,.adv-moves{ grid-template-columns:1fr; } .adv-block{ min-height:72px; } }
+
   /* how to */
   .how{ margin-top:22px; border-top:3px solid var(--line); padding-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:18px; }
   .how h3{ margin:0 0 6px; font-size:20px; }
@@ -168,7 +199,7 @@
 
   <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
   <h1>Ink <em>&amp;</em> Play</h1>
-  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just four turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
+  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just five turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
 
   <div class="specs" aria-label="Designed for e-ink">
     <div class="spec"><strong>✓ E-ink first</strong><p>Black, white &amp; grey only. Correct answers are told apart by fill and pattern, not colour.</p></div>
@@ -177,12 +208,13 @@
   </div>
 
   <div class="switcher">
-    <div class="switcher-label">Pick a game — 1 of 4</div>
+    <div class="switcher-label">Pick a game — 1 of 5</div>
     <div class="tabs" role="tablist" aria-label="Games">
       <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5 letters · 6 tries</span></button>
       <button class="tab" role="tab" id="tab-ttt" aria-selected="false" aria-controls="panel-ttt" onclick="showGame('ttt')"><strong>Tic-Tac-Toe</strong><span>You are X · vs. device</span></button>
       <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Mini Sudoku</strong><span>6 × 6 · 3 puzzles</span></button>
       <button class="tab" role="tab" id="tab-othello" aria-selected="false" aria-controls="panel-othello" onclick="showGame('othello')"><strong>Othello</strong><span>8 × 8 · 3 levels · you are ●</span></button>
+      <button class="tab" role="tab" id="tab-adventure" aria-selected="false" aria-controls="panel-adventure" onclick="showGame('adventure')"><strong>Beetle Quest</strong><span>Beetles + Baseball + Mining</span></button>
     </div>
   </div>
 
@@ -291,6 +323,22 @@
     </div>
   </section>
 
+  <!-- BEETLE QUEST ADVENTURE -->
+  <section class="panel hidden" id="panel-adventure" role="tabpanel" aria-labelledby="tab-adventure">
+    <div class="panel-head">
+      <div><h2>Beetle Quest Adventure</h2><p>All three favourites in one quest: <b>catch a Japanese beetle</b>, <b>dig &amp; craft</b> like Minecraft, and <b>win a baseball challenge</b> — then battle for the Forest Trophy. What you mine makes you stronger in the games that follow.</p></div>
+      <div class="status" id="adv-status">New quest<small>Pick your beetle to start</small></div>
+    </div>
+    <div class="panel-body">
+      <div class="adv-progress" id="adv-progress" aria-label="Quest progress"></div>
+      <div id="adv-main"></div>
+      <div class="actions">
+        <button class="btn" onclick="resetAdventure()">↻ Start over</button>
+      </div>
+      <p style="font-size:14px;color:var(--muted);margin:12px 0 0">For 1 player — or pass the Scribe and take turns choosing. No timer: think as long as you like on every tap.</p>
+    </div>
+  </section>
+
   <div class="how">
     <div>
       <h3>How to open this on your Scribe</h3>
@@ -307,7 +355,7 @@
         <li><b>Turn-based only</b> <span>— nothing moves until you tap, so there’s no blur or battery drain.</span></li>
         <li><b>Plain HTML + tap buttons</b> <span>— no canvas, no heavy scripts, so the Scribe’s limited browser can run it.</span></li>
         <li><b>Patterns, not colour</b> <span>— solid, double-border and grey read clearly in greyscale.</span></li>
-        <li><b>One page, four games</b> <span>— switching games doesn’t reload the page.</span></li>
+        <li><b>One page, five games</b> <span>— switching games doesn’t reload the page.</span></li>
       </ul>
     </div>
   </div>
@@ -317,7 +365,7 @@
 
 <script>
 function showGame(name){
-  var games=['word','ttt','sudoku','othello'];
+  var games=['word','ttt','sudoku','othello','adventure'];
   for(var i=0;i<games.length;i++){
     var p=document.getElementById('panel-'+games[i]);
     var t=document.getElementById('tab-'+games[i]);
@@ -635,11 +683,170 @@ function oCpuPick(){
   return pickH;
 }
 
+/* ---------- BEETLE QUEST ADVENTURE ---------- */
+var ADV_BEETLES=[
+ {name:'Kabutomushi', icon:'[KA]', desc:'The classic rhinoceros beetle. Big horn, brave heart. Balanced and strong.', hp:44, power:7, trait:'Balanced · + Horn Flip damage'},
+ {name:'Kuwagata', icon:'[KU]', desc:'Stag beetle with mighty jaws. Quick and clever — great at Guarding.', hp:38, power:6, trait:'Clever · Guard heals you'},
+ {name:'Hercules', icon:'[HE]', desc:'The giant hero beetle. Slow, huge and super strong. Hard to push out!', hp:52, power:9, trait:'Giant · + Push damage'}
+];
+var adv=null;
+function advFresh(){
+ return {phase:'choose', quest: (adv?adv.quest:1), beetle:null, hp:0, maxHp:0, power:0,
+  inv:{wood:0,stone:0,coal:0,iron:0,gold:0,diamond:0}, mine:[], dug:0,
+  crafted:{pick:false, armour:false, bat:false},
+  bb:{pitch:0, runs:0, outs:0, done:false, log:[]},
+  battle:{ehp:0, emax:0, ename:'', log:[], over:false, healed:false},
+  log:[]};
+}
+function advSetStatus(main, sub){ document.getElementById('adv-status').innerHTML=main+'<small>'+sub+'</small>'; }
+function advProgressHTML(){
+ var steps=['1 · Beetle','2 · Dig & Craft','3 · Baseball','4 · Battle','5 · Trophy'];
+ var idx={choose:0,mine:1,craft:1,baseball:2,battle:3,win:4,lose:3}[adv.phase];
+ var h='';
+ for(var i=0;i<steps.length;i++){ h+='<div class="adv-step'+(i<idx?' done':i===idx?' now':'')+'">'+steps[i]+'</div>'; }
+ return h;
+}
+function advHUD(){
+ if(!adv.beetle) return '';
+ return '<div class="adv-hud"><span class="adv-stat">Beetle <b>'+adv.beetle.name+'</b></span><span class="adv-stat">HP <b>'+Math.max(0,adv.hp)+' / '+adv.maxHp+'</b></span><span class="adv-stat">Power <b>'+adv.power+'</b></span><span class="adv-stat">Loot — [W] Wood '+adv.inv.wood+' · [S] Stone '+adv.inv.stone+' · [C] Coal '+adv.inv.coal+' · [I] Iron '+adv.inv.iron+' · [G] Gold '+adv.inv.gold+' · [D] Diamond '+adv.inv.diamond+'</span></div>';
+}
+function advBar(cur,max){ var p=max?Math.max(0,Math.round(cur/max*100)):0; return '<div class="adv-bar"><i style="width:'+p+'%"></i></div>'; }
+function resetAdventure(){ var q=adv?adv.quest:1; adv=advFresh(); adv.quest=q; renderAdventure(); }
+function renderAdventure(){
+ document.getElementById('adv-progress').innerHTML=advProgressHTML();
+ var m=document.getElementById('adv-main');
+ if(adv.phase==='choose'){
+   advSetStatus('New quest '+(adv.quest>1?'· Quest '+adv.quest:''),'Pick your beetle to start');
+   var h='<p style="font-size:17px;margin-top:0"><b>Summer break. The forest is calling.</b> First, pick your partner beetle. It will dig with you, cheer at baseball, and fight in the final battle.</p><div class="adv-cards">';
+   for(var i=0;i<ADV_BEETLES.length;i++){ (function(idx,b){ h+='<button class="adv-card" onclick="advChooseBeetle('+idx+')"><span class="adv-big">'+b.icon+'</span><strong>'+b.name+'</strong><span>'+b.desc+'</span><b>HP '+b.hp+' · Power '+b.power+'</b><span>'+b.trait+'</span></button>'; })(i,ADV_BEETLES[i]); }
+   h+='</div>'; m.innerHTML=h; return;
+ }
+ if(adv.phase==='mine'){
+   advSetStatus('Chapter 1 · The Mine','Tap blocks to dig — '+adv.dug+' of 9 dug');
+   var h2=advHUD()+'<p style="font-size:17px;margin-top:0"><b>Dig down!</b> Tap each block. Deeper blocks hide better treasure. What you find will make your pickaxe, armour and baseball bat stronger.</p><div class="adv-mine">';
+   for(var j=0;j<9;j++){ var blk=adv.mine[j]; if(!blk.dug){ h2+='<button class="adv-block" onclick="advDig('+j+')">□ Block '+(j+1)+'<small>'+(j<3?'Top layer':j<6?'Middle layer':'Deep layer — rare!')+'</small></button>'; } else { h2+='<div class="adv-block dug'+(blk.rare?' rare':'')+'">'+blk.label+'<small>'+blk.note+'</small></div>'; } }
+   h2+='</div>';
+   if(adv.log.length) h2+='<div class="adv-log"><p>'+adv.log[adv.log.length-1]+'</p></div>';
+   if(adv.dug>=5) h2+='<div class="actions"><button class="btn primary" onclick="advGoCraft()">Continue to Crafting →</button></div>';
+   else h2+='<p style="color:var(--muted);font-size:14px">Dig at least 5 blocks to continue. Dig all 9 for the best treasure!</p>';
+   m.innerHTML=h2; return;
+ }
+ if(adv.phase==='craft'){
+   advSetStatus('Chapter 2 · Crafting','Use what you mined');
+   var c=advHUD()+'<p style="font-size:17px;margin-top:0"><b>Crafting table.</b> Build gear for the baseball game and the final battle. You can build each item once, or skip ahead.</p><div class="adv-moves">';
+   c+='<button class="adv-move" onclick="advCraft(\'pick\')" '+(adv.crafted.pick||adv.inv.stone<2?'disabled style="opacity:.45"':'')+'><strong>[P] Stone Pickaxe</strong><span>Cost: 2 Stone · +3 Power in battle</span></button>';
+   c+='<button class="adv-move" onclick="advCraft(\'armour\')" '+(adv.crafted.armour||adv.inv.iron<1?'disabled style="opacity:.45"':'')+'><strong>[A] Iron Beetle Armour</strong><span>Cost: 1 Iron · +16 Max HP</span></button>';
+   c+='<button class="adv-move" onclick="advCraft(\'bat\')" '+(adv.crafted.bat||adv.inv.diamond<1?'disabled style="opacity:.45"':'')+'><strong>[D] Diamond Baseball Bat</strong><span>Cost: 1 Diamond · Much better hitting</span></button>';
+   c+='</div>';
+   if(adv.log.length) c+='<div class="adv-log"><p>'+adv.log[adv.log.length-1]+'</p></div>';
+   c+='<div class="actions"><button class="btn primary" onclick="advStartBaseball()">Go to Baseball →</button></div>';
+   m.innerHTML=c; return;
+ }
+ if(adv.phase==='baseball'){
+   advSetStatus('Chapter 3 · Baseball','Pitch '+(Math.min(3,adv.bb.pitch+ (adv.bb.done?0:1)))+' of 3 · Runs: '+adv.bb.runs,'Bottom of the 9th — village final!');
+   var b=advHUD()+'<p style="font-size:17px;margin-top:0"><b>Bottom of the 9th!</b> Your beetle is on your shoulder for luck. You have <b>3 pitches</b>. Score <b>3 or more runs</b> to win the Golden Glove bonus (+4 Power). Pick a swing for each pitch:</p>';
+   if(adv.bb.log.length){ b+='<div class="adv-log">'; for(var k=0;k<adv.bb.log.length;k++) b+='<p>'+adv.bb.log[k]+'</p>'; b+='</div>'; }
+   if(!adv.bb.done){
+     b+='<div class="adv-moves"><button class="adv-move" onclick="advSwing(\'contact\')"><strong>[C] Contact Hit</strong><span>Safe swing · Most likely to get 1 run</span></button><button class="adv-move" onclick="advSwing(\'big\')"><strong>[B] Big Swing</strong><span>Go for a home run · 2 runs, but easier to miss</span></button><button class="adv-move" onclick="advSwing(\'bunt\')"><strong>[T] Sneaky Bunt</strong><span>Trick play · Beetle dashes too — a surprise run</span></button></div>';
+   } else {
+     b+='<div class="actions"><button class="btn primary" onclick="advStartBattle()">To the Final Battle →</button></div>';
+   }
+   m.innerHTML=b; return;
+ }
+ if(adv.phase==='battle'){
+   var bt=adv.battle;
+   advSetStatus('Final Battle', adv.beetle.name+' vs '+bt.ename);
+   var w='<p style="font-size:17px;margin-top:0"><b>The beetle sumo ring, under the big oak.</b> Beat the champion to win the Forest Trophy!</p>';
+   w+='<div class="adv-log"><p><b>You · '+adv.beetle.name+'</b> — HP '+Math.max(0,adv.hp)+' / '+adv.maxHp+'</p>'+advBar(adv.hp,adv.maxHp)+'<p><b>Champion · '+bt.ename+'</b> — HP '+Math.max(0,bt.ehp)+' / '+bt.emax+'</p>'+advBar(bt.ehp,bt.emax)+'</div>';
+   w+=advHUD();
+   if(bt.log.length){ w+='<div class="adv-log">'; var start=Math.max(0,bt.log.length-3); for(var t=start;t<bt.log.length;t++) w+='<p>'+bt.log[t]+'</p>'; w+='</div>'; }
+   if(!bt.over){
+     w+='<p style="font-size:15px"><b>How moves win:</b> Push beats Guard · Horn Flip beats Push · Guard beats Horn Flip. Tied moves bump horns for small damage.</p><div class="adv-moves"><button class="adv-move" onclick="advBattleMove(\'push\')"><strong>[P] Push</strong><span>Shove the champion to the edge. Beats Guard.</span></button><button class="adv-move" onclick="advBattleMove(\'flip\')"><strong>[F] Horn Flip</strong><span>Get under and flip! Beats Push.</span></button><button class="adv-move" onclick="advBattleMove(\'guard\')"><strong>[G] Guard</strong><span>Dig in and hold firm. Beats Horn Flip.'+(adv.beetle.name==='Kuwagata'?' Also heals you.':'')+'</span></button></div>';
+   }
+   m.innerHTML=w; return;
+ }
+ if(adv.phase==='win'){
+   advSetStatus('Quest complete!','Forest Trophy won ★');
+   m.innerHTML='<div style="text-align:center;padding:10px 0"><span class="adv-big" style="font-size:64px">★</span><p style="font-size:24px;font-weight:800;margin:6px 0">You won the Forest Trophy!</p><p style="font-size:17px;max-width:520px;margin:0 auto">'+adv.beetle.name+' is the new forest champion! You dug deep, crafted gear, scored <b>'+adv.bb.runs+' run'+(adv.bb.runs===1?'':'s')+'</b> at baseball, and won the final battle with <b>'+Math.max(0,adv.hp)+' HP</b> left.</p></div>'+advHUD()+'<div class="actions" style="justify-content:center"><button class="btn primary" onclick="advNextQuest()">▶ Play Again — Harder Quest '+(adv.quest+1)+'</button></div>';
+   return;
+ }
+ if(adv.phase==='lose'){
+   advSetStatus('Beetle needs a rest','The champion was too strong this time');
+   m.innerHTML='<p style="font-size:20px;font-weight:800;margin-top:0">So close!</p><p style="font-size:17px">Your beetle is tired but proud — it dug, crafted and played baseball all the way to the final. Rest, heal up, and try the battle again. The champion will be waiting.</p>'+advHUD()+'<div class="actions"><button class="btn primary" onclick="advRetryBattle()">Rest &amp; Retry Battle →</button><button class="btn" onclick="resetAdventure()">Start a New Quest</button></div>';
+   return;
+ }
+}
+function advChooseBeetle(idx){
+ adv.beetle=ADV_BEETLES[idx]; adv.maxHp=adv.beetle.hp; adv.hp=adv.maxHp; adv.power=adv.beetle.power;
+ var loot=[{k:'wood',label:'[W] Wood',note:'+1 Wood',rare:false},{k:'stone',label:'[S] Stone',note:'+1 Stone',rare:false},{k:'coal',label:'[C] Coal',note:'+1 Coal · +1 Power snack fuel',rare:false},{k:'stone',label:'[S] Stone',note:'+1 Stone',rare:false},{k:'coal',label:'[C] Coal',note:'+1 Coal',rare:false},{k:'iron',label:'[I] Iron',note:'+1 Iron',rare:false},{k:'gold',label:'[G] Gold',note:'+1 Gold · +1 Power',rare:false},{k:'iron',label:'[I] Iron',note:'+1 Iron',rare:false},{k:'diamond',label:'[D] Diamond!',note:'+1 Diamond · Rare!',rare:true}];
+ // shuffle loot into blocks
+ for(var i=loot.length-1;i>0;i--){ var r=Math.floor(Math.random()*(i+1)); var tmp=loot[i]; loot[i]=loot[r]; loot[r]=tmp; }
+ adv.mine=[]; for(var j=0;j<9;j++) adv.mine.push({dug:false,k:loot[j].k,label:loot[j].label,note:loot[j].note,rare:loot[j].rare});
+ adv.phase='mine'; adv.log=['You picked '+adv.beetle.name+'! Into the mine you go…'];
+ renderAdventure();
+}
+function advDig(idx){
+ var blk=adv.mine[idx]; if(!blk||blk.dug) return; blk.dug=true; adv.dug++;
+ adv.inv[blk.k]++; if(blk.k==='gold') adv.power+=1; if(blk.k==='coal') { /* coal noted */ }
+ adv.log.push('You dug Block '+(idx+1)+' and found '+blk.label+'! '+blk.note+'.');
+ renderAdventure();
+}
+function advGoCraft(){ adv.phase='craft'; adv.log.push('Crafting time — your treasures are on the table.'); renderAdventure(); }
+function advCraft(kind){
+ if(kind==='pick'&&!adv.crafted.pick&&adv.inv.stone>=2){ adv.inv.stone-=2; adv.crafted.pick=true; adv.power+=3; adv.log.push('Crafted a Stone Pickaxe! Power +3.'); }
+ if(kind==='armour'&&!adv.crafted.armour&&adv.inv.iron>=1){ adv.inv.iron-=1; adv.crafted.armour=true; adv.maxHp+=16; adv.hp+=16; adv.log.push('Crafted Iron Beetle Armour! Max HP +16.'); }
+ if(kind==='bat'&&!adv.crafted.bat&&adv.inv.diamond>=1){ adv.inv.diamond-=1; adv.crafted.bat=true; adv.log.push('Crafted a Diamond Baseball Bat! Your swings are much stronger.'); }
+ renderAdventure();
+}
+function advStartBaseball(){ adv.phase='baseball'; adv.bb={pitch:0,runs:0,outs:0,done:false,log:['Play ball! The crowd of crickets goes wild.']}; renderAdventure(); }
+function advSwing(kind){
+ if(adv.bb.done) return;
+ var roll=Math.random(); var bonus=adv.crafted.bat?0.15:0; var runs=0; var msg='';
+ var n=adv.bb.pitch+1;
+ if(kind==='contact'){ if(roll<0.65+bonus){ runs=1; msg='Pitch '+n+': Crack! A clean contact hit — 1 run scores!'; } else if(roll<0.85){ msg='Pitch '+n+': Foul ball! It flies into the beetle forest. No run.'; } else { msg='Pitch '+n+': Swing and a miss — strike!'; adv.bb.outs++; } }
+ if(kind==='big'){ if(roll<0.35+bonus){ runs=2; msg='Pitch '+n+': BOOM! HOME RUN over the oak tree — 2 runs! Your beetle does a happy dance!'; } else if(roll<0.55+bonus){ runs=1; msg='Pitch '+n+': Big swing, deep hit — 1 run scores!'; } else { msg='Pitch '+n+': Huge swing… whoosh! Missed it. Strike!'; adv.bb.outs++; } }
+ if(kind==='bunt'){ if(roll<0.55+bonus){ runs=1; msg='Pitch '+n+': Sneaky bunt! Nobody expected it — 1 run, and your beetle dashes to celebrate!'; } else if(roll<0.80){ msg='Pitch '+n+': The bunt rolls foul. Nice try, no run.'; } else { msg='Pitch '+n+': The catcher saw the bunt coming — out!'; adv.bb.outs++; } }
+ adv.bb.runs+=runs; adv.bb.pitch++; adv.bb.log.push(msg);
+ if(adv.bb.pitch>=3){ adv.bb.done=true; if(adv.bb.runs>=3){ adv.power+=4; adv.bb.log.push('Final score: '+adv.bb.runs+' runs — you WIN the baseball final! Golden Glove bonus: +4 Power for the battle!'); } else { adv.bb.log.push('Final score: '+adv.bb.runs+' runs. Not quite 3 — but your beetle cheered so hard you still feel ready for battle!'); } }
+ renderAdventure();
+}
+function advStartBattle(){
+ adv.phase='battle';
+ var ename=adv.beetle.name==='Hercules'?'Giant Kuwagata Champion':'Hercules Champion';
+ var emax=48+(adv.quest-1)*10;
+ adv.battle={ehp:emax,emax:emax,ename:ename,log:['The champion steps into the ring… '+ename+' (HP '+emax+'). Your move!'],over:false};
+ renderAdventure();
+}
+function advRetryBattle(){ adv.hp=adv.maxHp; advStartBattle(); }
+function advNextQuest(){ adv.quest++; var keep=adv.quest; adv=advFresh(); adv.quest=keep; renderAdventure(); }
+function advBattleMove(move){
+ var bt=adv.battle; if(bt.over) return;
+ var moves=['push','flip','guard']; var emove=moves[Math.floor(Math.random()*3)];
+ var names={push:'Push',flip:'Horn Flip',guard:'Guard'};
+ var beats={push:'guard',flip:'push',guard:'flip'};
+ var dmgBonus=(move==='flip'&&adv.beetle.name==='Kabutomushi')?3:(move==='push'&&adv.beetle.name==='Hercules')?3:0;
+ if(move===emove){
+   var td=3; bt.ehp-=td; adv.hp-=td; bt.log.push('Both chose '+names[move]+' — horns bump! Both take '+td+' damage.');
+ } else if(beats[move]===emove){
+   var dmg=adv.power+2+dmgBonus+Math.floor(Math.random()*4); bt.ehp-=dmg;
+   if(move==='guard'&&adv.beetle.name==='Kuwagata'){ adv.hp=Math.min(adv.maxHp,adv.hp+4); bt.log.push('Your Guard beats '+names[emove]+'! You deal '+dmg+' damage and Kuwagata heals 4 HP.'); }
+   else bt.log.push('Your '+names[move]+' beats '+names[emove]+'! You deal '+dmg+' damage.');
+ } else {
+   var edmg=7+Math.floor(Math.random()*4)+(adv.quest-1)*1; adv.hp-=edmg; bt.log.push('Champion\u2019s '+names[emove]+' beats your '+names[move]+'. You take '+edmg+' damage.');
+ }
+ if(bt.ehp<=0&&adv.hp<=0){ adv.hp=1; }
+ if(bt.ehp<=0){ bt.over=true; adv.phase='win'; }
+ else if(adv.hp<=0){ bt.over=true; adv.phase='lose'; }
+ renderAdventure();
+}
+
 /* init */
+adv=advFresh();
 newWordGame();
 newTTT();
 loadSudoku();
 newOthello();
+renderAdventure();
 </script>
 </body>
 </html>
