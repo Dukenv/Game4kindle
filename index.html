@@ -147,6 +147,7 @@
   .adv-block{ min-height:84px; border:2px solid var(--line); background:var(--wash); font-size:15px; font-weight:700; padding:10px; line-height:1.3; }
   .adv-block small{ display:block; font-weight:400; color:var(--muted); font-size:13px; margin-top:4px; }
   .adv-block.dug{ background:var(--panel); }
+  .adv-block.locked{ background:var(--wash); opacity:.45; }
   .adv-block.rare{ background:var(--fill); color:var(--fill-ink); }
   .adv-block.rare small{ color:var(--fill-ink); opacity:.85; }
   .adv-hud{ display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
@@ -704,7 +705,10 @@ function oCpuPick(){
 var ADV_BEETLES=[
  {name:'Kabutomushi', art:'kabuto', desc:'The classic rhinoceros beetle. Big horn, brave heart. Balanced and strong.', hp:44, power:7, trait:'Balanced · + Horn Flip damage'},
  {name:'Kuwagata', art:'kuwagata', desc:'Stag beetle with mighty jaws. Quick and clever — great at Guarding.', hp:38, power:6, trait:'Clever · Guard heals you'},
- {name:'Hercules', art:'hercules', desc:'The giant hero beetle. Slow, huge and super strong. Hard to push out!', hp:52, power:9, trait:'Giant · + Push damage'}
+ {name:'Hercules', art:'hercules', desc:'The giant hero beetle. Slow, huge and super strong. Hard to push out!', hp:52, power:9, trait:'Giant · + Push damage'},
+ {name:'Atlas Beetle', art:'atlas', desc:'Three mighty horns and a super-tough shell. A real tank — very hard to hurt!', hp:50, power:8, trait:'Tough shell · + Guard damage'},
+ {name:'Giraffe Stag', art:'giraffe', desc:'The longest stag beetle in the world — jaws as long as a giraffe\u2019s neck!', hp:40, power:8, trait:'Long jaws · + Horn Flip damage'},
+ {name:'Rainbow Stag', art:'rainbow', desc:'Australia\u2019s shiny jewel beetle. Its shell sparkles like a rainbow in the sun!', hp:36, power:7, trait:'Shiny luck · Push heals you'}
 ];
 /* Hand-drawn black & white pictures for every Beetle Quest character and item.
    Plain inline SVG line art — no colour, so it stays crisp on e-ink. */
@@ -712,6 +716,9 @@ var ADV_ICONS={
  kabuto:'<path d="M32 3v9"/><path d="M32 5c-5 0-9 3-10 8"/><path d="M32 5c5 0 9 3 10 8"/><ellipse cx="32" cy="39" rx="13" ry="17"/><path d="M32 23v33"/><path d="M19 32H7M19 42H5M21 51l-9 6M45 32h12M45 42h14M43 51l9 6"/><circle cx="27" cy="25" r="1.8" fill="currentColor" stroke="none"/><circle cx="37" cy="25" r="1.8" fill="currentColor" stroke="none"/>',
  kuwagata:'<path d="M25 22C18 12 11 8 4 10c4 3 6 6 8 11"/><path d="M39 22c7-10 14-14 21-12-4 3-6 6-8 11"/><path d="M23 17l-3-5M41 17l3-5"/><ellipse cx="32" cy="40" rx="12" ry="16"/><path d="M32 25v31"/><path d="M20 33H8M20 43H6M22 52l-9 5M44 33h12M44 43h14M42 52l9 5"/><circle cx="27" cy="27" r="1.8" fill="currentColor" stroke="none"/><circle cx="37" cy="27" r="1.8" fill="currentColor" stroke="none"/>',
  hercules:'<path d="M28 24V6c0-2 8-2 8 0v18"/><path d="M28 11h8M28 17h8"/><path d="M28 24c-4 2-7 5-8 9M36 24c4 2 7 5 8 9"/><ellipse cx="32" cy="42" rx="13" ry="15"/><path d="M32 28v29"/><path d="M19 36H7M19 46H5M21 54l-9 5M45 36h12M45 46h14M43 54l9 5"/><circle cx="27" cy="30" r="1.8" fill="currentColor" stroke="none"/><circle cx="37" cy="30" r="1.8" fill="currentColor" stroke="none"/>',
+ atlas:'<path d="M32 22V9"/><path d="M32 9l-5-5M32 9l5-5"/><path d="M24 25C18 17 18 10 23 5M40 25c6-8 6-15 1-20"/><ellipse cx="32" cy="42" rx="14" ry="15"/><path d="M32 28v29"/><path d="M18 36H6M18 46H5M20 54l-8 4M46 36h12M46 46h13M44 54l8 4"/><circle cx="27" cy="31" r="1.8" fill="currentColor" stroke="none"/><circle cx="37" cy="31" r="1.8" fill="currentColor" stroke="none"/>',
+ giraffe:'<path d="M26 27L20 4M23 13l5 3M21 20l6 3"/><path d="M38 27l6-23M41 13l-5 3M43 20l-6 3"/><ellipse cx="32" cy="43" rx="12" ry="14"/><path d="M32 30v27"/><path d="M20 37H8M20 47H6M22 54l-9 4M44 37h12M44 47h14M42 54l9 4"/><circle cx="27" cy="33" r="1.8" fill="currentColor" stroke="none"/><circle cx="37" cy="33" r="1.8" fill="currentColor" stroke="none"/>',
+ rainbow:'<path d="M25 23C19 14 13 10 6 12c4 3 6 6 7 10"/><path d="M39 23c6-9 12-13 19-11-4 3-6 6-7 10"/><ellipse cx="32" cy="41" rx="12" ry="15"/><path d="M32 27v29"/><path d="M23 34c3 2 6 3 9 3s6-1 9-3M22 44c3 2 6 3 10 3s7-1 10-3"/><path d="M20 34H9M20 44H7M22 52l-8 5M44 34h11M44 44h13M42 52l8 5"/><path d="M53 29l1.1 2.9 2.9 1.1-2.9 1.1L53 37l-1.1-2.9L49 33l2.9-1.1z" fill="currentColor" stroke="none"/><circle cx="27" cy="29" r="1.8" fill="currentColor" stroke="none"/><circle cx="37" cy="29" r="1.8" fill="currentColor" stroke="none"/>',
  champion:'<path d="M19 12l5-7 8 6 8-6 5 7-2 6H21z"/><ellipse cx="32" cy="42" rx="14" ry="15"/><path d="M32 27v30"/><path d="M18 36H6M18 46H5M20 54l-8 4M46 36h12M46 46h13M44 54l8 4"/><path d="M32 35l1.9 3.9 4.3.6-3.1 3 .7 4.3L32 44.8l-3.8 2 .7-4.3-3.1-3 4.3-.6z" fill="currentColor" stroke="none"/>',
  wood:'<rect x="6" y="24" width="44" height="18" rx="9"/><ellipse cx="50" cy="33" rx="8" ry="9"/><ellipse cx="50" cy="33" rx="3.5" ry="4"/><path d="M12 29h26M12 38h22"/>',
  stone:'<path d="M10 46l6-22 14-8 18 8 6 12-4 10z"/><path d="M16 24l14 6 18-6M30 30v16"/>',
@@ -771,13 +778,13 @@ function renderAdventure(){
    h+='</div>'; m.innerHTML=h; return;
  }
  if(adv.phase==='mine'){
-   advSetStatus('Chapter 1 · The Mine','Tap blocks to dig — '+adv.dug+' of 9 dug');
-   var h2=advHUD()+'<p style="font-size:17px;margin-top:0"><b>Dig down!</b> Tap each block. Deeper blocks hide better treasure. What you find will make your pickaxe, armour and baseball bat stronger.</p><div class="adv-mine">';
-   for(var j=0;j<9;j++){ var blk=adv.mine[j]; if(!blk.dug){ h2+='<button class="adv-block" onclick="advDig('+j+')"><span class="adv-block-art">'+advIcon('block',46)+'</span><span class="adv-block-name">Block '+(j+1)+'</span><small>'+(j<3?'Top layer':j<6?'Middle layer':'Deep layer — rare!')+'</small></button>'; } else { h2+='<div class="adv-block dug'+(blk.rare?' rare':'')+'"><span class="adv-block-art">'+advIcon(blk.k,46)+'</span><span class="adv-block-name">'+blk.label+'</span><small>'+blk.note+'</small></div>'; } }
+   advSetStatus('Chapter 1 · The Mine','Tap blocks to dig — '+adv.dug+' of 4 picks used');
+   var h2=advHUD()+'<p style="font-size:17px;margin-top:0"><b>Dig down — choose wisely!</b> You only get <b>4 picks</b>, so choose 4 blocks out of the 9. Deeper blocks hide better treasure. What you find will make your pickaxe, armour and baseball bat stronger.</p><div class="adv-mine">';
+   for(var j=0;j<9;j++){ var blk=adv.mine[j]; if(!blk.dug&&adv.dug>=4){ h2+='<div class="adv-block locked"><span class="adv-block-art">'+advIcon('block',46)+'</span><span class="adv-block-name">Block '+(j+1)+'</span><small>Locked — 4 picks used</small></div>'; } else if(!blk.dug){ h2+='<button class="adv-block" onclick="advDig('+j+')"><span class="adv-block-art">'+advIcon('block',46)+'</span><span class="adv-block-name">Block '+(j+1)+'</span><small>'+(j<3?'Top layer':j<6?'Middle layer':'Deep layer — rare!')+'</small></button>'; } else { h2+='<div class="adv-block dug'+(blk.rare?' rare':'')+'"><span class="adv-block-art">'+advIcon(blk.k,46)+'</span><span class="adv-block-name">'+blk.label+'</span><small>'+blk.note+'</small></div>'; } }
    h2+='</div>';
    if(adv.log.length) h2+='<div class="adv-log"><p>'+adv.log[adv.log.length-1]+'</p></div>';
-   if(adv.dug>=5) h2+='<div class="actions"><button class="btn primary" onclick="advGoCraft()">Continue to Crafting →</button></div>';
-   else h2+='<p style="color:var(--muted);font-size:14px">Dig at least 5 blocks to continue. Dig all 9 for the best treasure!</p>';
+   if(adv.dug>=4) h2+='<div class="actions"><button class="btn primary" onclick="advGoCraft()">Continue to Crafting →</button></div>';
+   else h2+='<p style="color:var(--muted);font-size:14px">Choose '+(4-adv.dug)+' more block'+(4-adv.dug===1?'':'s')+' to continue — you get 4 picks in total.</p>';
    m.innerHTML=h2; return;
  }
  if(adv.phase==='craft'){
@@ -810,7 +817,7 @@ function renderAdventure(){
    w+=advHUD();
    if(bt.log.length){ w+='<div class="adv-log">'; var start=Math.max(0,bt.log.length-3); for(var t=start;t<bt.log.length;t++) w+='<p>'+bt.log[t]+'</p>'; w+='</div>'; }
    if(!bt.over){
-     w+='<p style="font-size:15px"><b>How moves win:</b> Push beats Guard · Horn Flip beats Push · Guard beats Horn Flip. Tied moves bump horns for small damage.</p><div class="adv-moves"><button class="adv-move" onclick="advBattleMove(\'push\')"><span class="adv-move-art">'+advIcon('push',44)+'</span><strong>Push</strong><span>Shove the champion to the edge. Beats Guard.</span></button><button class="adv-move" onclick="advBattleMove(\'flip\')"><span class="adv-move-art">'+advIcon('flip',44)+'</span><strong>Horn Flip</strong><span>Get under and flip! Beats Push.</span></button><button class="adv-move" onclick="advBattleMove(\'guard\')"><span class="adv-move-art">'+advIcon('guard',44)+'</span><strong>Guard</strong><span>Dig in and hold firm. Beats Horn Flip.'+(adv.beetle.name==='Kuwagata'?' Also heals you.':'')+'</span></button></div>';
+     w+='<p style="font-size:15px"><b>How moves win:</b> Push beats Guard · Horn Flip beats Push · Guard beats Horn Flip. Tied moves bump horns for small damage.</p><div class="adv-moves"><button class="adv-move" onclick="advBattleMove(\'push\')"><span class="adv-move-art">'+advIcon('push',44)+'</span><strong>Push</strong><span>Shove the champion to the edge. Beats Guard.'+(adv.beetle.name==='Hercules'?' Bonus damage for Hercules.':'')+(adv.beetle.name==='Rainbow Stag'?' Also heals Rainbow Stag.':'')+'</span></button><button class="adv-move" onclick="advBattleMove(\'flip\')"><span class="adv-move-art">'+advIcon('flip',44)+'</span><strong>Horn Flip</strong><span>Get under and flip! Beats Push.'+(adv.beetle.name==='Kabutomushi'?' Bonus damage for Kabutomushi.':'')+(adv.beetle.name==='Giraffe Stag'?' Big bonus damage for Giraffe Stag.':'')+'</span></button><button class="adv-move" onclick="advBattleMove(\'guard\')"><span class="adv-move-art">'+advIcon('guard',44)+'</span><strong>Guard</strong><span>Dig in and hold firm. Beats Horn Flip.'+(adv.beetle.name==='Kuwagata'?' Also heals you.':'')+(adv.beetle.name==='Atlas Beetle'?' Bonus damage for Atlas Beetle.':'')+'</span></button></div>';
    }
    m.innerHTML=w; return;
  }
@@ -835,7 +842,7 @@ function advChooseBeetle(idx){
  renderAdventure();
 }
 function advDig(idx){
- var blk=adv.mine[idx]; if(!blk||blk.dug) return; blk.dug=true; adv.dug++;
+ var blk=adv.mine[idx]; if(!blk||blk.dug||adv.dug>=4) return; blk.dug=true; adv.dug++;
  adv.inv[blk.k]++; if(blk.k==='gold') adv.power+=1; if(blk.k==='coal') { /* coal noted */ }
  adv.log.push('You dug Block '+(idx+1)+' and found '+blk.label+'! '+blk.note+'.');
  renderAdventure();
@@ -873,12 +880,17 @@ function advBattleMove(move){
  var moves=['push','flip','guard']; var emove=moves[Math.floor(Math.random()*3)];
  var names={push:'Push',flip:'Horn Flip',guard:'Guard'};
  var beats={push:'guard',flip:'push',guard:'flip'};
- var dmgBonus=(move==='flip'&&adv.beetle.name==='Kabutomushi')?3:(move==='push'&&adv.beetle.name==='Hercules')?3:0;
+ var dmgBonus=0;
+ if(move==='flip'&&adv.beetle.name==='Kabutomushi') dmgBonus=3;
+ if(move==='push'&&adv.beetle.name==='Hercules') dmgBonus=3;
+ if(move==='guard'&&adv.beetle.name==='Atlas Beetle') dmgBonus=3;
+ if(move==='flip'&&adv.beetle.name==='Giraffe Stag') dmgBonus=4;
  if(move===emove){
    var td=3; bt.ehp-=td; adv.hp-=td; bt.log.push('Both chose '+names[move]+' — horns bump! Both take '+td+' damage.');
  } else if(beats[move]===emove){
    var dmg=adv.power+2+dmgBonus+Math.floor(Math.random()*4); bt.ehp-=dmg;
    if(move==='guard'&&adv.beetle.name==='Kuwagata'){ adv.hp=Math.min(adv.maxHp,adv.hp+4); bt.log.push('Your Guard beats '+names[emove]+'! You deal '+dmg+' damage and Kuwagata heals 4 HP.'); }
+   else if(move==='push'&&adv.beetle.name==='Rainbow Stag'){ adv.hp=Math.min(adv.maxHp,adv.hp+3); bt.log.push('Your Push beats '+names[emove]+'! You deal '+dmg+' damage and Rainbow Stag sparkles — you heal 3 HP.'); }
    else bt.log.push('Your '+names[move]+' beats '+names[emove]+'! You deal '+dmg+' damage.');
  } else {
    var edmg=7+Math.floor(Math.random()*4)+(adv.quest-1)*1; adv.hp-=edmg; bt.log.push('Champion\u2019s '+names[emove]+' beats your '+names[move]+'. You take '+edmg+' damage.');
