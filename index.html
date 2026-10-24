@@ -132,6 +132,10 @@
   .level-btn[aria-pressed="true"] span{ color:var(--fill-ink); opacity:.85; }
   .othello-legend{ display:flex; gap:16px; flex-wrap:wrap; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:13.5px; margin-bottom:14px; align-items:center; }
   .othello-legend .disc{ width:22px; height:22px; vertical-align:middle; display:inline-block; margin-right:5px; }
+  .othello-score{ display:flex; flex-wrap:nowrap; align-items:stretch; border:2px solid var(--line); background:var(--wash); }
+  .othello-score .os-item{ flex:1 1 0; display:flex; align-items:center; justify-content:center; gap:6px; padding:5px 8px; min-height:36px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:14px; white-space:nowrap; border-right:1px solid var(--line-soft); }
+  .othello-score .os-item:last-child{ border-right:none; }
+  .othello-score .os-item b{ font-size:16px; line-height:1; }
 
   /* ADVENTURE */
   .adv-progress{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
@@ -234,6 +238,8 @@
     .ttt-board{ grid-template-columns:repeat(3, min(84px,26vw)); grid-template-rows:repeat(3, min(84px,26vw)); }
     .o-cell.valid:after{ width:10px; height:10px; }
     .s-cell{ width:min(46px,12.5vw); height:min(46px,12.5vw); font-size:21px; }
+    .othello-score .os-item{ padding:5px 4px; gap:4px; font-size:12.5px; min-height:32px; }
+    .othello-score .os-item b{ font-size:14px; }
     .how{ grid-template-columns:1fr; }
     .spec{ flex-basis:140px; }
   }
@@ -332,7 +338,7 @@
   <!-- OTHELLO -->
   <section class="panel hidden" id="panel-othello" role="tabpanel" aria-labelledby="tab-othello">
     <div class="panel-head">
-      <div><h2>Othello</h2><p>You are <b>● Black</b>. Tap a dotted square to place a disc and flip the white discs you trap in a line. Most discs at the end wins. If you have no move, you pass — same for the device.</p></div>
+      <div><h2>Othello</h2><p>You are <b>● Black</b>. Tap a dotted square to flip trapped discs. Most discs wins.</p></div>
       <div class="status" id="othello-status">Your turn<small>Tap a dotted square</small></div>
     </div>
     <div class="panel-body">
@@ -347,16 +353,16 @@
         <span><span class="disc white"></span> Device (White)</span>
         <span>· Dotted square = you can play there</span>
       </div>
-      <div class="othello-wrap">
+      <div class="othello-score" aria-label="Othello score">
+        <div class="os-item"><span>● You</span><b id="othello-you">2</b></div>
+        <div class="os-item"><span>○ Device</span><b id="othello-cpu">2</b></div>
+        <div class="os-item"><span>Empty</span><b id="othello-empty">60</b></div>
+        <div class="os-item"><span>Level</span><b id="othello-level-label" style="font-size:15px">1 · Easy</b></div>
+      </div>
+      <div class="othello-wrap" style="margin-top:12px">
         <div class="othello-board" id="othello-board" aria-label="Othello board"></div>
         <div style="flex:1 1 200px;min-width:200px">
-          <div class="score" aria-label="Othello score">
-            <div class="score-row"><span>● You</span><b id="othello-you">2</b></div>
-            <div class="score-row"><span>○ Device</span><b id="othello-cpu">2</b></div>
-            <div class="score-row"><span>Empty</span><b id="othello-empty">60</b></div>
-            <div class="score-row"><span>Level</span><b id="othello-level-label" style="font-size:16px">1 · Easy</b></div>
-          </div>
-          <div class="actions">
+          <div class="actions" style="margin-top:0">
             <button class="btn primary" onclick="newOthello()">↻ New game</button>
           </div>
           <p style="font-size:14px;color:var(--muted);max-width:320px;margin:12px 0 0">Tip: corners can never be flipped, so they are the best squares on the board. Having lots of discs early does not always win — position matters more.</p>
