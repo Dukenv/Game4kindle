@@ -984,9 +984,11 @@ function netFresh(){
   return {peer:null, conn:null, role:'', code:'', tries:0, phase:'lobby', status:'',
     myBeetle:-1, oppBeetle:-1, hostHp:0, guestHp:0, hostMax:0, guestMax:0,
     round:1, myMove:'', oppMove:'', oppLocked:false, log:[], winner:'',
-    rematchWanted:false, rematchOffered:false, joinTimer:null};
+    rematchWanted:false, rematchOffered:false, joinTimer:null,
+    lastAction:'', errorKind:''};
 }
 var net=netFresh();
+var netSession=0;
 function advSetMode(mode){
   var sBtn=document.getElementById('adv-mode-solo'), oBtn=document.getElementById('adv-mode-online');
   var sEl=document.getElementById('adv-solo'), oEl=document.getElementById('adv-online');
@@ -999,12 +1001,79 @@ function advSetMode(mode){
     renderAdventure();
   } else {
     sEl.className='hidden'; oEl.className='';
+    /* Re-check on every tap of Online Battle: start the library loading in
+       the background now, so it is ready by the time a game is started. */
+    if(netHasWebRTC()) netEnsureLib(function(){});
     renderOnline();
   }
 }
-function netSupported(){ return typeof Peer!=='undefined' && !!window.RTCPeerConnection; }
+/* WebRTC detection: older iOS Safari exposes only the webkit-prefixed
+   constructor, so check both before ever calling a browser unsupported. */
+function netHasWebRTC(){ return !!(window.RTCPeerConnection || window.webkitRTCPeerConnection); }
+/* PeerJS library loading: the library may still be on its way when the panel
+   opens or a button is tapped, so "not loaded yet" must never be treated as
+   "not supported". Load on demand, walk fallback CDNs if a source fails, and
+   let Try Again start the load over. */
+var NET_PEER_URLS=[
+  'https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js',
+  'https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js'
+];
+var netLibState='idle', netLibWaiters=[];
+function netLibReady(){ return typeof Peer!=='undefined'; }
+function netEnsureLib(cb){
+  if(netLibReady()){ cb(true); return; }
+  netLibWaiters.push(cb);
+  if(netLibState==='loading') return;
+  netLibState='loading';
+  netLoadLibFrom(0);
+}
+function netLoadLibFrom(i){
+  if(netLibReady()){ netLibDone(true); return; }
+  if(i>=NET_PEER_URLS.length){ netLibDone(false); return; }
+  var s=document.createElement('script');
+  var settled=false;
+  var timer=setTimeout(function(){ if(!settled){ settled=true; netLoadLibFrom(i+1); } }, 10000);
+  s.onload=function(){ if(settled) return; settled=true; clearTimeout(timer); if(netLibReady()) netLibDone(true); else netLoadLibFrom(i+1); };
+  s.onerror=function(){ if(settled) return; settled=true; clearTimeout(timer); netLoadLibFrom(i+1); };
+  s.src=NET_PEER_URLS[i];
+  document.head.appendChild(s);
+}
+function netLibDone(ok){
+  netLibState=ok?'ready':'failed';
+  var w=netLibWaiters; netLibWaiters=[];
+  for(var i=0;i<w.length;i++){ try{ w[i](ok); }catch(e){} }
+}
+/* A failed attempt lands on the error screen with the specific reason and a
+   Try Again button — never a pre-emptive "not available" block. */
+function netFail(kind){
+  net.errorKind=kind;
+  if(kind==='webrtc') netFailText('This browser does not support WebRTC, which online battle uses to connect two devices directly. Try a current phone, tablet or computer browser (Safari, Chrome, Firefox or Edge). Online battle most likely can\u2019t run in the Kindle Scribe\u2019s own browser \u2014 the Solo Quest works everywhere, including on the Scribe.');
+  else if(kind==='library') netFailText('The online battle library (PeerJS) could not be loaded, even after trying more than one download source. Check your internet connection, then tap Try Again.');
+  else netFailText('Could not connect to the PeerJS connection service, which introduces the two devices before they talk directly. Check your internet connection, then tap Try Again.');
+}
+function netFailText(msg){
+  netTeardown();
+  net.phase='error'; net.status=msg; net.myMove=''; net.oppMove='';
+  renderOnline();
+}
+function netRetry(){
+  if(net.lastAction==='join'&&net.code) netBeginJoin(net.code);
+  else netHost();
+}
+function netPrepareStart(){
+  var session=netSession;
+  if(!netHasWebRTC()){ netFail('webrtc'); return; }
+  netEnsureLib(function(ok){
+    if(session!==netSession) return;
+    if(!ok){ netFail('library'); return; }
+    if(net.lastAction==='host'){ net.phase='creating'; renderOnline(); netCreatePeer(); }
+    else { net.phase='joining'; renderOnline(); netStartJoinPeer(); }
+  });
+}
 function netMakeCode(){ var chars='ABCDEFGHJKMNPQRSTUVWXYZ23456789'; var c=''; for(var i=0;i<4;i++) c+=chars.charAt(Math.floor(Math.random()*chars.length)); return c; }
 function netTeardown(){
+  netSession++;
   if(net.joinTimer){ clearTimeout(net.joinTimer); net.joinTimer=null; }
   if(net.conn){ try{ net.conn.close(); }catch(e){} net.conn=null; }
   if(net.peer){ try{ net.peer.destroy(); }catch(e){} net.peer=null; }
@@ -1024,15 +1093,14 @@ function netBackToLobby(){ net=netFresh(); renderOnline(); }
 function netSend(o){ if(net.conn&&net.conn.open){ try{ net.conn.send(o); }catch(e){} } }
 function netOppLabel(){ return net.role==='host'?'Player 2':'Player 1'; }
 function netHost(){
-  if(!netSupported()){ net.phase='unsupported'; renderOnline(); return; }
   netTeardown(); net=netFresh();
-  net.role='host'; net.code=netMakeCode(); net.phase='creating';
+  net.role='host'; net.lastAction='host'; net.code=netMakeCode(); net.phase='loading';
   renderOnline();
-  netCreatePeer();
+  netPrepareStart();
 }
 function netCreatePeer(){
   try{ net.peer=new Peer(NET_PREFIX+net.code.toLowerCase()); }
-  catch(e){ netDropped('This browser could not start an online game. Try a phone, tablet or computer browser.'); return; }
+  catch(e){ netFailText('This browser could not start an online game. Try a current phone, tablet or computer browser.'); return; }
   net.peer.on('open', function(){
     if(net.role==='host'&&net.phase==='creating'){ net.phase='waiting'; renderOnline(); }
   });
@@ -1043,22 +1111,30 @@ function netCreatePeer(){
   net.peer.on('disconnected', function(){ try{ net.peer.reconnect(); }catch(e){} });
   net.peer.on('error', function(err){
     if(err&&err.type==='unavailable-id'&&net.tries<5){ net.tries++; try{ net.peer.destroy(); }catch(e){} net.peer=null; net.code=netMakeCode(); netCreatePeer(); return; }
-    if(net.phase==='creating'||net.phase==='waiting'){ netDropped('Could not create the game ('+(err?err.type:'error')+'). Check your internet connection and try again.'); }
+    if(err&&err.type==='browser-incompatible'){ netFail('webrtc'); return; }
+    if(net.phase==='creating'){ netFail('broker'); }
+    else if(net.phase==='waiting'){ netFailText('Lost the connection to the game service ('+(err?err.type:'error')+'). Tap Try Again to make a new game.'); }
   });
 }
 function netJoin(){
   var input=document.getElementById('net-code-input');
   var code=input?(input.value||'').toUpperCase().replace(/[^A-Z0-9]/g,''):'';
   if(code.length!==4){ net.status='Type the 4-character game code from your friend first, then tap Join Game.'; renderOnline(); return; }
-  if(!netSupported()){ net.phase='unsupported'; renderOnline(); return; }
+  netBeginJoin(code);
+}
+function netBeginJoin(code){
   netTeardown(); net=netFresh();
-  net.role='guest'; net.code=code; net.phase='joining';
+  net.role='guest'; net.lastAction='join'; net.code=code; net.phase='loading';
   renderOnline();
+  netPrepareStart();
+}
+function netStartJoinPeer(){
+  var code=net.code;
   net.joinTimer=setTimeout(function(){
-    if(net.phase==='joining') netDropped('Nobody answered for code '+code+'. Check the code, and make sure your friend is still on the waiting screen, then try again.');
+    if(net.phase==='joining') netFailText('Nobody answered for code '+code+'. Check the code, and make sure your friend is still on the waiting screen, then tap Try Again.');
   }, 20000);
   try{ net.peer=new Peer(); }
-  catch(e){ netDropped('This browser could not start an online game. Try a phone, tablet or computer browser.'); return; }
+  catch(e){ netFailText('This browser could not start an online game. Try a current phone, tablet or computer browser.'); return; }
   net.peer.on('open', function(){
     var conn=net.peer.connect(NET_PREFIX+code.toLowerCase(), {reliable:true});
     net.conn=conn; netWireConn();
@@ -1066,8 +1142,9 @@ function netJoin(){
   net.peer.on('disconnected', function(){ try{ net.peer.reconnect(); }catch(e){} });
   net.peer.on('error', function(err){
     if(net.phase!=='joining') return;
-    if(err&&err.type==='peer-unavailable'){ netDropped('No game found with code '+code+'. Check the code and try again.'); }
-    else { netDropped('Connection problem ('+(err?err.type:'error')+'). Check your internet connection and try again.'); }
+    if(err&&err.type==='peer-unavailable'){ netFailText('No game found with code '+code+'. Check the code, then tap Try Again.'); }
+    else if(err&&err.type==='browser-incompatible'){ netFail('webrtc'); }
+    else { netFail('broker'); }
   });
 }
 function netWireConn(){
@@ -1083,7 +1160,7 @@ function netWireConn(){
   conn.on('iceStateChanged', function(state){ if(state==='closed'||state==='failed') netOnPeerGone(); });
 }
 function netOnPeerGone(){
-  if(net.phase==='lobby'||net.phase==='dropped'||net.phase==='unsupported') return;
+  if(net.phase==='lobby'||net.phase==='dropped'||net.phase==='error'||net.phase==='loading') return;
   netDropped('The other player disconnected, so this game has ended. Start a new game whenever you are ready.');
 }
 /* Peer messages are untrusted input: validate numbers/enums and escape any
@@ -1228,9 +1305,14 @@ function renderOnline(){
     h+='</div>';
     el.innerHTML=h; return;
   }
-  if(net.phase==='unsupported'){
-    advSetStatus('Online Battle','Not available in this browser');
-    el.innerHTML='<div class="adv-log"><p><b>Online battle can\u2019t run in this browser.</b> It needs an internet connection and a modern phone, tablet or computer browser — the Kindle Scribe\u2019s browser most likely can\u2019t do it. The Solo Quest works everywhere, including on the Scribe.</p></div><div class="actions"><button class="btn primary" onclick="advSetMode(\'solo\')">Play the Solo Quest</button></div>';
+  if(net.phase==='loading'){
+    advSetStatus('Online Battle','Getting ready…');
+    el.innerHTML='<p style="font-size:17px">Getting online battle ready — loading the connection tools…</p><div class="actions"><button class="btn" onclick="netQuitToLobby()">Cancel</button></div>';
+    return;
+  }
+  if(net.phase==='error'){
+    advSetStatus('Online Battle','That didn\u2019t work — try again');
+    el.innerHTML='<p style="font-size:20px;font-weight:800;margin-top:0">Online battle didn\u2019t start</p><div class="adv-log"><p>'+net.status+'</p></div><div class="actions"><button class="btn primary" onclick="netRetry()">↻ Try Again</button><button class="btn" onclick="netBackToLobby()">Back to Online Lobby</button><button class="btn" onclick="advSetMode(\'solo\')">Play the Solo Quest</button></div>';
     return;
   }
   if(net.phase==='creating'){
