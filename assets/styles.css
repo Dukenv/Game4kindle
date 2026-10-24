@@ -92,12 +92,16 @@
   .sudoku-tip{ font-size:14px; color:var(--muted); max-width:520px; margin:12px auto 0; text-align:center; }
   .sudoku-pad{ width:100%; border-top:2px solid var(--line); padding-top:14px; }
   .s-row{ display:flex; }
-  .s-cell{ width:76px; height:76px; border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); background:var(--panel); color:var(--ink); font-size:36px; font-weight:700; padding:0; line-height:1; }
+  .s-cell{ width:76px; height:76px; border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); background:var(--panel); color:#444444; font-size:36px; font-weight:400; padding:0; line-height:1; }
   .s-cell:nth-child(3n){ border-right:2px solid var(--line); }
   .s-cell:nth-child(6n){ border-right:none; }
   .s-row:nth-child(2n) .s-cell{ border-bottom:2px solid var(--line); }
   .s-row:last-child .s-cell{ border-bottom:none; }
-  .s-cell.given{ background:var(--wash); font-weight:800; }
+  .s-cell.given{ background:var(--wash); color:#000000; font-weight:800; }
+  @media (prefers-color-scheme: dark){
+    .s-cell{ color:#c9c9c9; }
+    .s-cell.given{ color:#ffffff; }
+  }
   .s-cell.selected{ outline:3px solid var(--ink); outline-offset:-3px; background:var(--wash2); }
   .s-cell.wrong{ text-decoration:line-through; }
   .numpad{ display:flex; gap:8px; flex-wrap:nowrap; justify-content:center; width:100%; max-width:560px; margin:0 auto; }
