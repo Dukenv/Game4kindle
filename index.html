@@ -139,6 +139,24 @@
   /* ADVENTURE */
   .adv-back-btn{ min-height:50px; padding:0 16px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:999px; font-size:15px; font-weight:700; }
   .adv-back-label{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--muted); align-self:center; }
+  /* Grouped Beetle Quest controls row (Back · play-mode label · Start over / Leave):
+     never wraps — the three items stay on one row at every width, shrinking instead */
+  .adv-ctl-row{ flex-wrap:nowrap; align-items:center; }
+  .adv-ctl-row > *{ min-width:0; }
+  .adv-ctl-row .adv-back-btn, .adv-ctl-row .btn{ flex:0 1 auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .adv-ctl-row .adv-back-label{ flex:0 1 auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  @media (max-width:560px){
+    .adv-ctl-row{ gap:6px; }
+    .adv-ctl-row .adv-back-btn{ min-height:50px; padding:0 10px; font-size:13px; }
+    .adv-ctl-row .btn{ min-height:50px; padding:0 12px; font-size:14px; }
+    .adv-ctl-row .adv-back-label{ font-size:10.5px; letter-spacing:.08em; }
+  }
+  @media (max-width:380px){
+    .adv-ctl-row{ gap:5px; }
+    .adv-ctl-row .adv-back-btn{ min-height:50px; padding:0 8px; font-size:12px; }
+    .adv-ctl-row .btn{ min-height:50px; padding:0 10px; font-size:13px; }
+    .adv-ctl-row .adv-back-label{ font-size:9.5px; letter-spacing:.05em; }
+  }
   .adv-progress{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
   .adv-step{ flex:1 1 110px; border:2px solid var(--line); padding:8px 10px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.05em; text-transform:uppercase; font-weight:700; text-align:center; background:var(--panel); }
   .adv-step.done{ background:var(--wash2); }
@@ -372,7 +390,7 @@
         <div id="adv-solo" class="hidden">
           <div class="adv-progress" id="adv-progress" aria-label="Quest progress"></div>
           <div id="adv-main"></div>
-          <div class="actions">
+          <div class="actions adv-ctl-row">
             <button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button>
             <span class="adv-back-label" id="adv-play-label">Solo Quest</span>
             <button class="btn" onclick="resetAdventure()">↻ Start over</button>
@@ -383,27 +401,6 @@
       </div>
     </div>
   </section>
-
-  <div class="how">
-    <div>
-      <h3>How to open this on your Scribe</h3>
-      <ol>
-        <li>Open this page on your phone / computer first <span>— you’re already here.</span></li>
-        <li>On the Scribe, open the <b>Web Browser</b> <span>from the Home / More menu.</span></li>
-        <li>Type this page’s address, or send it to your Kindle <span>via Send to Kindle and open the link.</span></li>
-        <li>Bookmark it <span>— the games work from the cached page and need no account.</span></li>
-      </ol>
-    </div>
-    <div>
-      <h3>Why this sample works on e-ink</h3>
-      <ul>
-        <li><b>Turn-based only</b> <span>— nothing moves until you tap, so there’s no blur or battery drain. One exception: if you win Beetle Quest, the trophy screen plays a gentle bounce-and-wiggle celebration.</span></li>
-        <li><b>Plain HTML + tap buttons</b> <span>— no canvas and no heavy scripts for the solo games, so the Scribe’s limited browser can run them. Online Battle is the exception: it loads the PeerJS library and needs a modern browser.</span></li>
-        <li><b>Patterns, not colour</b> <span>— solid, double-border and grey read clearly in greyscale.</span></li>
-        <li><b>One page, four games</b> <span>— switching games doesn’t reload the page.</span></li>
-      </ul>
-    </div>
-  </div>
 
   <div class="about" aria-label="About Ink &amp; Play">
   <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
@@ -732,7 +729,8 @@ var ADV_BEETLES=[
  {name:'Rainbow Stag', art:'rainbow', desc:'Australia\u2019s shiny jewel beetle. Its shell sparkles like a rainbow in the sun!', hp:36, power:7, trait:'Shiny luck · Push heals you'},
  {name:'Miyama Stag', art:'miyama', desc:'A stag beetle from the cool mountain forests, with deep, curving jaws like a samurai\u2019s helmet.', hp:42, power:7, trait:'Deep jaws · + Horn Flip damage'},
  {name:'Saw Stag', art:'sawstag', desc:'The Nokogiri Kuwagata! Its jaws have little teeth like a saw, for gripping and shoving.', hp:34, power:6, trait:'Saw teeth · + Push damage'},
- {name:'Giant Stag', art:'giantstag', desc:'The mighty \u014Ckuwagata — Japan\u2019s biggest stag beetle, with huge straight jaws. A gentle giant.', hp:48, power:8, trait:'Huge jaws · + Guard damage'}
+ {name:'Giant Stag', art:'giantstag', desc:'The mighty \u014Ckuwagata — Japan\u2019s biggest stag beetle, with huge straight jaws. A gentle giant.', hp:48, power:8, trait:'Huge jaws · + Guard damage'},
+ {name:'Caucasus Beetle', art:'caucasus', desc:'A giant rhinoceros beetle with THREE horns — two curved side horns and one long horn in the middle, perfect for flipping!', hp:46, power:8, trait:'Three horns · + Horn Flip damage'}
 ];
 /* Hand-drawn black & white pictures for every Beetle Quest character and item.
    Plain inline SVG line art — no colour, so it stays crisp on e-ink. */
@@ -746,6 +744,7 @@ var ADV_ICONS={
  miyama:'<ellipse cx="32" cy="44" rx="13" ry="13" style="fill:var(--wash2)"/><path d="M20 42c3 2 7 3 12 3s9-1 12-3"/><path d="M32 31v26"/><ellipse cx="32" cy="27" rx="9" ry="7"/><path d="M26 22C22 12 22 4 28 2c-1 4 0 8 3 11M38 22c4-10 4-18-2-20 1 4 0 8-3 11"/><path d="M27 12l4 2M37 12l-4 2"/><circle cx="28" cy="26" r="2.7" fill="currentColor" stroke="none"/><circle cx="36" cy="26" r="2.7" fill="currentColor" stroke="none"/><circle cx="29" cy="25" r="1" fill="var(--bg)" stroke="none"/><circle cx="37" cy="25" r="1" fill="var(--bg)" stroke="none"/><path d="M19 38l-9-3-1 5M19 47l-11 1 1 5M21 55l-7 5M45 38l9-3 1 5M45 47l11 1-1 5M43 55l7 5"/>',
  sawstag:'<ellipse cx="32" cy="44" rx="12" ry="13" style="fill:var(--wash2)"/><path d="M21 42c3 2 6 3 11 3s8-1 11-3"/><path d="M32 31v26"/><ellipse cx="32" cy="27" rx="9" ry="7"/><path d="M25 21C20 13 14 8 6 9l5 3-3 2 5 2-3 3 6 3M39 21c5-8 11-13 19-12l-5 3 3 2-5 2 3 3-6 3"/><circle cx="28" cy="26" r="2.7" fill="currentColor" stroke="none"/><circle cx="36" cy="26" r="2.7" fill="currentColor" stroke="none"/><circle cx="29" cy="25" r="1" fill="var(--bg)" stroke="none"/><circle cx="37" cy="25" r="1" fill="var(--bg)" stroke="none"/><path d="M20 38l-9-3-1 5M20 47l-11 1 1 5M22 55l-7 5M44 38l9-3 1 5M44 47l11 1-1 5M42 55l7 5"/>',
  giantstag:'<ellipse cx="32" cy="44" rx="15" ry="13" style="fill:var(--wash2)"/><path d="M19 41c4 2 8 3 13 3s9-1 13-3M20 50c3 2 7 3 12 3s9-1 12-3"/><path d="M32 30v27"/><ellipse cx="32" cy="26" rx="10" ry="8"/><path d="M24 20C18 10 10 4 2 6l6 4-2 3 6 2-1 4 7 3M40 20c6-10 14-16 22-14l-6 4 2 3-6 2 1 4-7 3"/><circle cx="27" cy="25" r="2.9" fill="currentColor" stroke="none"/><circle cx="37" cy="25" r="2.9" fill="currentColor" stroke="none"/><circle cx="28" cy="24" r="1" fill="var(--bg)" stroke="none"/><circle cx="38" cy="24" r="1" fill="var(--bg)" stroke="none"/><path d="M17 38l-10-3-1 5M17 47l-11 1 1 5M20 55l-7 5M47 38l10-3 1 5M47 47l11 1-1 5M44 55l7 5"/>',
+ caucasus:'<ellipse cx="32" cy="45" rx="14" ry="12" style="fill:var(--wash2)"/><path d="M20 43c3 2 7 3 12 3s9-1 12-3"/><path d="M32 32v25"/><ellipse cx="32" cy="28" rx="10" ry="7"/><path d="M32 21C31 13 32 6 37 2M37 2l4 2M37 2l-1 4M33 12l4 1M33 7l3 1"/><path d="M23 26C16 21 12 13 14 4c3 5 7 9 12 11M41 26c7-5 11-13 9-22-3 5-7 9-12 11"/><circle cx="28" cy="27" r="2.7" fill="currentColor" stroke="none"/><circle cx="36" cy="27" r="2.7" fill="currentColor" stroke="none"/><circle cx="29" cy="26" r="1" fill="var(--bg)" stroke="none"/><circle cx="37" cy="26" r="1" fill="var(--bg)" stroke="none"/><path d="M29 31c1 1 5 1 6 0"/><path d="M18 39l-9-3-1 5M18 48l-11 1 1 5M21 55l-7 5M46 39l9-3 1 5M46 48l11 1-1 5M43 55l7 5"/>',
  champion:'<path d="M18 11l4-7 10 6 10-6 4 7-2 7H20z"/><circle cx="32" cy="10" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="32" cy="44" rx="15" ry="13" style="fill:var(--wash2)"/><path d="M32 29v28"/><ellipse cx="32" cy="26" rx="10" ry="7"/><circle cx="28" cy="25" r="2.8" fill="currentColor" stroke="none"/><circle cx="36" cy="25" r="2.8" fill="currentColor" stroke="none"/><circle cx="29" cy="24" r="1" fill="var(--bg)" stroke="none"/><circle cx="37" cy="24" r="1" fill="var(--bg)" stroke="none"/><path d="M32 34l1.8 3.6 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4-2.9-2.8 4-.6z" fill="currentColor" stroke="none"/><path d="M17 38l-9-3-1 5M17 47l-11 1 1 5M20 55l-7 5M47 38l9-3 1 5M47 47l11 1-1 5M44 55l7 5"/>',
  wood:'<rect x="6" y="24" width="44" height="18" rx="9"/><ellipse cx="50" cy="33" rx="8" ry="9"/><ellipse cx="50" cy="33" rx="3.5" ry="4"/><path d="M12 29h26M12 38h22"/>',
  stone:'<path d="M10 46l6-22 14-8 18 8 6 12-4 10z"/><path d="M16 24l14 6 18-6M30 30v16"/>',
@@ -870,7 +869,7 @@ function renderAdventure(){
    w+=advHUD();
    if(bt.log.length){ w+='<div class="adv-log">'; var start=Math.max(0,bt.log.length-3); for(var t=start;t<bt.log.length;t++) w+='<p>'+bt.log[t]+'</p>'; w+='</div>'; }
    if(!bt.over){
-     w+='<p style="font-size:15px"><b>How moves win:</b> Push beats Guard · Horn Flip beats Push · Guard beats Horn Flip. Tied moves bump horns for small damage.</p><div class="adv-moves"><button class="adv-move" onclick="advBattleMove(\'push\')"><span class="adv-move-art">'+advIcon('push',44)+'</span><strong>Push</strong><span>Shove the champion to the edge. Beats Guard.'+(adv.beetle.name==='Hercules'?' Bonus damage for Hercules.':'')+(adv.beetle.name==='Saw Stag'?' Bonus damage for Saw Stag.':'')+(adv.beetle.name==='Rainbow Stag'?' Also heals Rainbow Stag.':'')+'</span></button><button class="adv-move" onclick="advBattleMove(\'flip\')"><span class="adv-move-art">'+advIcon('flip',44)+'</span><strong>Horn Flip</strong><span>Get under and flip! Beats Push.'+(adv.beetle.name==='Kabutomushi'?' Bonus damage for Kabutomushi.':'')+(adv.beetle.name==='Miyama Stag'?' Bonus damage for Miyama Stag.':'')+(adv.beetle.name==='Giraffe Stag'?' Big bonus damage for Giraffe Stag.':'')+'</span></button><button class="adv-move" onclick="advBattleMove(\'guard\')"><span class="adv-move-art">'+advIcon('guard',44)+'</span><strong>Guard</strong><span>Dig in and hold firm. Beats Horn Flip.'+(adv.beetle.name==='Kuwagata'?' Also heals you.':'')+(adv.beetle.name==='Atlas Beetle'?' Bonus damage for Atlas Beetle.':'')+(adv.beetle.name==='Giant Stag'?' Big bonus damage for Giant Stag.':'')+'</span></button></div>';
+     w+='<p style="font-size:15px"><b>How moves win:</b> Push beats Guard · Horn Flip beats Push · Guard beats Horn Flip. Tied moves bump horns for small damage.</p><div class="adv-moves"><button class="adv-move" onclick="advBattleMove(\'push\')"><span class="adv-move-art">'+advIcon('push',44)+'</span><strong>Push</strong><span>Shove the champion to the edge. Beats Guard.'+(adv.beetle.name==='Hercules'?' Bonus damage for Hercules.':'')+(adv.beetle.name==='Saw Stag'?' Bonus damage for Saw Stag.':'')+(adv.beetle.name==='Rainbow Stag'?' Also heals Rainbow Stag.':'')+'</span></button><button class="adv-move" onclick="advBattleMove(\'flip\')"><span class="adv-move-art">'+advIcon('flip',44)+'</span><strong>Horn Flip</strong><span>Get under and flip! Beats Push.'+(adv.beetle.name==='Kabutomushi'?' Bonus damage for Kabutomushi.':'')+(adv.beetle.name==='Miyama Stag'?' Bonus damage for Miyama Stag.':'')+(adv.beetle.name==='Giraffe Stag'?' Big bonus damage for Giraffe Stag.':'')+(adv.beetle.name==='Caucasus Beetle'?' Big bonus damage for Caucasus Beetle.':'')+'</span></button><button class="adv-move" onclick="advBattleMove(\'guard\')"><span class="adv-move-art">'+advIcon('guard',44)+'</span><strong>Guard</strong><span>Dig in and hold firm. Beats Horn Flip.'+(adv.beetle.name==='Kuwagata'?' Also heals you.':'')+(adv.beetle.name==='Atlas Beetle'?' Bonus damage for Atlas Beetle.':'')+(adv.beetle.name==='Giant Stag'?' Big bonus damage for Giant Stag.':'')+'</span></button></div>';
    }
    m.innerHTML=sceneHtml+w; return;
  }
@@ -964,6 +963,7 @@ function advTraitBonus(b,move){
   if(move==='flip'&&b.name==='Miyama Stag') return 3;
   if(move==='push'&&b.name==='Saw Stag') return 3;
   if(move==='guard'&&b.name==='Giant Stag') return 4;
+  if(move==='flip'&&b.name==='Caucasus Beetle') return 4;
   return 0;
 }
 function advTraitHeal(b,move){
@@ -1298,7 +1298,7 @@ function netResetBattle(){
 function netMoveButtonsHTML(myB){
   var s='<p style="font-size:15px"><b>How moves win:</b> Push beats Guard · Horn Flip beats Push · Guard beats Horn Flip. Tied moves bump horns for 3 damage each.</p><div class="adv-moves">';
   s+='<button class="adv-move" onclick="netPickMove(\'push\')"><span class="adv-move-art">'+advIcon('push',44)+'</span><strong>Push</strong><span>Shove them to the edge. Beats Guard.'+(myB.name==='Hercules'?' Bonus damage for Hercules.':'')+(myB.name==='Saw Stag'?' Bonus damage for Saw Stag.':'')+(myB.name==='Rainbow Stag'?' Also heals Rainbow Stag.':'')+'</span></button>';
-  s+='<button class="adv-move" onclick="netPickMove(\'flip\')"><span class="adv-move-art">'+advIcon('flip',44)+'</span><strong>Horn Flip</strong><span>Get under and flip! Beats Push.'+(myB.name==='Kabutomushi'?' Bonus damage for Kabutomushi.':'')+(myB.name==='Miyama Stag'?' Bonus damage for Miyama Stag.':'')+(myB.name==='Giraffe Stag'?' Big bonus damage for Giraffe Stag.':'')+'</span></button>';
+  s+='<button class="adv-move" onclick="netPickMove(\'flip\')"><span class="adv-move-art">'+advIcon('flip',44)+'</span><strong>Horn Flip</strong><span>Get under and flip! Beats Push.'+(myB.name==='Kabutomushi'?' Bonus damage for Kabutomushi.':'')+(myB.name==='Miyama Stag'?' Bonus damage for Miyama Stag.':'')+(myB.name==='Giraffe Stag'?' Big bonus damage for Giraffe Stag.':'')+(myB.name==='Caucasus Beetle'?' Big bonus damage for Caucasus Beetle.':'')+'</span></button>';
   s+='<button class="adv-move" onclick="netPickMove(\'guard\')"><span class="adv-move-art">'+advIcon('guard',44)+'</span><strong>Guard</strong><span>Dig in and hold firm. Beats Horn Flip.'+(myB.name==='Kuwagata'?' Also heals you.':'')+(myB.name==='Atlas Beetle'?' Bonus damage for Atlas Beetle.':'')+(myB.name==='Giant Stag'?' Big bonus damage for Giant Stag.':'')+'</span></button>';
   s+='</div>';
   return s;
@@ -1315,7 +1315,7 @@ function renderOnline(){
     h+='<div class="adv-card"><strong>Create a Game</strong><span>You are Player 1. You get a game code — share it with your friend.</span><div class="actions"><button class="btn primary" onclick="netHost()">Create Game</button></div></div>';
     h+='<div class="adv-card"><strong>Join a Game</strong><span>You are Player 2. Type the code your friend gave you:</span><input id="net-code-input" class="net-input" type="text" maxlength="4" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="CODE" aria-label="Game code" onkeydown="if(event.key===\'Enter\')netJoin()"><div class="actions"><button class="btn primary" onclick="netJoin()">Join Game</button></div></div>';
     h+='</div>';
-    h+='<div class="actions"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span></div>';
+    h+='<div class="actions adv-ctl-row"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span></div>';
     el.innerHTML=h; return;
   }
   if(net.phase==='loading'){
@@ -1355,7 +1355,7 @@ function renderOnline(){
       h+='</div>';
       if(net.oppBeetle>=0) h+='<p style="font-size:15px;margin-top:10px"><b>'+netOppLabel()+' has picked their beetle</b> — now you pick yours!</p>';
     }
-    h+='<div class="actions"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn" onclick="netQuitToLobby()">Leave Game</button></div>';
+    h+='<div class="actions adv-ctl-row"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn" onclick="netQuitToLobby()">Leave Game</button></div>';
     el.innerHTML=h; return;
   }
   if(net.phase==='battle'||net.phase==='over'){
@@ -1380,7 +1380,7 @@ function renderOnline(){
         else h+='<p style="font-size:16px"><b>Round '+net.round+' — pick your move.</b> '+netOppLabel()+' is choosing on their device too. Moves stay secret until both are locked in.</p>';
         h+=netMoveButtonsHTML(myB);
       }
-      h+='<div class="actions"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span></div>';
+      h+='<div class="actions adv-ctl-row"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span></div>';
     } else {
       if(isDraw){
         h+='<p style="font-size:22px;font-weight:800;text-align:center">It\u2019s a draw!</p><p style="font-size:16px;text-align:center">Both beetles ran out of HP in the same round — what a battle!</p>';
@@ -1390,11 +1390,11 @@ function renderOnline(){
         h+='<p style="font-size:22px;font-weight:800;text-align:center">'+netOppLabel()+' wins this battle!</p><p style="font-size:16px;text-align:center">Your '+myB.name+' fought bravely. How about a rematch?</p>';
       }
       if(net.rematchOffered){
-        h+='<div class="adv-log"><p><b>'+netOppLabel()+' wants a rematch!</b> You will both pick beetles again.</p></div><div class="actions" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn primary" onclick="netAcceptRematch()">Accept Rematch</button><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
+        h+='<div class="adv-log"><p><b>'+netOppLabel()+' wants a rematch!</b> You will both pick beetles again.</p></div><div class="actions adv-ctl-row" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn primary" onclick="netAcceptRematch()">Accept Rematch</button><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
       } else if(net.rematchWanted){
-        h+='<p style="font-size:16px;text-align:center">Rematch requested — waiting for '+netOppLabel()+' to accept…</p><div class="actions" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
+        h+='<p style="font-size:16px;text-align:center">Rematch requested — waiting for '+netOppLabel()+' to accept…</p><div class="actions adv-ctl-row" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
       } else {
-        h+='<div class="actions" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn primary" onclick="netRematch()">↻ Rematch</button><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
+        h+='<div class="actions adv-ctl-row" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn primary" onclick="netRematch()">↻ Rematch</button><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
       }
     }
     el.innerHTML=h; return;
