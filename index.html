@@ -80,10 +80,10 @@
   .tile.present{ background:var(--present-bg); color:var(--ink); border:3px double var(--line); }
   .tile.present:after{ content:"●"; position:absolute; bottom:2px; right:4px; font-size:8px; }
   .tile.absent{ background:var(--absent-bg); color:var(--absent-ink); border-color:var(--line-soft); }
-  .keyboard{ margin-top:16px; max-width:620px; margin-left:auto; margin-right:auto; }
-  .kb-row{ display:flex; justify-content:center; gap:5px; margin-bottom:5px; }
-  .key{ flex:1; max-width:52px; min-height:54px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:8px; font-size:17px; font-weight:800; text-transform:uppercase; padding:0; }
-  .key.wide{ flex:1.6; max-width:82px; font-size:13px; letter-spacing:.04em; }
+  .keyboard{ margin-top:18px; max-width:760px; margin-left:auto; margin-right:auto; }
+  .kb-row{ display:flex; justify-content:center; gap:7px; margin-bottom:7px; }
+  .key{ flex:1; max-width:68px; min-height:72px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:10px; font-size:23px; font-weight:800; text-transform:uppercase; padding:0; }
+  .key.wide{ flex:1.6; max-width:110px; font-size:16px; letter-spacing:.04em; }
   .key.correct{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
   .key.present{ background:var(--present-bg); border:3px double var(--line); }
   .key.absent{ background:var(--absent-bg); color:var(--absent-ink); border-color:var(--line-soft); }
@@ -127,7 +127,9 @@
     h1{ font-size:40px; }
     .lede{ font-size:17px; }
     .tile{ width:52px; height:52px; font-size:27px; }
-    .key{ min-height:50px; font-size:15px; }
+    .kb-row{ gap:5px; margin-bottom:6px; }
+    .key{ min-height:62px; font-size:20px; }
+    .key.wide{ font-size:14px; }
     .ttt-board{ grid-template-columns:repeat(3, 84px); grid-template-rows:repeat(3, 84px); }
     .s-cell{ width:46px; height:46px; font-size:21px; }
     .how{ grid-template-columns:1fr; }
@@ -160,7 +162,7 @@
   <!-- WORD GUESS -->
   <section class="panel" id="panel-word" role="tabpanel" aria-labelledby="tab-word">
     <div class="panel-head">
-      <div><h2>Word Guess</h2><p>Guess the hidden 5-letter word. Type with the keys below — or your keyboard — then press ENTER.</p></div>
+      <div><h2>Word Guess</h2><p>Guess the hidden 5-letter word. Lots of easy words kids know — animals, food, colours, numbers and school words. Type with the big keys below — or your keyboard — then press ENTER.</p></div>
       <div class="status" id="word-status">Guess 1 of 6<small>Start typing</small></div>
     </div>
     <div class="panel-body">
@@ -262,7 +264,7 @@ function showGame(name){
 }
 
 /* ---------- WORD GUESS ---------- */
-var WORDS=["APPLE","BRAVE","CRANE","DELTA","EAGLE","FLAME","GRAPE","HOUSE","IVORY","JUMBO","KNEEL","LEMON","MANGO","NOBLE","OCEAN","PIANO","QUEEN","RIVER","STONE","TIGER","UMBRA","VIVID","WALTZ","YOUTH","ZEBRA","ABOUT","BRICK","CLOUD","DANCE","EARTH","FROST","GIANT","HEART","INDEX","JOINT","KOALA","LIGHT","MOUSE","NIGHT","OPERA","PLANT","QUILT","ROBOT","SOLAR","TRAIN","URBAN","VOICE","WATER","YIELD","BREAD","CHAIR","DREAM","ELBOW","FABLE","GLOBE"];
+var WORDS=["APPLE","BRAVE","CRANE","DELTA","EAGLE","FLAME","GRAPE","HOUSE","IVORY","JUMBO","KNEEL","LEMON","MANGO","NOBLE","OCEAN","PIANO","QUEEN","RIVER","STONE","TIGER","UMBRA","VIVID","WALTZ","YOUTH","ZEBRA","ABOUT","BRICK","CLOUD","DANCE","EARTH","FROST","GIANT","HEART","INDEX","JOINT","KOALA","LIGHT","MOUSE","NIGHT","OPERA","PLANT","QUILT","ROBOT","SOLAR","TRAIN","URBAN","VOICE","WATER","YIELD","BREAD","CHAIR","DREAM","ELBOW","FABLE","GLOBE","PUPPY","KITTY","BUNNY","HORSE","SHEEP","SNAKE","WHALE","SHARK","PANDA","FROGS","CHICK","PIZZA","CANDY","HONEY","CAKES","PEACH","MELON","BERRY","PASTA","SALAD","SWEET","BOOKS","PAPER","CLOCK","PHONE","WATCH","SHOES","SHIRT","PANTS","DRESS","TABLE","BEACH","SUNNY","RAINY","SNOWY","WINDY","TREES","GRASS","MUSIC","SONGS","STORY","MOVIE","HAPPY","SMILE","LAUGH","FUNNY","YUMMY","GAMES","MOMMY","DADDY","HELLO","COLOR","GREEN","BLACK","WHITE","BROWN","THREE","SEVEN","EIGHT","FIRST","LEARN","TEACH","SLEEP","BRUSH","CLEAN","DIRTY","WRITE","COUNT","SWIMS","JUMPS","READS","TRUCK","PLANE"];
 var wordTarget="", wordGuesses=[], wordCurrent="", wordOver=false, keyState={};
 function pickWord(){ return WORDS[Math.floor(Math.random()*WORDS.length)]; }
 function renderWordGrid(){
