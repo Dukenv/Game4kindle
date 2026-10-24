@@ -27,7 +27,7 @@
   body{ margin:0; background:var(--bg); color:var(--ink); font-family: Georgia, "Times New Roman", Times, serif; line-height:1.5; }
   button{ font-family: inherit; cursor:pointer; -webkit-tap-highlight-color: transparent; }
   button:focus-visible, [tabindex]:focus-visible{ outline:3px solid var(--ink); outline-offset:2px; }
-  .wrap{ max-width:880px; margin:0 auto; padding:20px 18px 40px; }
+  .wrap{ max-width:880px; margin:0 auto; padding:14px 18px 40px; }
 
   /* header */
   .kicker{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; border-bottom:3px solid var(--line); padding-bottom:10px; }
@@ -43,10 +43,10 @@
   .spec p{ margin:3px 0 0; font-size:14px; color:var(--muted); line-height:1.4; }
 
   /* game switcher */
-  .switcher{ margin:22px 0 0; }
+  .switcher{ margin:6px 0 0; }
   .switcher-label{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; margin-bottom:8px; }
   .tabs{ display:flex; gap:8px; flex-wrap:wrap; }
-  .tab{ flex:1 1 150px; min-height:58px; background:var(--btn-bg); color:var(--btn-ink); border:2px solid var(--line); border-radius:var(--radius); padding:10px 12px; text-align:left; }
+  .tab{ flex:1 1 150px; min-height:54px; background:var(--btn-bg); color:var(--btn-ink); border:2px solid var(--line); border-radius:var(--radius); padding:8px 12px; text-align:left; }
   .tab strong{ display:block; font-size:18px; line-height:1.1; }
   .tab span{ display:block; font-size:13px; color:var(--muted); margin-top:2px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
   .tab[aria-selected="true"]{ background:var(--fill); color:var(--fill-ink); }
@@ -54,10 +54,10 @@
 
   /* panels */
   .panel{ border:2px solid var(--line); margin-top:14px; background:var(--panel); }
-  .panel-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; padding:16px 16px 12px; border-bottom:1px solid var(--line-soft); }
+  .panel-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; padding:12px 16px 10px; border-bottom:1px solid var(--line-soft); }
   .panel-head h2{ margin:0; font-size:28px; line-height:1; }
   .panel-head p{ margin:6px 0 0; font-size:15px; color:var(--muted); max-width:520px; }
-  .panel-body{ padding:16px; }
+  .panel-body{ padding:14px 16px; }
   .status{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:14px; font-weight:700; border:2px solid var(--line); padding:9px 12px; min-width:170px; text-align:center; background:var(--wash); }
   .status small{ display:block; font-weight:400; font-size:12px; color:var(--muted); margin-top:2px; }
   .actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
@@ -74,7 +74,7 @@
   .legend .l-absent{ background:var(--absent-bg); border-color:var(--line-soft); }
   .word-grid{ display:block; text-align:center; }
   .word-row{ display:flex; justify-content:center; gap:6px; margin-bottom:6px; }
-  .tile{ width:56px; height:56px; flex:0 1 56px; min-width:0; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:30px; font-weight:800; text-transform:uppercase; background:var(--panel); position:relative; line-height:1; }
+  .tile{ width:min(56px,12vw,6.4vh); height:min(56px,12vw,6.4vh); flex:0 0 auto; min-width:0; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:min(30px,3.8vh); font-weight:800; text-transform:uppercase; background:var(--panel); position:relative; line-height:1; }
   .tile.filled{ border-width:2px; }
   .tile.correct{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
   .tile.present{ background:var(--present-bg); color:var(--ink); border:3px double var(--line); }
@@ -82,7 +82,7 @@
   .tile.absent{ background:var(--absent-bg); color:var(--absent-ink); border-color:var(--line-soft); }
   .keyboard{ margin-top:18px; max-width:760px; margin-left:auto; margin-right:auto; }
   .kb-row{ display:flex; justify-content:center; gap:7px; margin-bottom:7px; }
-  .key{ flex:1; max-width:68px; min-height:72px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:10px; font-size:23px; font-weight:800; text-transform:uppercase; padding:0; }
+  .key{ flex:1; max-width:68px; min-height:min(72px,8.4vh); border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:10px; font-size:23px; font-weight:800; text-transform:uppercase; padding:0; }
   .key.wide{ flex:1.6; max-width:110px; font-size:16px; letter-spacing:.04em; }
   .key.correct{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
   .key.present{ background:var(--present-bg); border:3px double var(--line); }
@@ -90,7 +90,7 @@
 
   /* TIC TAC TOE */
   .ttt-wrap{ display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; }
-  .ttt-board{ display:grid; grid-template-columns:repeat(3, 92px); grid-template-rows:repeat(3, 92px); gap:0; border:3px solid var(--line); width:fit-content; }
+  .ttt-board{ display:grid; grid-template-columns:repeat(3, min(92px,26vw,12.5vh)); grid-template-rows:repeat(3, min(92px,26vw,12.5vh)); gap:0; border:3px solid var(--line); width:fit-content; }
   .ttt-cell{ border:1px solid var(--line); background:var(--panel); font-size:52px; font-weight:800; line-height:1; padding:0; }
   .ttt-cell.win{ background:var(--fill); color:var(--fill-ink); }
   .score{ flex:1 1 200px; border:2px solid var(--line); }
@@ -102,7 +102,7 @@
   .sudoku-wrap{ display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; }
   .sudoku-board{ border:3px solid var(--line); width:fit-content; background:var(--panel); }
   .s-row{ display:flex; }
-  .s-cell{ width:52px; height:52px; border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); background:var(--panel); color:var(--ink); font-size:24px; font-weight:700; padding:0; line-height:1; }
+  .s-cell{ width:min(52px,13vw,7vh); height:min(52px,13vw,7vh); border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); background:var(--panel); color:var(--ink); font-size:24px; font-weight:700; padding:0; line-height:1; }
   .s-cell:nth-child(3n){ border-right:2px solid var(--line); }
   .s-cell:nth-child(6n){ border-right:none; }
   .s-row:nth-child(2n) .s-cell{ border-bottom:2px solid var(--line); }
@@ -116,12 +116,12 @@
 
   /* OTHELLO */
   .othello-wrap{ display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start; justify-content:center; }
-  .othello-board{ display:grid; grid-template-columns:repeat(8, 76px); grid-template-rows:repeat(8, 76px); border:3px solid var(--line); width:fit-content; background:var(--panel); }
+  .othello-board{ display:grid; grid-template-columns:repeat(8, min(76px,11vw,8vh)); grid-template-rows:repeat(8, min(76px,11vw,8vh)); border:3px solid var(--line); width:fit-content; background:var(--panel); }
   .o-cell{ border:1px solid var(--line-soft); background:var(--panel); padding:0; display:flex; align-items:center; justify-content:center; position:relative; min-width:0; min-height:0; }
   .o-cell.valid{ background:var(--wash); cursor:pointer; }
   .o-cell.valid:after{ content:""; width:14px; height:14px; border-radius:50%; border:2px solid var(--ink); opacity:.55; display:block; }
   .o-cell.last{ outline:3px solid var(--ink); outline-offset:-3px; }
-  .disc{ width:56px; height:56px; border-radius:50%; display:block; flex:none; }
+  .disc{ width:min(56px,8.6vw,6.2vh); height:min(56px,8.6vw,6.2vh); border-radius:50%; display:block; flex:none; }
   .disc.black{ background:var(--fill); border:2px solid var(--fill); }
   .disc.white{ background:var(--panel); border:3px solid var(--line); }
   .level-row{ display:flex; gap:8px; flex-wrap:wrap; }
@@ -139,7 +139,7 @@
   .adv-step.done{ background:var(--wash2); }
   .adv-step.now{ background:var(--fill); color:var(--fill-ink); }
   .adv-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-  .adv-card{ border:2px solid var(--line); background:var(--panel); padding:16px 14px; text-align:left; min-height:150px; }
+  .adv-card{ border:2px solid var(--line); background:var(--panel); padding:14px 12px; text-align:left; min-height:128px; }
   .adv-card strong{ display:block; font-size:20px; line-height:1.1; }
   .adv-card span{ display:block; font-size:14px; color:var(--muted); margin-top:6px; line-height:1.45; }
   .adv-card b{ display:inline-block; margin-top:8px; border:2px solid var(--line); padding:2px 8px; font-size:13px; }
@@ -184,7 +184,7 @@
 
   /* STAGE BACKGROUNDS — forest, mine, workshop, Koshien stadium, ring */
   .adv-scene{ border:2px solid var(--line); background:var(--wash); margin:0 0 14px; overflow:hidden; line-height:0; }
-  .adv-scene svg{ width:100%; height:auto; display:block; }
+  .adv-scene svg{ width:auto; height:clamp(84px,20vh,210px); max-width:100%; display:block; margin:0 auto; }
   .adv-scene-label{ line-height:1.2; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:8px 10px; border-top:2px solid var(--line); background:var(--panel); font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
   .adv-scene-label b{ font-size:13px; letter-spacing:.08em; text-transform:uppercase; }
   .adv-scene-label span{ font-size:13px; color:var(--muted); }
@@ -221,6 +221,32 @@
   .how li span{ color:var(--muted); }
   footer{ margin-top:24px; padding-top:14px; border-top:1px solid var(--line-soft); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
 
+
+  /* FIT THE SCRIBE SCREEN - the game frame fills the first screenful:
+     the tabs plus the active panel together are exactly one viewport
+     tall, and the boards/keys above size themselves from the viewport
+     height, so a game in progress never needs the page scrolled. If a
+     panel is still too tall on an unusually short screen, its body can
+     scroll internally (the fit script below normally scales it instead),
+     and the explanatory sections live below the game, past the fold. */
+  .panel{ margin-top:10px; height:calc(100vh - 132px); height:calc(100dvh - 132px); display:flex; flex-direction:column; }
+  .panel-head{ flex:none; }
+  .panel-body{ flex:1 1 auto; min-height:0; overflow-y:auto; }
+  .js-fit .panel-body{ overflow:hidden; }
+  .fit-inner{ transform-origin:top left; }
+  .keyboard{ margin-top:12px; }
+  .about{ margin-top:26px; border-top:3px solid var(--line); padding-top:16px; }
+  .about h1{ margin-top:14px; }
+  @media (max-height:900px){
+    .tile{ width:min(56px,12vw,5.8vh); height:min(56px,12vw,5.8vh); }
+    .key{ min-height:min(72px,7.6vh); }
+  }
+  @media (max-width:720px){
+    .panel{ height:calc(100vh - 198px); height:calc(100dvh - 198px); }
+  }
+  @media (max-width:560px){
+    .panel{ height:calc(100vh - 264px); height:calc(100dvh - 264px); }
+  }
   @media (max-width:720px){
     .othello-board{ grid-template-columns:repeat(8, 1fr); grid-template-rows:repeat(8, 1fr); width:100%; max-width:608px; aspect-ratio:1 / 1; }
     .othello-board .disc{ width:74%; height:74%; }
@@ -230,13 +256,13 @@
   @media (max-width:560px){
     h1{ font-size:40px; }
     .lede{ font-size:17px; }
-    .tile{ width:52px; height:52px; font-size:27px; }
+    .tile{ width:min(52px,13vw,6.4vh); height:min(52px,13vw,6.4vh); font-size:min(27px,3.8vh); }
     .kb-row{ gap:5px; margin-bottom:6px; }
-    .key{ min-height:62px; font-size:20px; }
+    .key{ min-height:min(62px,8.4vh); font-size:20px; }
     .key.wide{ font-size:14px; }
-    .ttt-board{ grid-template-columns:repeat(3, 84px); grid-template-rows:repeat(3, 84px); }
+    .ttt-board{ grid-template-columns:repeat(3, min(84px,26vw,12.5vh)); grid-template-rows:repeat(3, min(84px,26vw,12.5vh)); }
     .o-cell.valid:after{ width:10px; height:10px; }
-    .s-cell{ width:46px; height:46px; font-size:21px; }
+    .s-cell{ width:min(46px,12.5vw,7vh); height:min(46px,12.5vw,7vh); font-size:21px; }
     .how{ grid-template-columns:1fr; }
     .spec{ flex-basis:140px; }
   }
@@ -244,16 +270,6 @@
 </head>
 <body>
 <div class="wrap">
-
-  <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
-  <h1>Ink <em>&amp;</em> Play</h1>
-  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just five turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
-
-  <div class="specs" aria-label="Designed for e-ink">
-    <div class="spec"><strong>✓ E-ink first</strong><p>Black, white &amp; grey only. Correct answers are told apart by fill and pattern, not colour.</p></div>
-    <div class="spec"><strong>✓ Stylus friendly</strong><p>Every button is at least 50px tall. Works with a finger tap or the Premium Pen.</p></div>
-    <div class="spec"><strong>✓ No flicker</strong><p>No auto-refresh or video. The page only changes when you tap — plus one gentle bounce &amp; wiggle celebration if you win Beetle Quest.</p></div>
-  </div>
 
   <div class="switcher">
     <div class="switcher-label">Pick a game — 1 of 5</div>
@@ -421,6 +437,18 @@
         <li><b>One page, five games</b> <span>— switching games doesn’t reload the page.</span></li>
       </ul>
     </div>
+  </div>
+
+  <div class="about" aria-label="About Ink &amp; Play">
+  <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
+  <h1>Ink <em>&amp;</em> Play</h1>
+  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just five turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
+
+  <div class="specs" aria-label="Designed for e-ink">
+    <div class="spec"><strong>✓ E-ink first</strong><p>Black, white &amp; grey only. Correct answers are told apart by fill and pattern, not colour.</p></div>
+    <div class="spec"><strong>✓ Stylus friendly</strong><p>Every button is at least 50px tall. Works with a finger tap or the Premium Pen.</p></div>
+    <div class="spec"><strong>✓ No flicker</strong><p>No auto-refresh or video. The page only changes when you tap — plus one gentle bounce &amp; wiggle celebration if you win Beetle Quest.</p></div>
+  </div>
   </div>
 
   <footer><span>Ink &amp; Play — Sample for Kindle Scribe</span><span>Black &amp; white · No timers · Tap to play</span></footer>
@@ -1427,6 +1455,69 @@ newTTT();
 loadSudoku();
 newOthello();
 renderAdventure();
+</script>
+
+<script>
+/* FIT-TO-SCREEN - the CSS above gives the active panel exactly the height
+   left under the game tabs, and sizes boards and keys from the viewport.
+   This script is the safety net: it wraps each panel body and, whenever
+   the contents would be taller or wider than the frame (a long Beetle
+   Quest stage, a short browser window), scales them down just enough to
+   fit - never up. On the tall Scribe screen the scale is normally 1 and
+   nothing changes. Written in plain ES5 like the rest of the page so the
+   Scribe and older iPad browsers can run it. */
+(function(){
+  function wrapBody(body){
+    var inner=document.createElement('div');
+    inner.className='fit-inner';
+    while(body.firstChild){ inner.appendChild(body.firstChild); }
+    body.appendChild(inner);
+  }
+  function fitBody(body){
+    if(!body || body.clientHeight<40 || body.clientWidth<40){ return; }
+    var inner=null, kids=body.childNodes;
+    for(var i=0;i<kids.length;i++){ if(kids[i].className==='fit-inner'){ inner=kids[i]; break; } }
+    if(!inner){ return; }
+    inner.style.transform='';
+    inner.style.width='';
+    inner.style.height='';
+    var needH=inner.scrollHeight, needW=inner.scrollWidth;
+    if(!needH || !needW){ return; }
+    var s=Math.min(1, body.clientHeight/needH, body.clientWidth/needW);
+    if(s<0.999){
+      inner.style.transform='scale('+s+')';
+      inner.style.width=(100/s)+'%';
+      inner.style.height=(needH*s)+'px';
+    }
+  }
+  function fitAll(){
+    var bodies=document.querySelectorAll('.panel-body');
+    for(var i=0;i<bodies.length;i++){ fitBody(bodies[i]); }
+  }
+  var timer=null;
+  function scheduleFit(){
+    if(timer){ clearTimeout(timer); }
+    timer=setTimeout(fitAll,70);
+  }
+  function init(){
+    document.documentElement.className+=' js-fit';
+    var bodies=document.querySelectorAll('.panel-body');
+    for(var i=0;i<bodies.length;i++){ wrapBody(bodies[i]); }
+    fitAll();
+    if(window.addEventListener){
+      window.addEventListener('resize',scheduleFit);
+      document.addEventListener('click',scheduleFit);
+    }
+    if(window.MutationObserver){
+      var mo=new MutationObserver(scheduleFit);
+      for(var j=0;j<bodies.length;j++){ mo.observe(bodies[j],{childList:true,subtree:true,characterData:true}); }
+    }
+    setTimeout(fitAll,350);
+  }
+  if(document.readyState==='loading' && document.addEventListener){
+    document.addEventListener('DOMContentLoaded',init);
+  } else { init(); }
+})();
 </script>
 </body>
 </html>
