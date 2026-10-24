@@ -74,7 +74,7 @@
   .legend .l-absent{ background:var(--absent-bg); border-color:var(--line-soft); }
   .word-grid{ display:block; text-align:center; }
   .word-row{ display:flex; justify-content:center; gap:6px; margin-bottom:6px; }
-  .tile{ width:56px; height:56px; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:30px; font-weight:800; text-transform:uppercase; background:var(--panel); position:relative; line-height:1; }
+  .tile{ width:56px; height:56px; flex:0 1 56px; min-width:0; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:30px; font-weight:800; text-transform:uppercase; background:var(--panel); position:relative; line-height:1; }
   .tile.filled{ border-width:2px; }
   .tile.correct{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
   .tile.present{ background:var(--present-bg); color:var(--ink); border:3px double var(--line); }
@@ -258,7 +258,7 @@
   <div class="switcher">
     <div class="switcher-label">Pick a game — 1 of 5</div>
     <div class="tabs" role="tablist" aria-label="Games">
-      <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5 letters · 6 tries</span></button>
+      <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5–8 letters · 6 tries</span></button>
       <button class="tab" role="tab" id="tab-ttt" aria-selected="false" aria-controls="panel-ttt" onclick="showGame('ttt')"><strong>Tic-Tac-Toe</strong><span>You are X · vs. device</span></button>
       <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Mini Sudoku</strong><span>6 × 6 · 3 puzzles</span></button>
       <button class="tab" role="tab" id="tab-othello" aria-selected="false" aria-controls="panel-othello" onclick="showGame('othello')"><strong>Othello</strong><span>8 × 8 · 3 levels · you are ●</span></button>
@@ -269,10 +269,17 @@
   <!-- WORD GUESS -->
   <section class="panel" id="panel-word" role="tabpanel" aria-labelledby="tab-word">
     <div class="panel-head">
-      <div><h2>Word Guess</h2><p>Guess the hidden 5-letter word. Lots of easy words kids know — animals, food, colours, numbers and school words. Type with the big keys below — or your keyboard — then press ENTER.</p></div>
+      <div><h2>Word Guess</h2><p>Guess the hidden word — you pick how long it is: 5, 6, 7 or 8 letters. Lots of easy words kids know — animals, food, colours, numbers and school words. Type with the big keys below — or your keyboard — then press ENTER.</p></div>
       <div class="status" id="word-status">Guess 1 of 6<small>Start typing</small></div>
     </div>
     <div class="panel-body">
+      <div class="switcher-label" style="margin-bottom:8px">Word length — tap to start a new word</div>
+      <div class="level-row" role="group" aria-label="Word length" style="margin-bottom:16px">
+        <button class="level-btn" id="wlen-5" aria-pressed="true" onclick="setWordLen(5)"><strong>5 letters</strong><span>The classic game</span></button>
+        <button class="level-btn" id="wlen-6" aria-pressed="false" onclick="setWordLen(6)"><strong>6 letters</strong><span>A little longer</span></button>
+        <button class="level-btn" id="wlen-7" aria-pressed="false" onclick="setWordLen(7)"><strong>7 letters</strong><span>Getting tricky</span></button>
+        <button class="level-btn" id="wlen-8" aria-pressed="false" onclick="setWordLen(8)"><strong>8 letters</strong><span>For word champs</span></button>
+      </div>
       <div class="legend">
         <span><i class="l-correct"></i> Right letter, right place — solid black</span>
         <span><i class="l-present">●</i> In the word, wrong place — double border</span>
@@ -444,8 +451,17 @@ function showGame(name){
 
 /* ---------- WORD GUESS ---------- */
 var WORDS=["APPLE","BRAVE","CRANE","DELTA","EAGLE","FLAME","GRAPE","HOUSE","IVORY","JUMBO","KNEEL","LEMON","MANGO","NOBLE","OCEAN","PIANO","QUEEN","RIVER","STONE","TIGER","UMBRA","VIVID","WALTZ","YOUTH","ZEBRA","ABOUT","BRICK","CLOUD","DANCE","EARTH","FROST","GIANT","HEART","INDEX","JOINT","KOALA","LIGHT","MOUSE","NIGHT","OPERA","PLANT","QUILT","ROBOT","SOLAR","TRAIN","URBAN","VOICE","WATER","YIELD","BREAD","CHAIR","DREAM","ELBOW","FABLE","GLOBE","PUPPY","KITTY","BUNNY","HORSE","SHEEP","SNAKE","WHALE","SHARK","PANDA","FROGS","CHICK","PIZZA","CANDY","HONEY","CAKES","PEACH","MELON","BERRY","PASTA","SALAD","SWEET","BOOKS","PAPER","CLOCK","PHONE","WATCH","SHOES","SHIRT","PANTS","DRESS","TABLE","BEACH","SUNNY","RAINY","SNOWY","WINDY","TREES","GRASS","MUSIC","SONGS","STORY","MOVIE","HAPPY","SMILE","LAUGH","FUNNY","YUMMY","GAMES","MOMMY","DADDY","HELLO","COLOR","GREEN","BLACK","WHITE","BROWN","THREE","SEVEN","EIGHT","FIRST","LEARN","TEACH","SLEEP","BRUSH","CLEAN","DIRTY","WRITE","COUNT","SWIMS","JUMPS","READS","TRUCK","PLANE"];
-var wordTarget="", wordGuesses=[], wordCurrent="", wordOver=false, keyState={};
-function pickWord(){ return WORDS[Math.floor(Math.random()*WORDS.length)]; }
+var WORDS6=["ANIMAL","BANANA","ORANGE","PURPLE","SCHOOL","ROCKET","CASTLE","DRAGON","TURTLE","RABBIT","MONKEY","PIRATE","PLANET","GARDEN","WINTER","SUMMER","AUTUMN","SPRING","FRIEND","FAMILY","FATHER","MOTHER","BUTTER","CHEESE","COOKIE","PENCIL","WINDOW","BRIDGE","ISLAND","KITTEN","HAMMER","LADDER","MIRROR","CANDLE","BOTTLE","YELLOW","SILVER","GOLDEN","SOCCER","TENNIS","GUITAR","CAMERA","LETTER","NUMBER","PICNIC","NATURE"];
+var WORDS7=["RAINBOW","DOLPHIN","PENGUIN","GIRAFFE","OCTOPUS","CHICKEN","KITCHEN","BEDROOM","MORNING","EVENING","HOLIDAY","LIBRARY","TEACHER","STUDENT","WEATHER","THUNDER","SNOWMAN","POPCORN","PANCAKE","CUPCAKE","BALLOON","BICYCLE","UNICORN","AIRPORT","COMPASS","JOURNEY","MYSTERY","CAPTAIN","DESSERT","VOLCANO","PYRAMID","DIAMOND","EMERALD","HARVEST","LANTERN","FEATHER","BLANKET","TOASTER","FREEZER","COSTUME","MONSTER","VAMPIRE","WHISPER"];
+var WORDS8=["BASEBALL","FOOTBALL","AIRPLANE","ELEPHANT","COMPUTER","KEYBOARD","MOUNTAIN","DINOSAUR","SANDWICH","BIRTHDAY","SATURDAY","TOMORROW","QUESTION","LANGUAGE","KANGAROO","SNOWBALL","FIREWORK","STARFISH","SUNSHINE","TREASURE","NOTEBOOK","BACKPACK","HOSPITAL","SEASHORE","PRINCESS","BOOKWORM","UMBRELLA","SKELETON","RAINCOAT","LOLLIPOP","CUPBOARD","COLORFUL","HOMEWORK","MIDNIGHT","DAYLIGHT","SWIMMING","FOOTSTEP"];
+var wordTarget="", wordGuesses=[], wordCurrent="", wordOver=false, keyState={}, wordLen=5;
+function wordList(){ return wordLen===6?WORDS6 : wordLen===7?WORDS7 : wordLen===8?WORDS8 : WORDS; }
+function pickWord(){ var list=wordList(); return list[Math.floor(Math.random()*list.length)]; }
+function setWordLen(n){
+  wordLen=n;
+  for(var i=5;i<=8;i++){ var b=document.getElementById('wlen-'+i); if(b) b.setAttribute('aria-pressed', i===n?'true':'false'); }
+  newWordGame();
+}
 function renderWordGrid(){
   var g=document.getElementById('word-grid'); g.innerHTML="";
   for(var r=0;r<6;r++){
@@ -454,7 +470,7 @@ function renderWordGrid(){
     var isCurrent=(r===wordGuesses.length && !wordOver);
     var text=isCurrent?wordCurrent:guess;
     var result=(r<wordGuesses.length)?scoreGuess(guess,wordTarget):null;
-    for(var c=0;c<5;c++){
+    for(var c=0;c<wordLen;c++){
       var d=document.createElement('div'); d.className='tile';
       var ch=text.charAt(c)||""; d.textContent=ch;
       if(ch) d.className+=' filled';
@@ -474,9 +490,9 @@ function renderWordGrid(){
   renderKeyboard();
 }
 function scoreGuess(guess,target){
-  var res=['absent','absent','absent','absent','absent']; var rem={};
-  for(var i=0;i<5;i++){ if(guess.charAt(i)===target.charAt(i)) res[i]='correct'; else { var t=target.charAt(i); rem[t]=(rem[t]||0)+1; } }
-  for(var j=0;j<5;j++){ if(res[j]==='correct') continue; var ch=guess.charAt(j); if(rem[ch]>0){ res[j]='present'; rem[ch]--; } }
+  var n=target.length; var res=[]; var rem={};
+  for(var i=0;i<n;i++){ res.push('absent'); if(guess.charAt(i)===target.charAt(i)) res[i]='correct'; else { var t=target.charAt(i); rem[t]=(rem[t]||0)+1; } }
+  for(var j=0;j<n;j++){ if(res[j]==='correct') continue; var ch=guess.charAt(j); if(rem[ch]>0){ res[j]='present'; rem[ch]--; } }
   return res;
 }
 function renderKeyboard(){
@@ -502,15 +518,15 @@ function renderKeyboard(){
 function pressKey(k){
   if(wordOver) return;
   if(k==='DEL'){ wordCurrent=wordCurrent.slice(0,-1); }
-  else if(wordCurrent.length<5){ wordCurrent+=k; }
+  else if(wordCurrent.length<wordLen){ wordCurrent+=k; }
   renderWordGrid();
 }
 function submitWord(){
   if(wordOver) return;
-  if(wordCurrent.length!==5){ var st=document.getElementById('word-status'); st.innerHTML='Need 5 letters<small>You have '+wordCurrent.length+' — keep typing</small>'; return; }
+  if(wordCurrent.length!==wordLen){ var st=document.getElementById('word-status'); st.innerHTML='Need '+wordLen+' letters<small>You have '+wordCurrent.length+' — keep typing</small>'; return; }
   var guess=wordCurrent; var res=scoreGuess(guess,wordTarget);
   var rank={absent:0,present:1,correct:2};
-  for(var i=0;i<5;i++){ var ch=guess.charAt(i); if(!keyState[ch]||rank[res[i]]>rank[keyState[ch]]) keyState[ch]=res[i]; }
+  for(var i=0;i<wordLen;i++){ var ch=guess.charAt(i); if(!keyState[ch]||rank[res[i]]>rank[keyState[ch]]) keyState[ch]=res[i]; }
   wordGuesses.push(guess); wordCurrent="";
   if(guess===wordTarget||wordGuesses.length>=6) wordOver=true;
   renderWordGrid();
