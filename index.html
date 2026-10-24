@@ -45,7 +45,8 @@
   /* game switcher */
   .switcher{ margin:6px 0 0; }
   .switcher-label{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; margin-bottom:8px; }
-  .tabs{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .tabs{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+  .tab{ min-width:0; }
   .tab{ min-height:54px; background:var(--btn-bg); color:var(--btn-ink); border:2px solid var(--line); border-radius:var(--radius); padding:8px 12px; text-align:left; }
   .tab strong{ display:block; font-size:18px; line-height:1.1; }
   .tab span{ display:block; font-size:13px; color:var(--muted); margin-top:2px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
@@ -87,16 +88,6 @@
   .key.correct{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
   .key.present{ background:var(--present-bg); border:3px double var(--line); }
   .key.absent{ background:var(--absent-bg); color:var(--absent-ink); border-color:var(--line-soft); }
-
-  /* TIC TAC TOE */
-  .ttt-wrap{ display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; }
-  .ttt-board{ display:grid; grid-template-columns:repeat(3, 92px); grid-template-rows:repeat(3, 92px); gap:0; border:3px solid var(--line); width:fit-content; }
-  .ttt-cell{ border:1px solid var(--line); background:var(--panel); font-size:52px; font-weight:800; line-height:1; padding:0; }
-  .ttt-cell.win{ background:var(--fill); color:var(--fill-ink); }
-  .score{ flex:1 1 200px; border:2px solid var(--line); }
-  .score-row{ display:flex; justify-content:space-between; padding:11px 14px; border-bottom:1px solid var(--line-soft); font-size:16px; }
-  .score-row:last-child{ border-bottom:none; }
-  .score-row b{ font-size:20px; }
 
   /* SUDOKU */
   .sudoku-wrap{ display:flex; flex-direction:column; gap:16px; align-items:center; }
@@ -141,15 +132,18 @@
   .othello-score .os-item b{ font-size:16px; line-height:1; }
 
   /* ADVENTURE */
+  .adv-backbar{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+  .adv-backbar .adv-back-btn{ min-height:50px; padding:0 16px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:999px; font-size:15px; font-weight:700; }
+  .adv-backbar .adv-back-label{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--muted); }
   .adv-progress{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
   .adv-step{ flex:1 1 110px; border:2px solid var(--line); padding:8px 10px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.05em; text-transform:uppercase; font-weight:700; text-align:center; background:var(--panel); }
   .adv-step.done{ background:var(--wash2); }
   .adv-step.now{ background:var(--fill); color:var(--fill-ink); }
-  .adv-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-  .adv-card{ border:2px solid var(--line); background:var(--panel); padding:14px 12px; text-align:left; min-height:128px; }
-  .adv-card strong{ display:block; font-size:20px; line-height:1.1; }
-  .adv-card span{ display:block; font-size:14px; color:var(--muted); margin-top:6px; line-height:1.45; }
-  .adv-card b{ display:inline-block; margin-top:8px; border:2px solid var(--line); padding:2px 8px; font-size:13px; }
+  .adv-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .adv-card{ border:2px solid var(--line); background:var(--panel); padding:9px 9px; text-align:left; min-height:0; min-width:0; }
+  .adv-card strong{ display:block; font-size:16.5px; line-height:1.1; }
+  .adv-card span{ display:block; font-size:12.5px; color:var(--muted); margin-top:4px; line-height:1.35; }
+  .adv-card b{ display:inline-block; margin-top:6px; border:2px solid var(--line); padding:1px 6px; font-size:12px; }
   .adv-mine{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:520px; }
   .adv-block{ min-height:84px; border:2px solid var(--line); background:var(--wash); font-size:15px; font-weight:700; padding:10px; line-height:1.3; }
   .adv-block small{ display:block; font-weight:400; color:var(--muted); font-size:13px; margin-top:4px; }
@@ -169,10 +163,10 @@
   .adv-move{ min-height:68px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); padding:10px; text-align:left; }
   .adv-move strong{ display:block; font-size:17px; }
   .adv-move span{ display:block; font-size:13px; color:var(--muted); margin-top:2px; line-height:1.35; }
-  @media (max-width:560px){ .adv-cards,.adv-moves{ grid-template-columns:1fr; } .adv-block{ min-height:72px; } }
+  @media (max-width:560px){ .adv-moves{ grid-template-columns:1fr; } .adv-cards{ grid-template-columns:repeat(3,1fr); gap:6px; } .adv-card{ padding:7px 6px; } .adv-card strong{ font-size:14px; } .adv-card span{ font-size:11px; } .adv-block{ min-height:72px; } }
 
   /* ADVENTURE ART — hand-drawn black & white SVG pictures */
-  .adv-card-art{ display:flex; justify-content:center; padding:6px 0 10px; }
+  .adv-card-art{ display:flex; justify-content:center; padding:2px 0 4px; }
   .adv-move-art{ display:block; margin-bottom:6px; }
   .adv-block{ text-align:center; }
   .adv-block-art{ display:flex; justify-content:center; margin-bottom:6px; }
@@ -191,7 +185,7 @@
 
   /* STAGE BACKGROUNDS — forest, mine, workshop, Koshien stadium, ring */
   .adv-scene{ border:2px solid var(--line); background:var(--wash); margin:0 0 14px; overflow:hidden; line-height:0; }
-  .adv-scene svg{ width:auto; height:auto; max-width:100%; display:block; margin:0 auto; }
+  .adv-scene svg{ width:100%; height:74px; max-width:100%; display:block; margin:0 auto; }
   .adv-scene-label{ line-height:1.2; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:8px 10px; border-top:2px solid var(--line); background:var(--panel); font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
   .adv-scene-label b{ font-size:13px; letter-spacing:.08em; text-transform:uppercase; }
   .adv-scene-label span{ font-size:13px; color:var(--muted); }
@@ -238,7 +232,6 @@
     .kb-row{ gap:5px; margin-bottom:6px; }
     .key{ min-height:62px; font-size:20px; }
     .key.wide{ font-size:14px; }
-    .ttt-board{ grid-template-columns:repeat(3, min(84px,26vw)); grid-template-rows:repeat(3, min(84px,26vw)); }
     .o-cell.valid:after{ width:10px; height:10px; }
     .s-cell{ width:min(76px,15vw); height:min(76px,15vw); font-size:min(36px,7.5vw); }
     .num{ height:56px; font-size:23px; }
@@ -256,10 +249,9 @@
 <div class="wrap">
 
   <div class="switcher">
-    <div class="switcher-label">Pick a game — 1 of 5</div>
+    <div class="switcher-label">Pick a game — 1 of 4</div>
     <div class="tabs" role="tablist" aria-label="Games">
       <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5–8 letters · 5 tries</span></button>
-      <button class="tab" role="tab" id="tab-ttt" aria-selected="false" aria-controls="panel-ttt" onclick="showGame('ttt')"><strong>Tic-Tac-Toe</strong><span>You are X · vs. device</span></button>
       <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Mini Sudoku</strong><span>6 × 6 · 3 puzzles</span></button>
       <button class="tab" role="tab" id="tab-othello" aria-selected="false" aria-controls="panel-othello" onclick="showGame('othello')"><strong>Othello</strong><span>8 × 8 · 3 levels · you are ●</span></button>
       <button class="tab" role="tab" id="tab-adventure" aria-selected="false" aria-controls="panel-adventure" onclick="showGame('adventure')"><strong>Beetle Quest</strong><span>Beetles + Baseball + Mining</span></button>
@@ -292,30 +284,6 @@
         <button class="btn" onclick="giveUpWord()">Show answer</button>
       </div>
       <p style="font-size:14px;color:var(--muted);margin:12px 0 0">Tip for Scribe: tap keys slowly and let the screen settle between guesses — e-ink redraws the whole board at once on ENTER, which keeps ghosting down.</p>
-    </div>
-  </section>
-
-  <!-- TIC TAC TOE -->
-  <section class="panel hidden" id="panel-ttt" role="tabpanel" aria-labelledby="tab-ttt">
-    <div class="panel-head">
-      <div><h2>Tic-Tac-Toe</h2><p>You are <b>X</b>. Tap any empty square. The device plays O straight after — it will try to win, then block you, then take the centre.</p></div>
-      <div class="status" id="ttt-status">Your turn<small>Tap a square to start</small></div>
-    </div>
-    <div class="panel-body">
-      <div class="ttt-wrap">
-        <div class="ttt-board" id="ttt-board" aria-label="Tic tac toe board"></div>
-        <div style="flex:1 1 200px;min-width:200px">
-          <div class="score" aria-label="Score">
-            <div class="score-row"><span>You (X)</span><b id="score-you">0</b></div>
-            <div class="score-row"><span>Draws</span><b id="score-draw">0</b></div>
-            <div class="score-row"><span>Device (O)</span><b id="score-cpu">0</b></div>
-          </div>
-          <div class="actions">
-            <button class="btn primary" onclick="newTTT()">↻ New round</button>
-            <button class="btn" onclick="resetTTTScore()">Reset score</button>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -383,24 +351,33 @@
   <!-- BEETLE QUEST ADVENTURE -->
   <section class="panel hidden" id="panel-adventure" role="tabpanel" aria-labelledby="tab-adventure">
     <div class="panel-head">
-      <div><h2>Beetle Quest Adventure</h2><p>All three favourites in one quest: <b>catch a Japanese beetle</b>, <b>dig &amp; craft</b> like Minecraft, and <b>win a baseball challenge</b> — then battle for the Forest Trophy. What you mine makes you stronger in the games that follow. Or pick <b>Online Battle</b> below to battle a friend on another device.</p></div>
-      <div class="status" id="adv-status">New quest<small>Pick your beetle to start</small></div>
+      <div id="adv-intro"><h2>Beetle Quest Adventure</h2><p>All three favourites in one quest: <b>catch a Japanese beetle</b>, <b>dig &amp; craft</b> like Minecraft, and <b>win a baseball challenge</b> — then battle for the Forest Trophy. What you mine makes you stronger in the games that follow. Or pick <b>Online Battle</b> below to battle a friend on another device.</p></div>
+      <div class="status" id="adv-status">Beetle Quest<small>Pick a play mode to start</small></div>
     </div>
     <div class="panel-body">
-      <div class="switcher-label" style="margin-bottom:8px">Beetle Quest mode</div>
-      <div class="level-row" role="group" aria-label="Beetle Quest mode" style="margin-bottom:16px">
-        <button class="level-btn" id="adv-mode-solo" aria-pressed="true" onclick="advSetMode('solo')"><strong>Solo Quest</strong><span>1 player · the full adventure on this device</span></button>
-        <button class="level-btn" id="adv-mode-online" aria-pressed="false" onclick="advSetMode('online')"><strong>Online Battle · 2 Players</strong><span>Two devices, over the internet, with a game code</span></button>
-      </div>
-      <div id="adv-solo">
-        <div class="adv-progress" id="adv-progress" aria-label="Quest progress"></div>
-        <div id="adv-main"></div>
-        <div class="actions">
-          <button class="btn" onclick="resetAdventure()">↻ Start over</button>
+      <div id="adv-home">
+        <div class="switcher-label" style="margin-bottom:8px">Play mode — choose how to play</div>
+        <div class="level-row" role="group" aria-label="Beetle Quest mode" style="margin-bottom:16px">
+          <button class="level-btn" id="adv-mode-solo" aria-pressed="false" onclick="advSetMode('solo')"><strong>Solo Quest</strong><span>1 player · the full adventure on this device</span></button>
+          <button class="level-btn" id="adv-mode-online" aria-pressed="false" onclick="advSetMode('online')"><strong>Online Battle · 2 Players</strong><span>Two devices, over the internet, with a game code</span></button>
         </div>
-        <p style="font-size:14px;color:var(--muted);margin:12px 0 0">For 1 player — or pass the Scribe and take turns choosing. No timer: think as long as you like on every tap.</p>
+        <p style="font-size:14px;color:var(--muted);margin:0">Solo Quest is the full adventure on this device. Online Battle pits your beetle against a friend's on another device, using a short game code.</p>
       </div>
-      <div id="adv-online" class="hidden"></div>
+      <div id="adv-play" class="hidden">
+        <div class="adv-backbar">
+          <button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button>
+          <span class="adv-back-label" id="adv-play-label">Solo Quest</span>
+        </div>
+        <div id="adv-solo" class="hidden">
+          <div class="adv-progress" id="adv-progress" aria-label="Quest progress"></div>
+          <div id="adv-main"></div>
+          <div class="actions">
+            <button class="btn" onclick="resetAdventure()">↻ Start over</button>
+          </div>
+          <p style="font-size:14px;color:var(--muted);margin:12px 0 0">For 1 player — or pass the Scribe and take turns choosing. No timer: think as long as you like on every tap.</p>
+        </div>
+        <div id="adv-online" class="hidden"></div>
+      </div>
     </div>
   </section>
 
@@ -420,7 +397,7 @@
         <li><b>Turn-based only</b> <span>— nothing moves until you tap, so there’s no blur or battery drain. One exception: if you win Beetle Quest, the trophy screen plays a gentle bounce-and-wiggle celebration.</span></li>
         <li><b>Plain HTML + tap buttons</b> <span>— no canvas and no heavy scripts for the solo games, so the Scribe’s limited browser can run them. Online Battle is the exception: it loads the PeerJS library and needs a modern browser.</span></li>
         <li><b>Patterns, not colour</b> <span>— solid, double-border and grey read clearly in greyscale.</span></li>
-        <li><b>One page, five games</b> <span>— switching games doesn’t reload the page.</span></li>
+        <li><b>One page, four games</b> <span>— switching games doesn’t reload the page.</span></li>
       </ul>
     </div>
   </div>
@@ -428,7 +405,7 @@
   <div class="about" aria-label="About Ink &amp; Play">
   <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
   <h1>Ink <em>&amp;</em> Play</h1>
-  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just five turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
+  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just four turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
 
   <div class="specs" aria-label="Designed for e-ink">
     <div class="spec"><strong>✓ E-ink first</strong><p>Black, white &amp; grey only. Correct answers are told apart by fill and pattern, not colour.</p></div>
@@ -454,7 +431,7 @@
 </script>
 <script>
 function showGame(name){
-  var games=['word','ttt','sudoku','othello','adventure'];
+  var games=['word','sudoku','othello','adventure'];
   for(var i=0;i<games.length;i++){
     var p=document.getElementById('panel-'+games[i]);
     var t=document.getElementById('tab-'+games[i]);
@@ -553,45 +530,6 @@ document.addEventListener('keydown',function(e){
   else if(e.key==='Backspace') pressKey('DEL');
   else if(/^[a-zA-Z]$/.test(e.key)) pressKey(e.key.toUpperCase());
 });
-
-/* ---------- TIC TAC TOE ---------- */
-var tttBoard=['','','','','','','','',''], tttOver=false, scoreYou=0, scoreDraw=0, scoreCpu=0;
-var LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-function tttWinner(b){ for(var i=0;i<LINES.length;i++){ var L=LINES[i]; if(b[L[0]]&&b[L[0]]===b[L[1]]&&b[L[1]]===b[L[2]]) return {who:b[L[0]],line:L}; } return null; }
-function renderTTT(winLine){
-  var el=document.getElementById('ttt-board'); el.innerHTML="";
-  for(var i=0;i<9;i++){
-    (function(idx){
-      var b=document.createElement('button'); b.className='ttt-cell'+(winLine&&winLine.indexOf(idx)!==-1?' win':''); b.textContent=tttBoard[idx]; b.setAttribute('aria-label','Square '+(idx+1)+(tttBoard[idx]?': '+tttBoard[idx]:': empty'));
-      b.onclick=function(){ playTTT(idx); }; el.appendChild(b);
-    })(i);
-  }
-  document.getElementById('score-you').textContent=scoreYou;
-  document.getElementById('score-draw').textContent=scoreDraw;
-  document.getElementById('score-cpu').textContent=scoreCpu;
-}
-function setTTTStatus(main,sub){ document.getElementById('ttt-status').innerHTML=main+'<small>'+sub+'</small>'; }
-function playTTT(idx){
-  if(tttOver||tttBoard[idx]) return;
-  tttBoard[idx]='X';
-  var w=tttWinner(tttBoard);
-  if(w){ tttOver=true; scoreYou++; renderTTT(w.line); setTTTStatus('You win!','Tap New round to play again'); return; }
-  if(tttBoard.indexOf('')===-1){ tttOver=true; scoreDraw++; renderTTT(null); setTTTStatus('It\u2019s a draw','Tap New round to play again'); return; }
-  var cpu=cpuMove(); tttBoard[cpu]='O';
-  var w2=tttWinner(tttBoard);
-  if(w2){ tttOver=true; scoreCpu++; renderTTT(w2.line); setTTTStatus('Device wins','Tap New round to try again'); return; }
-  if(tttBoard.indexOf('')===-1){ tttOver=true; scoreDraw++; renderTTT(null); setTTTStatus('It\u2019s a draw','Tap New round to play again'); return; }
-  renderTTT(null); setTTTStatus('Your turn','Tap an empty square');
-}
-function cpuMove(){
-  var i,L;
-  for(var p=0;p<2;p++){ var mark=p===0?'O':'X'; for(i=0;i<LINES.length;i++){ L=LINES[i]; var vals=[tttBoard[L[0]],tttBoard[L[1]],tttBoard[L[2]]]; var cnt=0,empty=-1; for(var j=0;j<3;j++){ if(vals[j]===mark) cnt++; if(vals[j]==='') empty=L[j]; } if(cnt===2&&empty!==-1) return empty; } }
-  if(tttBoard[4]==='') return 4;
-  var empt=[]; for(i=0;i<9;i++) if(tttBoard[i]==='') empt.push(i);
-  return empt[Math.floor(Math.random()*empt.length)];
-}
-function newTTT(){ tttBoard=['','','','','','','','','']; tttOver=false; renderTTT(null); setTTTStatus('Your turn','Tap a square to start'); }
-function resetTTTScore(){ scoreYou=0; scoreDraw=0; scoreCpu=0; newTTT(); }
 
 /* ---------- SUDOKU 6x6 ---------- */
 var SUDOKU=[
@@ -830,7 +768,7 @@ var ADV_SCENES={
 };
 function advScene(key){
  var s=ADV_SCENES[key]; if(!s) return '';
- return '<div class="adv-scene" aria-hidden="true"><svg viewBox="0 0 400 110" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">'+s.svg+'</svg><div class="adv-scene-label"><b>'+s.label+'</b><span>'+s.sub+'</span></div></div>';
+ return '<div class="adv-scene" aria-hidden="true"><svg viewBox="0 0 400 110" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">'+s.svg+'</svg><div class="adv-scene-label"><b>'+s.label+'</b><span>'+s.sub+'</span></div></div>';
 }
 function advSceneForPhase(){
  if(adv.phase==='choose') return advScene('forest');
@@ -877,7 +815,7 @@ function renderAdventure(){
  if(adv.phase==='choose'){
    advSetStatus('New quest '+(adv.quest>1?'· Quest '+adv.quest:''),'Pick your beetle to start');
    var h='<p style="font-size:17px;margin-top:0"><b>Summer break. The forest is calling.</b> First, pick your partner beetle. It will dig with you, cheer at baseball, and fight in the final battle.</p><div class="adv-cards">';
-   for(var i=0;i<ADV_BEETLES.length;i++){ (function(idx,b){ h+='<button class="adv-card" onclick="advChooseBeetle('+idx+')"><span class="adv-card-art">'+advIcon(b.art,110)+'</span><strong>'+b.name+'</strong><span>'+b.desc+'</span><b>HP '+b.hp+' · Power '+b.power+'</b><span>'+b.trait+'</span></button>'; })(i,ADV_BEETLES[i]); }
+   for(var i=0;i<ADV_BEETLES.length;i++){ (function(idx,b){ h+='<button class="adv-card" onclick="advChooseBeetle('+idx+')"><span class="adv-card-art">'+advIcon(b.art,62)+'</span><strong>'+b.name+'</strong><span>'+b.desc+'</span><b>HP '+b.hp+' · Power '+b.power+'</b><span>'+b.trait+'</span></button>'; })(i,ADV_BEETLES[i]); }
    h+='</div>'; m.innerHTML=sceneHtml+h; return;
  }
  if(adv.phase==='mine'){
@@ -1033,9 +971,16 @@ var netSession=0;
 function advSetMode(mode){
   var sBtn=document.getElementById('adv-mode-solo'), oBtn=document.getElementById('adv-mode-online');
   var sEl=document.getElementById('adv-solo'), oEl=document.getElementById('adv-online');
+  var homeEl=document.getElementById('adv-home'), playEl=document.getElementById('adv-play'), introEl=document.getElementById('adv-intro'), labelEl=document.getElementById('adv-play-label');
   if(!sBtn||!oEl) return;
   sBtn.setAttribute('aria-pressed', mode==='solo'?'true':'false');
   oBtn.setAttribute('aria-pressed', mode==='online'?'true':'false');
+  /* Choosing a mode leaves the Beetle Quest start screen: the intro and the
+     mode selection are hidden, and only the chosen mode's screen is shown. */
+  if(homeEl) homeEl.className='hidden';
+  if(introEl) introEl.className='hidden';
+  if(playEl) playEl.className='';
+  if(labelEl) labelEl.textContent=(mode==='solo'?'Solo Quest':'Online Battle · 2 Players');
   if(mode==='solo'){
     oEl.className='hidden'; sEl.className='';
     if(net.phase!=='lobby') netQuitToLobby();
@@ -1047,6 +992,17 @@ function advSetMode(mode){
     if(netHasWebRTC()) netEnsureLib(function(){});
     renderOnline();
   }
+}
+function advShowHome(){
+  var sBtn=document.getElementById('adv-mode-solo'), oBtn=document.getElementById('adv-mode-online');
+  var homeEl=document.getElementById('adv-home'), playEl=document.getElementById('adv-play'), introEl=document.getElementById('adv-intro');
+  if(net.phase!=='lobby') netQuitToLobby();
+  if(sBtn) sBtn.setAttribute('aria-pressed','false');
+  if(oBtn) oBtn.setAttribute('aria-pressed','false');
+  if(playEl) playEl.className='hidden';
+  if(homeEl) homeEl.className='';
+  if(introEl) introEl.className='';
+  advSetStatus('Beetle Quest','Pick a play mode to start');
 }
 /* WebRTC detection: older iOS Safari exposes only the webkit-prefixed
    constructor, so check both before ever calling a browser unsupported. */
@@ -1379,7 +1335,7 @@ function renderOnline(){
       h+='<p style="font-size:17px;margin-top:0"><b>You picked '+b.name+'!</b> '+(net.oppBeetle>=0?netOppLabel()+' has picked too — the battle is about to start!':'Waiting for '+netOppLabel()+' to pick a beetle on their device…')+'</p><div style="display:flex;justify-content:center;padding:6px 0">'+advIcon(b.art,120)+'</div>';
     } else {
       h+='<p style="font-size:17px;margin-top:0"><b>Connected! Pick your beetle.</b> '+netOppLabel()+' is picking on their device at the same time.</p><div class="adv-cards">';
-      for(i=0;i<ADV_BEETLES.length;i++){ (function(idx,bb){ h+='<button class="adv-card" onclick="netPickBeetle('+idx+')"><span class="adv-card-art">'+advIcon(bb.art,110)+'</span><strong>'+bb.name+'</strong><span>'+bb.desc+'</span><b>HP '+bb.hp+' · Power '+bb.power+'</b><span>'+bb.trait+'</span></button>'; })(i,ADV_BEETLES[i]); }
+      for(i=0;i<ADV_BEETLES.length;i++){ (function(idx,bb){ h+='<button class="adv-card" onclick="netPickBeetle('+idx+')"><span class="adv-card-art">'+advIcon(bb.art,62)+'</span><strong>'+bb.name+'</strong><span>'+bb.desc+'</span><b>HP '+bb.hp+' · Power '+bb.power+'</b><span>'+bb.trait+'</span></button>'; })(i,ADV_BEETLES[i]); }
       h+='</div>';
       if(net.oppBeetle>=0) h+='<p style="font-size:15px;margin-top:10px"><b>'+netOppLabel()+' has picked their beetle</b> — now you pick yours!</p>';
     }
@@ -1437,10 +1393,10 @@ function renderOnline(){
 /* init */
 adv=advFresh();
 newWordGame();
-newTTT();
 loadSudoku();
 newOthello();
 renderAdventure();
+advShowHome();
 </script>
 
 </body>
