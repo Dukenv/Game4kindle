@@ -114,6 +114,25 @@
   .num{ width:52px; height:52px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); font-size:22px; font-weight:800; border-radius:8px; }
   .num.wide{ width:auto; padding:0 16px; font-size:15px; }
 
+  /* OTHELLO */
+  .othello-wrap{ display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; }
+  .othello-board{ display:grid; grid-template-columns:repeat(8, 52px); grid-template-rows:repeat(8, 52px); border:3px solid var(--line); width:fit-content; background:var(--panel); }
+  .o-cell{ border:1px solid var(--line-soft); background:var(--panel); padding:0; display:flex; align-items:center; justify-content:center; position:relative; }
+  .o-cell.valid{ background:var(--wash); cursor:pointer; }
+  .o-cell.valid:after{ content:""; width:10px; height:10px; border-radius:50%; border:2px solid var(--ink); opacity:.55; display:block; }
+  .o-cell.last{ outline:3px solid var(--ink); outline-offset:-3px; }
+  .disc{ width:38px; height:38px; border-radius:50%; display:block; flex:none; }
+  .disc.black{ background:var(--fill); border:2px solid var(--fill); }
+  .disc.white{ background:var(--panel); border:3px solid var(--line); }
+  .level-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .level-btn{ min-height:50px; padding:10px 14px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:10px; text-align:left; flex:1 1 130px; }
+  .level-btn strong{ display:block; font-size:16px; line-height:1.1; }
+  .level-btn span{ display:block; font-size:12.5px; color:var(--muted); margin-top:2px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.35; }
+  .level-btn[aria-pressed="true"]{ background:var(--fill); color:var(--fill-ink); }
+  .level-btn[aria-pressed="true"] span{ color:var(--fill-ink); opacity:.85; }
+  .othello-legend{ display:flex; gap:16px; flex-wrap:wrap; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:13.5px; margin-bottom:14px; align-items:center; }
+  .othello-legend .disc{ width:22px; height:22px; vertical-align:middle; display:inline-block; margin-right:5px; }
+
   /* how to */
   .how{ margin-top:22px; border-top:3px solid var(--line); padding-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:18px; }
   .how h3{ margin:0 0 6px; font-size:20px; }
@@ -131,6 +150,8 @@
     .key{ min-height:62px; font-size:20px; }
     .key.wide{ font-size:14px; }
     .ttt-board{ grid-template-columns:repeat(3, 84px); grid-template-rows:repeat(3, 84px); }
+    .othello-board{ grid-template-columns:repeat(8, 42px); grid-template-rows:repeat(8, 42px); }
+    .disc{ width:30px; height:30px; }
     .s-cell{ width:46px; height:46px; font-size:21px; }
     .how{ grid-template-columns:1fr; }
     .spec{ flex-basis:140px; }
@@ -142,7 +163,7 @@
 
   <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
   <h1>Ink <em>&amp;</em> Play</h1>
-  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just three turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
+  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just four turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
 
   <div class="specs" aria-label="Designed for e-ink">
     <div class="spec"><strong>✓ E-ink first</strong><p>Black, white &amp; grey only. Correct answers are told apart by fill and pattern, not colour.</p></div>
@@ -151,11 +172,12 @@
   </div>
 
   <div class="switcher">
-    <div class="switcher-label">Pick a game — 1 of 3</div>
+    <div class="switcher-label">Pick a game — 1 of 4</div>
     <div class="tabs" role="tablist" aria-label="Games">
       <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5 letters · 6 tries</span></button>
       <button class="tab" role="tab" id="tab-ttt" aria-selected="false" aria-controls="panel-ttt" onclick="showGame('ttt')"><strong>Tic-Tac-Toe</strong><span>You are X · vs. device</span></button>
       <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Mini Sudoku</strong><span>6 × 6 · 3 puzzles</span></button>
+      <button class="tab" role="tab" id="tab-othello" aria-selected="false" aria-controls="panel-othello" onclick="showGame('othello')"><strong>Othello</strong><span>8 × 8 · 3 levels · you are ●</span></button>
     </div>
   </div>
 
@@ -228,6 +250,42 @@
     </div>
   </section>
 
+  <!-- OTHELLO -->
+  <section class="panel hidden" id="panel-othello" role="tabpanel" aria-labelledby="tab-othello">
+    <div class="panel-head">
+      <div><h2>Othello</h2><p>You are <b>● Black</b>. Tap a dotted square to place a disc and flip the white discs you trap in a line. Most discs at the end wins. If you have no move, you pass — same for the device.</p></div>
+      <div class="status" id="othello-status">Your turn<small>Tap a dotted square</small></div>
+    </div>
+    <div class="panel-body">
+      <div class="switcher-label" style="margin-bottom:8px">Level — pick one, then start a new game</div>
+      <div class="level-row" role="group" aria-label="Othello level">
+        <button class="level-btn" id="level-1" aria-pressed="true" onclick="setOthelloLevel(1)"><strong>Level 1 · Easy</strong><span>Device plays casually — great to learn</span></button>
+        <button class="level-btn" id="level-2" aria-pressed="false" onclick="setOthelloLevel(2)"><strong>Level 2 · Medium</strong><span>Device grabs flips &amp; corners</span></button>
+        <button class="level-btn" id="level-3" aria-pressed="false" onclick="setOthelloLevel(3)"><strong>Level 3 · Hard</strong><span>Device plans ahead — watch the corners</span></button>
+      </div>
+      <div class="othello-legend" style="margin-top:14px">
+        <span><span class="disc black"></span> You (Black)</span>
+        <span><span class="disc white"></span> Device (White)</span>
+        <span>· Dotted square = you can play there</span>
+      </div>
+      <div class="othello-wrap">
+        <div class="othello-board" id="othello-board" aria-label="Othello board"></div>
+        <div style="flex:1 1 200px;min-width:200px">
+          <div class="score" aria-label="Othello score">
+            <div class="score-row"><span>● You</span><b id="othello-you">2</b></div>
+            <div class="score-row"><span>○ Device</span><b id="othello-cpu">2</b></div>
+            <div class="score-row"><span>Empty</span><b id="othello-empty">60</b></div>
+            <div class="score-row"><span>Level</span><b id="othello-level-label" style="font-size:16px">1 · Easy</b></div>
+          </div>
+          <div class="actions">
+            <button class="btn primary" onclick="newOthello()">↻ New game</button>
+          </div>
+          <p style="font-size:14px;color:var(--muted);max-width:320px;margin:12px 0 0">Tip: corners can never be flipped, so they are the best squares on the board. Having lots of discs early does not always win — position matters more.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="how">
     <div>
       <h3>How to open this on your Scribe</h3>
@@ -244,7 +302,7 @@
         <li><b>Turn-based only</b> <span>— nothing moves until you tap, so there’s no blur or battery drain.</span></li>
         <li><b>Plain HTML + tap buttons</b> <span>— no canvas, no heavy scripts, so the Scribe’s limited browser can run it.</span></li>
         <li><b>Patterns, not colour</b> <span>— solid, double-border and grey read clearly in greyscale.</span></li>
-        <li><b>One page, three games</b> <span>— switching games doesn’t reload the page.</span></li>
+        <li><b>One page, four games</b> <span>— switching games doesn’t reload the page.</span></li>
       </ul>
     </div>
   </div>
@@ -254,7 +312,7 @@
 
 <script>
 function showGame(name){
-  var games=['word','ttt','sudoku'];
+  var games=['word','ttt','sudoku','othello'];
   for(var i=0;i<games.length;i++){
     var p=document.getElementById('panel-'+games[i]);
     var t=document.getElementById('tab-'+games[i]);
@@ -431,10 +489,152 @@ function clearSudoku(){ var puz=SUDOKU[sudokuIdx].puz; for(var i=0;i<36;i++) if(
 function loadSudokuStatusOnly(){ var left=0; for(var i=0;i<36;i++) if(sudokuVals[i]===0) left++; document.getElementById('sudoku-status').innerHTML='Puzzle '+(sudokuIdx+1)+' of 3<small>'+left+' cells to fill</small>'; }
 function nextSudoku(){ sudokuIdx=(sudokuIdx+1)%SUDOKU.length; loadSudoku(); }
 
+/* ---------- OTHELLO ---------- */
+/* board: 0 empty, 1 black (you), 2 white (device). Index = row*8+col */
+var othelloBoard=[], othelloLevel=1, othelloOver=false, othelloLast=-1, othelloBusy=false;
+var O_DIRS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+var O_WEIGHTS=[120,-20,20,5,5,20,-20,120,-20,-40,-5,-5,-5,-5,-40,-20,20,-5,15,3,3,15,-5,20,5,-5,3,3,3,3,-5,5,5,-5,3,3,3,3,-5,5,20,-5,15,3,3,15,-5,20,-20,-40,-5,-5,-5,-5,-40,-20,120,-20,20,5,5,20,-20,120];
+var O_LEVEL_NAMES={1:'1 · Easy',2:'2 · Medium',3:'3 · Hard'};
+function oFlips(board,idx,player){
+  if(board[idx]!==0) return [];
+  var opp=player===1?2:1, r=Math.floor(idx/8), c=idx%8, all=[];
+  for(var d=0;d<8;d++){
+    var dr=O_DIRS[d][0], dc=O_DIRS[d][1], line=[], nr=r+dr, nc=c+dc;
+    while(nr>=0&&nr<8&&nc>=0&&nc<8&&board[nr*8+nc]===opp){ line.push(nr*8+nc); nr+=dr; nc+=dc; }
+    if(line.length&&nr>=0&&nr<8&&nc>=0&&nc<8&&board[nr*8+nc]===player){ for(var k=0;k<line.length;k++) all.push(line[k]); }
+  }
+  return all;
+}
+function oLegal(board,player){ var m=[]; for(var i=0;i<64;i++){ if(board[i]===0&&oFlips(board,i,player).length) m.push(i); } return m; }
+function oApply(board,idx,player){ var f=oFlips(board,idx,player); board[idx]=player; for(var i=0;i<f.length;i++) board[f[i]]=player; return f.length; }
+function oCounts(board){ var b=0,w=0,e=0; for(var i=0;i<64;i++){ if(board[i]===1)b++; else if(board[i]===2)w++; else e++; } return {b:b,w:w,e:e}; }
+function oSetStatus(main,sub){ document.getElementById('othello-status').innerHTML=main+'<small>'+sub+'</small>'; }
+function renderOthello(){
+  var el=document.getElementById('othello-board'); el.innerHTML="";
+  var legal=(!othelloOver&&!othelloBusy)?oLegal(othelloBoard,1):[];
+  for(var i=0;i<64;i++){
+    (function(idx){
+      var b=document.createElement('button'); var isLegal=legal.indexOf(idx)!==-1;
+      b.className='o-cell'+(isLegal?' valid':'')+(idx===othelloLast?' last':'');
+      var r=Math.floor(idx/8)+1, c=(idx%8)+1;
+      b.setAttribute('aria-label','Row '+r+' column '+c+(othelloBoard[idx]===1?': black':othelloBoard[idx]===2?': white':isLegal?': you can play here':': empty'));
+      if(othelloBoard[idx]!==0){ var s=document.createElement('span'); s.className='disc '+(othelloBoard[idx]===1?'black':'white'); b.appendChild(s); }
+      b.onclick=function(){ playOthello(idx); };
+      el.appendChild(b);
+    })(i);
+  }
+  var ct=oCounts(othelloBoard);
+  document.getElementById('othello-you').textContent=ct.b;
+  document.getElementById('othello-cpu').textContent=ct.w;
+  document.getElementById('othello-empty').textContent=ct.e;
+  document.getElementById('othello-level-label').textContent=O_LEVEL_NAMES[othelloLevel];
+}
+function newOthello(){
+  othelloBoard=[]; for(var i=0;i<64;i++) othelloBoard.push(0);
+  othelloBoard[27]=2; othelloBoard[28]=1; othelloBoard[35]=1; othelloBoard[36]=2;
+  othelloOver=false; othelloLast=-1; othelloBusy=false;
+  renderOthello(); oSetStatus('Your turn — Level '+othelloLevel,'Tap a dotted square to start');
+}
+function setOthelloLevel(n){
+  othelloLevel=n;
+  for(var i=1;i<=3;i++) document.getElementById('level-'+i).setAttribute('aria-pressed', i===n?'true':'false');
+  newOthello();
+}
+function playOthello(idx){
+  if(othelloOver||othelloBusy) return;
+  if(oFlips(othelloBoard,idx,1).length===0) return;
+  oApply(othelloBoard,idx,1); othelloLast=idx;
+  if(oCheckEnd()) { renderOthello(); return; }
+  var cpuMoves=oLegal(othelloBoard,2);
+  if(cpuMoves.length===0){
+    renderOthello();
+    if(oLegal(othelloBoard,1).length===0){ oFinish(); }
+    else oSetStatus('Device has no move — you go again','White passes this turn');
+    return;
+  }
+  oDeviceChain();
+}
+function oDeviceChain(){
+  othelloBusy=true; renderOthello(); oSetStatus('Device is thinking…','Level '+othelloLevel+' · White to play');
+  setTimeout(function(){
+    var mv=oCpuPick();
+    if(mv!==-1){ oApply(othelloBoard,mv,2); othelloLast=mv; }
+    if(oCheckEnd()){ othelloBusy=false; renderOthello(); return; }
+    if(oLegal(othelloBoard,1).length===0){
+      // Player still has no move — player passes again.
+      // Only finish when neither side can move (handled by oCheckEnd above);
+      // otherwise the device keeps playing.
+      if(oLegal(othelloBoard,2).length===0){ othelloBusy=false; oFinish(); return; }
+      renderOthello();
+      oSetStatus('You have no move — device plays again','Black passes this turn');
+      // Loop: device plays another move, then re-checks the player.
+      setTimeout(function(){ oDeviceChain(); },350);
+      return;
+    }
+    othelloBusy=false;
+    renderOthello(); oSetStatus('Your turn','Tap a dotted square');
+  },350);
+}
+function oCheckEnd(){
+  var ct=oCounts(othelloBoard);
+  if(ct.e===0||(oLegal(othelloBoard,1).length===0&&oLegal(othelloBoard,2).length===0)){ oFinish(); return true; }
+  return false;
+}
+function oFinish(){
+  othelloOver=true; renderOthello();
+  var ct=oCounts(othelloBoard);
+  if(ct.b>ct.w) oSetStatus('You win '+ct.b+' – '+ct.w+'!','Well played — tap New game');
+  else if(ct.w>ct.b) oSetStatus('Device wins '+ct.w+' – '+ct.b,'Tap New game to try again');
+  else oSetStatus('It\u2019s a draw '+ct.b+' – '+ct.w,'Tap New game to play again');
+}
+function oEval(board,player){
+  var opp=player===1?2:1, score=0, i;
+  for(i=0;i<64;i++){ if(board[i]===player) score+=O_WEIGHTS[i]; else if(board[i]===opp) score-=O_WEIGHTS[i]; }
+  var my=oLegal(board,player).length, op=oLegal(board,opp).length;
+  score+=(my-op)*5;
+  var ct=oCounts(board);
+  if(ct.e===0) score+=( (player===1?ct.b-ct.w:ct.w-ct.b) )*10;
+  else if(ct.e<10) score+=( (player===1?ct.b-ct.w:ct.w-ct.b) )*2;
+  return score;
+}
+function oMinimax(board,depth,alpha,beta,isMax){
+  var player=isMax?2:1;
+  var moves=oLegal(board,player);
+  var other=oLegal(board,player===1?2:1);
+  if(depth===0||(moves.length===0&&other.length===0)) return oEval(board,2);
+  if(moves.length===0) return oMinimax(board,depth-1,alpha,beta,!isMax);
+  var i, copy, v;
+  if(isMax){ v=-999999; for(i=0;i<moves.length;i++){ copy=board.slice(); oApply(copy,moves[i],2); v=Math.max(v,oMinimax(copy,depth-1,alpha,beta,false)); alpha=Math.max(alpha,v); if(beta<=alpha) break; } return v; }
+  v=999999; for(i=0;i<moves.length;i++){ copy=board.slice(); oApply(copy,moves[i],1); v=Math.min(v,oMinimax(copy,depth-1,alpha,beta,true)); beta=Math.min(beta,v); if(beta<=alpha) break; } return v;
+}
+function oCpuPick(){
+  var moves=oLegal(othelloBoard,2); if(!moves.length) return -1;
+  var i, copy;
+  if(othelloLevel===1){
+    // Easy: random move, but takes a corner if one is offered
+    var corners=[0,7,56,63];
+    for(i=0;i<moves.length;i++) if(corners.indexOf(moves[i])!==-1 && Math.random()<0.5) return moves[i];
+    return moves[Math.floor(Math.random()*moves.length)];
+  }
+  if(othelloLevel===2){
+    // Medium: best immediate result by flips + position
+    var best=-999999, pick=moves[0];
+    for(i=0;i<moves.length;i++){ copy=othelloBoard.slice(); var f=oApply(copy,moves[i],2); var s=f*2+O_WEIGHTS[moves[i]]; if(s>best){ best=s; pick=moves[i]; } }
+    return pick;
+  }
+  // Hard: look ahead
+  var empt=oCounts(othelloBoard).e;
+  var depth=empt<=10?empt:4;
+  var bestV=-999999, pickH=moves[0];
+  for(i=0;i<moves.length;i++){ copy=othelloBoard.slice(); oApply(copy,moves[i],2); var val=oMinimax(copy,depth-1,-999999,999999,false); val+=O_WEIGHTS[moves[i]]*0.1; if(val>bestV){ bestV=val; pickH=moves[i]; } }
+  return pickH;
+}
+
 /* init */
 newWordGame();
 newTTT();
 loadSudoku();
+newOthello();
 </script>
 </body>
 </html>
