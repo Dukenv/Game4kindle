@@ -30,7 +30,8 @@ h1{font-size:24px;margin:4px 0 0}
 .key.miss{background:#eee;color:#999;border-color:#bbb}
 #newword{font-size:17px;padding:10px 22px;margin-top:10px;border:2px solid #000;background:#000;color:#fff;border-radius:6px}
 .how{font-size:13px;color:#444;margin:10px 4px}
-</style>
+
+.key,.lenbtn,#newword{-webkit-user-select:none;user-select:none;touch-action:manipulation}</style>
 </head>
 <body>
 <h1>Word Guess</h1>
@@ -39,7 +40,7 @@ h1{font-size:24px;margin:4px 0 0}
 <div id="status"></div>
 <div id="grid"></div>
 <div id="kb"></div>
-<button id="newword" onclick="newGame(0)">New word</button>
+<button id="newword" data-k="NEW">New word</button>
 <p class="how">Black tile = right letter, right place. Grey tile = right letter, wrong place. Tap a letter, then ENTER.</p>
 <script>
 var WORDS = {"5":["APPLE","BRAVE","CRANE","DELTA","EAGLE","FLAME","GRAPE","HOUSE","IVORY","JUMBO","KNEEL","LEMON","MANGO","NOBLE","OCEAN","PIANO","QUEEN","RIVER","STONE","TIGER","UMBRA","VIVID","WALTZ","YOUTH","ZEBRA","ABOUT","BRICK","CLOUD","DANCE","EARTH","FROST","GIANT","HEART","INDEX","JOINT","KOALA","LIGHT","MOUSE","NIGHT","OPERA","PLANT","QUILT","ROBOT","SOLAR","TRAIN","URBAN","VOICE","WATER","YIELD","BREAD","CHAIR","DREAM","ELBOW","FABLE","GLOBE","PUPPY","KITTY","BUNNY","HORSE","SHEEP","SNAKE","WHALE","SHARK","PANDA","FROGS","CHICK","PIZZA","CANDY","HONEY","CAKES","PEACH","MELON","BERRY","PASTA","SALAD","SWEET","BOOKS","PAPER","CLOCK","PHONE","WATCH","SHOES","SHIRT","PANTS","DRESS","TABLE","BEACH","SUNNY","RAINY","SNOWY","WINDY","TREES","GRASS","MUSIC","SONGS","STORY","MOVIE","HAPPY","SMILE","LAUGH","FUNNY","YUMMY","GAMES","MOMMY","DADDY","HELLO","COLOR","GREEN","BLACK","WHITE","BROWN","THREE","SEVEN","EIGHT","FIRST","LEARN","TEACH","SLEEP","BRUSH","CLEAN","DIRTY","WRITE","COUNT","SWIMS","JUMPS","READS","TRUCK","PLANE","ABOVE","ACTOR","ADULT","AFTER","AGAIN","ALARM","ALBUM","ALERT","ALIEN","ALIVE","ALLEY","ALLOW","ALONE","ALONG","ALOUD","ANGEL","ANGER","ANGLE","ANGRY","ANKLE","APART","APRIL","ARENA","ARGUE","ARMOR","ARROW","ASIDE","AVOID","AWAKE","AWARD","AWARE","AWFUL","BACON","BADGE","BAGEL","BAKER","BANJO","BASIN","BATCH","BEADS","BEANS","BEARD","BEARS","BEAST","BEGIN","BEING","BELLS","BELLY","BELOW","BENCH","BIBLE","BIKES","BILLS","BINGO","BIRDS","BIRTH","BITES","BLADE","BLAME","BLANK","BLAST","BLAZE","BLEED","BLEND","BLESS","BLIND","BLINK","BLOCK","BLOOD","BLOOM","BLUES","BLUFF","BLUSH","BOARD","BOATS","BOLTS","BOMBS","BONDS","BONES","BONUS","BOOST","BOOTS","BORED","BOSSY","BRAIN","BRAND","BRASS","BRIBE","BRIDE","BRIEF","BRING","BROAD","BROKE","BROOK","BROOM","BUCKS","BUDDY","BUILT","BULLS","BUMPS","BUNCH","BURNT","BUSES","BUSHY","BUYER","CABIN","CABLE","CADET","CAGES","CAMEL","CAMPS","CANAL","CANOE","CARDS","CARGO","CARRY","CARVE","CASES","CASTS","CATCH","CHARM","CHASE","CHECK","CHEEK","CHEER","CHESS","CHEST","CHILD"],"6":["ANIMAL","BANANA","ORANGE","PURPLE","SCHOOL","ROCKET","CASTLE","DRAGON","TURTLE","RABBIT","MONKEY","PIRATE","PLANET","GARDEN","WINTER","SUMMER","AUTUMN","SPRING","FRIEND","FAMILY","FATHER","MOTHER","BUTTER","CHEESE","COOKIE","PENCIL","WINDOW","BRIDGE","ISLAND","KITTEN","HAMMER","LADDER","MIRROR","CANDLE","BOTTLE","YELLOW","SILVER","GOLDEN","SOCCER","TENNIS","GUITAR","CAMERA","LETTER","NUMBER","PICNIC","NATURE","ACTION","ARTIST","AUTHOR","BAKERY","BASKET","BATTLE","BEAUTY","BECOME","BEFORE","BEHIND","BELONG","BINDER","BOTTOM","BOUNCE","BRANCH","BREEZE","BRIGHT","BROKEN","BRONZE","BUBBLE","BUCKET","BUDGET","BUNDLE","BURGER","BUTTON","CAMPUS","CANADA","CANCEL","CANVAS","CARBON","CAREER","CARPET","CARROT","CARTON","CASUAL","CATTLE","CAUGHT","CENTER","CHANCE","CHANGE","CHARGE","CHERRY","CHOICE","CHOOSE","CIRCLE","CIRCUS"],"7":["RAINBOW","DOLPHIN","PENGUIN","GIRAFFE","OCTOPUS","CHICKEN","KITCHEN","BEDROOM","MORNING","EVENING","HOLIDAY","LIBRARY","TEACHER","STUDENT","WEATHER","THUNDER","SNOWMAN","POPCORN","PANCAKE","CUPCAKE","BALLOON","BICYCLE","UNICORN","AIRPORT","COMPASS","JOURNEY","MYSTERY","CAPTAIN","DESSERT","VOLCANO","PYRAMID","DIAMOND","EMERALD","HARVEST","LANTERN","FEATHER","BLANKET","TOASTER","FREEZER","COSTUME","MONSTER","VAMPIRE","WHISPER","BANANAS","BATTERY","BROTHER","BUFFALO","CABBAGE","CARTOON","CHIMNEY","COLLECT","COLLEGE","COMFORT","CRICKET","CULTURE","CURIOUS","CURTAIN","DANCING","DAYTIME","DESKTOP","DIAGRAM","DIARIES","DIGITAL","DINNERS","DISCUSS","DISEASE","DISLIKE","DISPLAY","DISTANT","DIVIDED","DOODLES","DOORMAT","DOUBLES","DRAWING","DRESSES","DRIVERS","DROPLET","DRUMMER","DUSTBIN","EARLIER","EASTERN","ECLIPSE","ECONOMY","EDITORS","EFFORTS","ELASTIC"],"8":["BASEBALL","FOOTBALL","AIRPLANE","ELEPHANT","COMPUTER","KEYBOARD","MOUNTAIN","DINOSAUR","SANDWICH","BIRTHDAY","SATURDAY","TOMORROW","QUESTION","LANGUAGE","KANGAROO","SNOWBALL","FIREWORK","STARFISH","SUNSHINE","TREASURE","NOTEBOOK","BACKPACK","HOSPITAL","SEASHORE","PRINCESS","BOOKWORM","UMBRELLA","SKELETON","RAINCOAT","LOLLIPOP","CUPBOARD","COLORFUL","HOMEWORK","MIDNIGHT","DAYLIGHT","SWIMMING","FOOTSTEP","ALPHABET","BATHROOM","BEDROOMS","BEHAVIOR","BLUEBIRD","BROCCOLI","BUILDING","CALENDAR","CAMPFIRE","CARNIVAL","CATCHERS","CHAMPION","CHERRIES","CONCERTS","COOKBOOK","DAUGHTER","DAYDREAM","DECEMBER","DISCOVER","DOLPHINS","DOORBELL","DREAMING","DUMBBELL","ELECTRIC","ELEVATOR","ENVELOPE","EVERYDAY","EVERYONE","EXERCISE","EXPLORER","FAMILIES","FAREWELL","FAVORITE","FEBRUARY","FESTIVAL","FIGHTING","FRIENDLY"]};
@@ -59,36 +60,34 @@ function newGame(n){
   g.className = "g" + L;
   for(r=0;r<5;r++){ html += '<div class="row">'; for(c=0;c<L;c++){ html += '<span class="cell" id="c'+r+'_'+c+'"></span>'; } html += '</div>'; }
   g.innerHTML = html;
-  markLen(); drawKb();
-  status("Guess 1 of 5 — " + L + " letters");
+  markLen(); refreshKb();
+  status("Guess 1 of 5 \u2014 " + L + " letters");
 }
-function drawRow(){
-  var c, cell;
-  for(c=0;c<L;c++){ cell = el("c"+row+"_"+c); if(cell){ cell.innerHTML = cur.charAt(c) || ""; } }
-}
-function drawKb(){
-  var rows = ["QWERTYUIOP","ASDFGHJKL","ZXCVBNM"], html = "", i, j, ch, cls;
+function buildKb(){
+  var rows = ["QWERTYUIOP","ASDFGHJKL","ZXCVBNM"], html = "", i, j, ch;
   for(i=0;i<rows.length;i++){
     html += '<div class="krow">';
-    if(i===2){ html += '<span class="key wide" onclick="press(\'OK\')">ENTER</span>'; }
-    for(j=0;j<rows[i].length;j++){
-      ch = rows[i].charAt(j); cls = "key" + (kb[ch] ? " " + kb[ch] : "");
-      html += '<span class="'+cls+'" onclick="press(\''+ch+'\')">'+ch+'</span>';
-    }
-    if(i===2){ html += '<span class="key wide" onclick="press(\'DEL\')">DEL</span>'; }
+    if(i===2){ html += '<span class="key wide" data-k="OK">ENTER</span>'; }
+    for(j=0;j<rows[i].length;j++){ ch = rows[i].charAt(j); html += '<span class="key" data-k="'+ch+'" id="key-'+ch+'">'+ch+'</span>'; }
+    if(i===2){ html += '<span class="key wide" data-k="DEL">DEL</span>'; }
     html += '</div>';
   }
   el("kb").innerHTML = html;
 }
+function refreshKb(){
+  var A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", i, ch, node;
+  for(i=0;i<26;i++){ ch = A.charAt(i); node = el("key-"+ch); if(node){ node.className = "key" + (kb[ch] ? " " + kb[ch] : ""); } }
+}
+function paintCell(i){ var cell = el("c"+row+"_"+i); if(cell){ cell.innerHTML = cur.charAt(i) || ""; } }
 function press(k){
   if(over){ return; }
-  if(k==="DEL"){ cur = cur.slice(0,-1); drawRow(); return; }
+  if(k==="DEL"){ if(cur.length){ cur = cur.slice(0,-1); paintCell(cur.length); } return; }
   if(k==="OK"){ submit(); return; }
-  if(cur.length < L){ cur += k; drawRow(); }
+  if(cur.length < L){ cur += k; paintCell(cur.length-1); }
 }
 function submit(){
-  var i, j, cell, res = [], rest = [], a = answer.split(""), g = cur.split("");
-  if(cur.length < L){ status("Too short — the word has " + L + " letters"); return; }
+  var i, j, cell, res = [], a = answer.split(""), g = cur.split("");
+  if(cur.length < L){ status("Too short \u2014 the word has " + L + " letters"); return; }
   for(i=0;i<L;i++){ if(g[i]===a[i]){ res[i]="hit"; a[i]=null; } }
   for(i=0;i<L;i++){
     if(res[i]){ continue; }
@@ -101,17 +100,39 @@ function submit(){
     else if(res[i]==="mid"){ if(kb[g[i]]!=="hit"){ kb[g[i]] = "mid"; } }
     else { if(!kb[g[i]]){ kb[g[i]] = "miss"; } }
   }
-  drawKb();
-  if(cur === answer){ over = true; status("You got it! The word was " + answer + " — tap New word to play again."); return; }
+  refreshKb();
+  if(cur === answer){ over = true; status("You got it! The word was " + answer + " \u2014 tap New word to play again."); return; }
   row++;
-  if(row >= 5){ over = true; status("Out of guesses — the word was " + answer + ". Tap New word to try again."); return; }
+  if(row >= 5){ over = true; status("Out of guesses \u2014 the word was " + answer + ". Tap New word to try again."); return; }
   cur = "";
   status("Guess " + (row+1) + " of 5");
 }
+var lastTouch = 0;
+function findVal(t, node){
+  while(t && t!==node){ if(t.getAttribute){ var v = t.getAttribute("data-k") || t.getAttribute("data-l"); if(v){ return v; } } t = t.parentNode; }
+  if(t && t.getAttribute){ return t.getAttribute("data-k") || t.getAttribute("data-l"); }
+  return null;
+}
+function bindTap(id, fn){
+  var node = el(id);
+  node.addEventListener("touchstart", function(e){
+    var v = findVal(e.target, node);
+    if(v){ lastTouch = new Date().getTime(); if(e.preventDefault){ e.preventDefault(); } fn(v); }
+  }, false);
+  node.addEventListener("click", function(e){
+    if(new Date().getTime() - lastTouch < 800){ return; }
+    var v = findVal(e.target, node);
+    if(v){ fn(v); }
+  }, false);
+}
 (function(){
   var html = "", n;
-  for(n=5;n<=8;n++){ html += '<button type="button" class="lenbtn" data-l="'+n+'" onclick="newGame('+n+')">'+n+' letters</button>'; }
+  for(n=5;n<=8;n++){ html += '<button type="button" class="lenbtn" data-l="'+n+'">'+n+' letters</button>'; }
   el("lenbar").innerHTML = html;
+  buildKb();
+  bindTap("kb", function(v){ press(v); });
+  bindTap("lenbar", function(v){ newGame(parseInt(v,10)); });
+  bindTap("newword", function(){ newGame(0); });
   newGame(5);
 })();
 </script>
