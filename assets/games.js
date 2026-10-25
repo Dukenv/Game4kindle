@@ -8,7 +8,49 @@ function showGame(name){
     if(games[i]===name){ p.className=p.className.replace(' hidden',''); t.setAttribute('aria-selected','true'); }
     else{ if(p.className.indexOf('hidden')===-1) p.className+=' hidden'; t.setAttribute('aria-selected','false'); }
   }
+  playHit(name);
 }
+
+/* ---------- SHARED PLAY COUNTER (Abacus) ----------
+   One shared counter per game across all devices, via the free Abacus
+   service (namespace inkplay-dukenv). Plain XMLHttpRequest, ES5 only.
+   Every failure is silent: if the service is unreachable the strip just
+   keeps showing "–" (or the last value) and the games are unaffected. */
+var PLAY_KEYS={word:'wordguess',sudoku:'sudoku',othello:'othello',adventure:'beetlequest'};
+var PLAY_BASE='https://abacus.jasoncameron.dev';
+function playSet(game,val){
+  try{ var el=document.getElementById('plays-'+game); if(el) el.textContent=val; }catch(e){}
+}
+function playRequest(verb,game){
+  try{
+    var key=PLAY_KEYS[game]; if(!key) return;
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET',PLAY_BASE+'/'+verb+'/inkplay-dukenv/'+key,true);
+    try{ xhr.timeout=10000; }catch(e){}
+    xhr.onreadystatechange=function(){
+      try{
+        if(xhr.readyState!==4) return;
+        var data=null;
+        try{ data=JSON.parse(xhr.responseText); }catch(e2){}
+        if(data&&typeof data.value==='number'){ playSet(game,data.value); }
+        else if(verb==='get'&&data&&data.error){ playSet(game,0); }
+      }catch(e3){}
+    };
+    xhr.onerror=function(){};
+    xhr.ontimeout=function(){};
+    xhr.send(null);
+  }catch(e){}
+}
+function playHit(game){
+  try{ playRequest('hit',game); }catch(e){}
+}
+function playLoadAll(){
+  try{
+    var games=['word','sudoku','othello','adventure'];
+    for(var i=0;i<games.length;i++) playRequest('get',games[i]);
+  }catch(e){}
+}
+playLoadAll();
 
 /* ---------- WORD GUESS ---------- */
 var WORDS=["APPLE","BRAVE","CRANE","DELTA","EAGLE","FLAME","GRAPE","HOUSE","IVORY","JUMBO","KNEEL","LEMON","MANGO","NOBLE","OCEAN","PIANO","QUEEN","RIVER","STONE","TIGER","UMBRA","VIVID","WALTZ","YOUTH","ZEBRA","ABOUT","BRICK","CLOUD","DANCE","EARTH","FROST","GIANT","HEART","INDEX","JOINT","KOALA","LIGHT","MOUSE","NIGHT","OPERA","PLANT","QUILT","ROBOT","SOLAR","TRAIN","URBAN","VOICE","WATER","YIELD","BREAD","CHAIR","DREAM","ELBOW","FABLE","GLOBE","PUPPY","KITTY","BUNNY","HORSE","SHEEP","SNAKE","WHALE","SHARK","PANDA","FROGS","CHICK","PIZZA","CANDY","HONEY","CAKES","PEACH","MELON","BERRY","PASTA","SALAD","SWEET","BOOKS","PAPER","CLOCK","PHONE","WATCH","SHOES","SHIRT","PANTS","DRESS","TABLE","BEACH","SUNNY","RAINY","SNOWY","WINDY","TREES","GRASS","MUSIC","SONGS","STORY","MOVIE","HAPPY","SMILE","LAUGH","FUNNY","YUMMY","GAMES","MOMMY","DADDY","HELLO","COLOR","GREEN","BLACK","WHITE","BROWN","THREE","SEVEN","EIGHT","FIRST","LEARN","TEACH","SLEEP","BRUSH","CLEAN","DIRTY","WRITE","COUNT","SWIMS","JUMPS","READS","TRUCK","PLANE","ABOVE","ACTOR","ADULT","AFTER","AGAIN","ALARM","ALBUM","ALERT","ALIEN","ALIVE","ALLEY","ALLOW","ALONE","ALONG","ALOUD","ANGEL","ANGER","ANGLE","ANGRY","ANKLE","APART","APRIL","ARENA","ARGUE","ARMOR","ARROW","ASIDE","AVOID","AWAKE","AWARD","AWARE","AWFUL","BACON","BADGE","BAGEL","BAKER","BANJO","BASIN","BATCH","BEADS","BEANS","BEARD","BEARS","BEAST","BEGIN","BEING","BELLS","BELLY","BELOW","BENCH","BIBLE","BIKES","BILLS","BINGO","BIRDS","BIRTH","BITES","BLADE","BLAME","BLANK","BLAST","BLAZE","BLEED","BLEND","BLESS","BLIND","BLINK","BLOCK","BLOOD","BLOOM","BLUES","BLUFF","BLUSH","BOARD","BOATS","BOLTS","BOMBS","BONDS","BONES","BONUS","BOOST","BOOTS","BORED","BOSSY","BRAIN","BRAND","BRASS","BRIBE","BRIDE","BRIEF","BRING","BROAD","BROKE","BROOK","BROOM","BUCKS","BUDDY","BUILT","BULLS","BUMPS","BUNCH","BURNT","BUSES","BUSHY","BUYER","CABIN","CABLE","CADET","CAGES","CAMEL","CAMPS","CANAL","CANOE","CARDS","CARGO","CARRY","CARVE","CASES","CASTS","CATCH","CHARM","CHASE","CHECK","CHEEK","CHEER","CHESS","CHEST","CHILD"];
