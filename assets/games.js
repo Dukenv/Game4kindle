@@ -5,6 +5,7 @@ function showGame(name){
   for(var i=0;i<games.length;i++){
     var p=document.getElementById('panel-'+games[i]);
     var t=document.getElementById('tab-'+games[i]);
+    if(!p||!t) continue; /* game not on this page (pages are split: english.html / japanese.html) */
     if(games[i]===name){ p.className=p.className.replace(' hidden',''); t.setAttribute('aria-selected','true'); }
     else{ if(p.className.indexOf('hidden')===-1) p.className+=' hidden'; t.setAttribute('aria-selected','false'); }
   }
@@ -137,7 +138,8 @@ function submitWord(){
 function newWordGame(){ wordTarget=pickWord(); wordGuesses=[]; wordCurrent=""; wordOver=false; keyState={}; renderWordGrid(); }
 function giveUpWord(){ if(!wordOver){ wordOver=true; renderWordGrid(); } }
 document.addEventListener('keydown',function(e){
-  if(document.getElementById('panel-word').className.indexOf('hidden')!==-1) return;
+  var pw=document.getElementById('panel-word');
+  if(!pw||pw.className.indexOf('hidden')!==-1) return;
   if(e.key==='Enter') submitWord();
   else if(e.key==='Backspace') pressKey('DEL');
   else if(/^[a-zA-Z]$/.test(e.key)) pressKey(e.key.toUpperCase());

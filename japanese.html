@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>日本語学習ゲーム — Ink &amp; Play</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="wrap">
+
+  <div class="back-row"><a class="back-link" href="index.html">← トップページ</a></div>
+
+  <div class="switcher">
+    <div class="tabs tabs-2" role="tablist" aria-label="ゲーム">
+      <button class="tab" role="tab" id="tab-kanji" aria-selected="true" aria-controls="panel-kanji" onclick="showGame('kanji')"><strong>部首パズル</strong><span>4・5年生の漢字クイズ</span></button>
+      <button class="tab" role="tab" id="tab-sentence" aria-selected="false" aria-controls="panel-sentence" onclick="showGame('sentence')"><strong>バラバラ文修復</strong><span>怪盗ストーリー・文の並び替え</span></button>
+    </div>
+  </div>
+
+  <!-- KANJI PUZZLE -->
+  <section class="panel" id="panel-kanji" role="tabpanel" aria-labelledby="tab-kanji">
+    <div class="panel-head">
+      <div><h2>部首合体パズル</h2><p>お題の漢字になるように、2つのパーツをえらんで合体させよう！</p></div>
+      <div class="status" id="kanji-status">もんだい 1 / 10<small>スコア 0</small></div>
+    </div>
+    <div class="panel-body">
+      <div class="switcher-label" style="margin-bottom:8px">学年 — タップで切り替え（さいしょから始まります）</div>
+      <div class="level-row" role="group" aria-label="学年" style="margin-bottom:16px">
+        <button class="level-btn" id="kj-grade-4" aria-pressed="true" onclick="kjSetGrade(4)"><strong>4年生</strong><span>小4で習う漢字</span></button>
+        <button class="level-btn" id="kj-grade-5" aria-pressed="false" onclick="kjSetGrade(5)"><strong>5年生</strong><span>小5で習う漢字</span></button>
+        <button class="level-btn" id="kj-grade-mix" aria-pressed="false" onclick="kjSetGrade(0)"><strong>まぜる</strong><span>4・5年生ぜんぶ</span></button>
+      </div>
+      <div id="kj-main"></div>
+    </div>
+  </section>
+
+  <!-- SENTENCE REPAIR -->
+  <section class="panel hidden" id="panel-sentence" role="tabpanel" aria-labelledby="tab-sentence">
+    <div class="panel-head">
+      <div><h2>バラバラ文修復</h2><p>怪盗にバラバラにされてしまった文を直そう！カードを正しい順番にタップすると、文が組み上がるよ。全10ステージの物語を進めよう。</p></div>
+      <div class="status" id="sentence-status">ステージ 1 / 10<small>スコア 0</small></div>
+    </div>
+    <div class="panel-body">
+      <div id="sr-main"></div>
+    </div>
+  </section>
+
+  <footer><span>Ink &amp; Play — Sample for Kindle Scribe</span><span>Black &amp; white · No timers · Tap to play</span></footer>
+</div>
+
+<script src="assets/games.js"></script>
+<script src="assets/kanji-puzzle.js"></script>
+<script src="assets/sentence-repair.js"></script>
+</body>
+</html>

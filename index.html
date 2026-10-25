@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
 <link rel="icon" href="data:," />
-<title>Sample Game for Kindle Scribe — Ink &amp; Play</title>
+<title>Ink &amp; Play</title>
 <link rel="stylesheet" href="assets/styles.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,171 +14,14 @@
 <body>
 <div class="wrap">
 
-  <div class="switcher">
-    <div class="tabs" role="tablist" aria-label="Games">
-      <button class="tab" role="tab" id="tab-word" aria-selected="true" aria-controls="panel-word" onclick="showGame('word')"><strong>Word Guess</strong><span>5–8 letters · 5 tries</span></button>
-      <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Sudoku</strong><span>6 × 6 or 9 × 9 · 3 puzzles each</span></button>
-      <button class="tab" role="tab" id="tab-othello" aria-selected="false" aria-controls="panel-othello" onclick="showGame('othello')"><strong>Othello</strong><span>8 × 8 · 3 levels · you are ●</span></button>
-      <button class="tab" role="tab" id="tab-adventure" aria-selected="false" aria-controls="panel-adventure" onclick="showGame('adventure')"><strong>Beetle Quest</strong><span>Beetles + Baseball + Mining</span></button>
-      <button class="tab" role="tab" id="tab-kanji" aria-selected="false" aria-controls="panel-kanji" onclick="showGame('kanji')"><strong>部首パズル</strong><span>4・5年生の漢字クイズ</span></button>
-      <button class="tab" role="tab" id="tab-sentence" aria-selected="false" aria-controls="panel-sentence" onclick="showGame('sentence')"><strong>バラバラ文修復</strong><span>怪盗ストーリー・文の並び替え</span></button>
-    </div>
+  <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
+  <h1>Ink <em>&amp;</em> Play</h1>
+  <p class="lede">Six turn-based games that actually work on e-ink, on two pages. Pick a page to start playing — あそびたいページをえらんでね。</p>
+
+  <div class="hub-cards">
+    <a class="hub-card" href="english.html"><strong>English Games →</strong><span>Word Guess · Sudoku · Othello · Beetle Quest</span></a>
+    <a class="hub-card" href="japanese.html"><strong>日本語学習ゲーム →</strong><span>部首パズル · バラバラ文修復 ・・・</span></a>
   </div>
-
-  <!-- WORD GUESS -->
-  <section class="panel" id="panel-word" role="tabpanel" aria-labelledby="tab-word">
-    <div class="panel-head">
-      <div><h2>Word Guess</h2><p>Guess the hidden word — you pick how long it is: 5, 6, 7 or 8 letters. Lots of easy words kids know — animals, food, colours, numbers and school words. Type with the big keys below — or your keyboard — then press ENTER.</p></div>
-      <div class="status" id="word-status">Guess 1 of 5<small>Start typing</small></div>
-    </div>
-    <div class="panel-body">
-      <div class="switcher-label" style="margin-bottom:8px">Word length — tap to start a new word</div>
-      <div class="level-row" role="group" aria-label="Word length" style="margin-bottom:16px">
-        <button class="level-btn" id="wlen-5" aria-pressed="true" onclick="setWordLen(5)"><strong>5 letters</strong><span>The classic game</span></button>
-        <button class="level-btn" id="wlen-6" aria-pressed="false" onclick="setWordLen(6)"><strong>6 letters</strong><span>A little longer</span></button>
-        <button class="level-btn" id="wlen-7" aria-pressed="false" onclick="setWordLen(7)"><strong>7 letters</strong><span>Getting tricky</span></button>
-        <button class="level-btn" id="wlen-8" aria-pressed="false" onclick="setWordLen(8)"><strong>8 letters</strong><span>For word champs</span></button>
-      </div>
-      <div class="legend">
-        <span><i class="l-correct"></i> Right letter, right place — solid black</span>
-        <span><i class="l-present">●</i> In the word, wrong place — double border</span>
-        <span><i class="l-absent"></i> Not in the word — grey</span>
-      </div>
-      <div class="word-grid" id="word-grid" aria-label="Word grid"></div>
-      <div class="keyboard" id="keyboard" aria-label="Keyboard"></div>
-      <div class="actions">
-        <button class="btn primary" onclick="newWordGame()">↻ New word</button>
-        <button class="btn" onclick="giveUpWord()">Show answer</button>
-      </div>
-      <p style="font-size:14px;color:var(--muted);margin:12px 0 0">Tip for Scribe: tap keys slowly and let the screen settle between guesses — e-ink redraws the whole board at once on ENTER, which keeps ghosting down.</p>
-    </div>
-  </section>
-
-  <!-- SUDOKU -->
-  <section class="panel hidden" id="panel-sudoku" role="tabpanel" aria-labelledby="tab-sudoku">
-    <div class="panel-head">
-      <div><h2>Sudoku</h2><p id="sudoku-desc">Fill every row, column and 2×3 box with 1–6. Tap a white cell, then tap a number. Dark cells are given and can’t be changed.</p></div>
-      <div class="status" id="sudoku-status">Puzzle 1 of 3<small id="sudoku-sub">18 cells to fill</small></div>
-    </div>
-    <div class="panel-body">
-      <div class="switcher-label" style="margin-bottom:8px">Board size — tap to switch</div>
-      <div class="level-row" role="group" aria-label="Sudoku board size" style="margin-bottom:16px">
-        <button class="level-btn" id="ssize-6" aria-pressed="true" onclick="setSudokuSize(6)"><strong>6 × 6</strong><span>Mini — numbers 1–6, 2×3 boxes</span></button>
-        <button class="level-btn" id="ssize-9" aria-pressed="false" onclick="setSudokuSize(9)"><strong>9 × 9</strong><span>Classic — numbers 1–9, 3×3 boxes</span></button>
-      </div>
-      <div class="sudoku-wrap">
-        <div class="sudoku-board" id="sudoku-board" aria-label="Sudoku board"></div>
-        <div>
-          <div class="actions">
-            <button class="btn primary" onclick="checkSudoku()">Check</button>
-            <button class="btn" onclick="nextSudoku()">Next puzzle →</button>
-            <button class="btn" onclick="clearSudoku()">Clear my numbers</button>
-          </div>
-          <p class="sudoku-tip">Perfect for the pen: tap with the pen tip to select, tap a number to write it in. Use ✕ to erase.</p>
-        </div>
-        <div class="sudoku-pad">
-          <div class="switcher-label" style="margin-bottom:8px;text-align:center">Number pad</div>
-          <div class="numpad" id="numpad"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- OTHELLO -->
-  <section class="panel hidden" id="panel-othello" role="tabpanel" aria-labelledby="tab-othello">
-    <div class="panel-head">
-      <div><h2>Othello</h2><p>You are <b>● Black</b>. Tap a dotted square to flip trapped discs. Most discs wins.</p></div>
-      <div class="status" id="othello-status">Your turn<small>Tap a dotted square</small></div>
-    </div>
-    <div class="panel-body">
-      <div class="switcher-label" style="margin-bottom:8px">Level — pick one, then start a new game</div>
-      <div class="level-row" role="group" aria-label="Othello level">
-        <button class="level-btn" id="level-1" aria-pressed="true" onclick="setOthelloLevel(1)"><strong>Level 1 · Easy</strong><span>Device plays casually — great to learn</span></button>
-        <button class="level-btn" id="level-2" aria-pressed="false" onclick="setOthelloLevel(2)"><strong>Level 2 · Medium</strong><span>Device grabs flips &amp; corners</span></button>
-        <button class="level-btn" id="level-3" aria-pressed="false" onclick="setOthelloLevel(3)"><strong>Level 3 · Hard</strong><span>Device plans ahead — watch the corners</span></button>
-      </div>
-      <div class="othello-legend" style="margin-top:14px">
-        <span><span class="disc black"></span> You (Black)</span>
-        <span><span class="disc white"></span> Device (White)</span>
-        <span>· Dotted square = you can play there</span>
-      </div>
-      <div class="othello-score" aria-label="Othello score">
-        <div class="os-item"><span>● You</span><b id="othello-you">2</b></div>
-        <div class="os-item"><span>○ Device</span><b id="othello-cpu">2</b></div>
-        <div class="os-item"><span>Empty</span><b id="othello-empty">60</b></div>
-        <div class="os-item"><span>Level</span><b id="othello-level-label" style="font-size:15px">1 · Easy</b></div>
-      </div>
-      <div class="othello-wrap" style="margin-top:12px">
-        <div class="othello-board" id="othello-board" aria-label="Othello board"></div>
-        <div style="flex:1 1 200px;min-width:200px">
-          <div class="actions" style="margin-top:0">
-            <button class="btn primary" onclick="newOthello()">↻ New game</button>
-          </div>
-          <p style="font-size:14px;color:var(--muted);max-width:320px;margin:12px 0 0">Tip: corners can never be flipped, so they are the best squares on the board. Having lots of discs early does not always win — position matters more.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BEETLE QUEST ADVENTURE -->
-  <section class="panel hidden" id="panel-adventure" role="tabpanel" aria-labelledby="tab-adventure">
-    <div class="panel-head">
-      <div id="adv-intro"><h2>Beetle Quest Adventure</h2><p>All three favourites in one quest: <b>catch a Japanese beetle</b>, <b>dig &amp; craft</b> like Minecraft, and <b>win a baseball challenge</b> — then battle for the Forest Trophy. What you mine makes you stronger in the games that follow. Or pick <b>Online Battle</b> below to battle a friend on another device.</p></div>
-      <div class="status" id="adv-status">Beetle Quest<small>Pick a play mode to start</small></div>
-    </div>
-    <div class="panel-body">
-      <div id="adv-home">
-        <div id="adv-home-scene"></div>
-        <div class="switcher-label" style="margin-bottom:8px">Play mode — choose how to play</div>
-        <div class="level-row" role="group" aria-label="Beetle Quest mode" style="margin-bottom:16px">
-          <button class="level-btn" id="adv-mode-solo" aria-pressed="false" onclick="advSetMode('solo')"><strong>Solo Quest</strong><span>1 player · the full adventure on this device</span></button>
-          <button class="level-btn" id="adv-mode-online" aria-pressed="false" onclick="advSetMode('online')"><strong>Online Battle · 2 Players</strong><span>Two devices, over the internet, with a game code</span></button>
-        </div>
-        <p style="font-size:14px;color:var(--muted);margin:0">Solo Quest is the full adventure on this device. Online Battle pits your beetle against a friend's on another device, using a short game code.</p>
-      </div>
-      <div id="adv-play" class="hidden">
-        <div id="adv-solo" class="hidden">
-          <div class="adv-progress" id="adv-progress" aria-label="Quest progress"></div>
-          <div id="adv-main"></div>
-          <div class="actions adv-ctl-row">
-            <button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button>
-            <span class="adv-back-label" id="adv-play-label">Solo Quest</span>
-            <button class="btn" onclick="resetAdventure()">↻ Start over</button>
-          </div>
-          <p style="font-size:14px;color:var(--muted);margin:12px 0 0">For 1 player — or pass the Scribe and take turns choosing. No timer: think as long as you like on every tap.</p>
-        </div>
-        <div id="adv-online" class="hidden"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- KANJI PUZZLE -->
-  <section class="panel hidden" id="panel-kanji" role="tabpanel" aria-labelledby="tab-kanji">
-    <div class="panel-head">
-      <div><h2>部首合体パズル</h2><p>お題の漢字になるように、2つのパーツをえらんで合体させよう！</p></div>
-      <div class="status" id="kanji-status">もんだい 1 / 10<small>スコア 0</small></div>
-    </div>
-    <div class="panel-body">
-      <div class="switcher-label" style="margin-bottom:8px">学年 — タップで切り替え（さいしょから始まります）</div>
-      <div class="level-row" role="group" aria-label="学年" style="margin-bottom:16px">
-        <button class="level-btn" id="kj-grade-4" aria-pressed="true" onclick="kjSetGrade(4)"><strong>4年生</strong><span>小4で習う漢字</span></button>
-        <button class="level-btn" id="kj-grade-5" aria-pressed="false" onclick="kjSetGrade(5)"><strong>5年生</strong><span>小5で習う漢字</span></button>
-        <button class="level-btn" id="kj-grade-mix" aria-pressed="false" onclick="kjSetGrade(0)"><strong>まぜる</strong><span>4・5年生ぜんぶ</span></button>
-      </div>
-      <div id="kj-main"></div>
-    </div>
-  </section>
-
-  <!-- SENTENCE REPAIR -->
-  <section class="panel hidden" id="panel-sentence" role="tabpanel" aria-labelledby="tab-sentence">
-    <div class="panel-head">
-      <div><h2>バラバラ文修復</h2><p>怪盗にバラバラにされてしまった文を直そう！カードを正しい順番にタップすると、文が組み上がるよ。全10ステージの物語を進めよう。</p></div>
-      <div class="status" id="sentence-status">ステージ 1 / 10<small>スコア 0</small></div>
-    </div>
-    <div class="panel-body">
-      <div id="sr-main"></div>
-    </div>
-  </section>
 
   <div class="about-toggle-row">
     <button class="about-toggle" id="about-toggle" aria-expanded="false" aria-controls="about-more" onclick="toggleAbout()">About — Ink &amp; Playについて ▾</button>
@@ -187,7 +30,7 @@
   <div class="about" aria-label="About Ink &amp; Play">
   <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
   <h1>Ink <em>&amp;</em> Play</h1>
-  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just six turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
+  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just six turn-based games on two pages — English Games and 日本語学習ゲーム — with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
 
   <div class="specs" aria-label="Designed for e-ink">
     <div class="spec"><strong>✓ E-ink first</strong><p>Bold outlines and high contrast that stay clear on e-ink. Correct answers are told apart by fill and pattern, not by colour alone.</p></div>
@@ -203,8 +46,5 @@
 </div>
 
 <script src="assets/games.js"></script>
-<script src="assets/kanji-puzzle.js"></script>
-<script src="assets/sentence-repair.js"></script>
-<script src="assets/beetle-quest.js"></script>
 </body>
 </html>

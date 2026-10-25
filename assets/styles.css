@@ -330,6 +330,21 @@
   .about-toggle-row{ margin-top:26px; border-top:3px solid var(--line); padding-top:14px; }
   .about-toggle{ min-height:50px; padding:0 18px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:999px; font-size:16px; font-weight:700; }
 
+  /* Split pages: tab rows sized to the games on the page */
+  .tabs.tabs-4{ grid-template-columns:repeat(4,1fr); }
+  .tabs.tabs-2{ grid-template-columns:repeat(2,1fr); }
+
+  /* Top Page hub: two big link cards to the game pages */
+  .hub-cards{ display:flex; flex-wrap:wrap; gap:14px; margin-top:20px; }
+  .hub-card{ flex:1 1 260px; display:block; min-height:132px; border:3px solid var(--line); border-radius:var(--radius); background:var(--panel); color:var(--ink); text-decoration:none; padding:22px 24px; }
+  .hub-card strong{ display:block; font-size:32px; line-height:1.15; }
+  .hub-card span{ display:block; margin-top:10px; font-size:16.5px; line-height:1.45; color:var(--muted); font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+  .hub-card:focus-visible, .back-link:focus-visible{ outline:3px solid var(--ink); outline-offset:2px; }
+
+  /* Back link on the game pages, back to the Top Page */
+  .back-row{ margin:2px 0 12px; }
+  .back-link{ display:inline-flex; align-items:center; min-height:50px; padding:0 18px; border:2px solid var(--line); border-radius:999px; background:var(--btn-bg); color:var(--btn-ink); font-size:16px; font-weight:700; text-decoration:none; }
+
   .about{ margin-top:10px; }
   .about h1{ margin-top:14px; }
   @media (max-width:560px){
@@ -351,6 +366,9 @@
     .tab span{ font-size:11.5px; }
     .tab{ padding:7px 9px; }
     .tabs{ grid-template-columns:repeat(3,1fr); }
+    .tabs.tabs-4{ grid-template-columns:repeat(2,1fr); }
+    .tabs.tabs-2{ grid-template-columns:repeat(2,1fr); }
+    .hub-card strong{ font-size:27px; }
     .sr-card{ font-size:18px; padding:9px 12px; }
     .sr-chip{ font-size:18px; }
     .sr-answer-done{ font-size:19px; }
