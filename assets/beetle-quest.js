@@ -724,7 +724,8 @@ advShowHome();
    The narration/status messages live in .adv-log blocks inside #adv-main
    (Solo) and #adv-online (Online Battle). Every render rebuilds those
    blocks, so a MutationObserver spots each fresh block and types out its
-   newest message character by character, terminal-style. Display only:
+   newest message character by character, terminal-style, and keeps only
+   the 3 most recent lines on show. Display only:
    no game state is read or changed, typing runs on a timer so buttons
    and gameplay are never blocked, and the finished text is exactly the
    message the game rendered. Plain ES5. */
@@ -752,8 +753,8 @@ function advTermType(logEl, p, full){
   advTermStop();
   var len=full.length;
   if(!len) return;
-  /* ~16ms per character; longer messages type more characters per tick so
-     the whole message always lands within about 1.5 seconds. */
+  /* ~32ms per character; longer messages type more characters per tick so
+     the whole message always lands within about 2.9 seconds. */
   var perTick=Math.max(1, Math.ceil(len/90));
   var pos=0;
   var textNode=document.createTextNode('');
@@ -775,7 +776,36 @@ function advTermType(logEl, p, full){
     } else {
       textNode.data=full.substring(0,pos);
     }
-  }, 16);
+  }, 32);
+}
+function advTermTrim(container){
+  /* Show at most the 3 most recent narration lines (the newest line plus
+     the 2 before it): collect every paragraph the container's log blocks
+     render, in order, and drop the oldest from the top until 3 remain.
+     The line currently typing is never dropped, and kept lines are left
+     untouched, so their final text stays complete and unchanged. */
+  var logs=container.querySelectorAll('.adv-log');
+  var paras=[], touched=[], i, j, ps;
+  for(i=0;i<logs.length;i++){
+    ps=logs[i].getElementsByTagName('p');
+    for(j=0;j<ps.length;j++) paras.push(ps[j]);
+  }
+  while(paras.length>3){
+    var old=paras[0];
+    if(old===advTermPara) break; /* never pull the line being typed */
+    paras.shift();
+    if(!old.parentNode) break;
+    if(touched.indexOf(old.parentNode)<0) touched.push(old.parentNode);
+    old.parentNode.removeChild(old);
+  }
+  /* A block whose lines were all trimmed away goes too, so no empty
+     terminal strip is left behind. */
+  for(i=0;i<touched.length;i++){
+    var blk=touched[i];
+    if(blk!==advTermLog && blk.parentNode && !blk.getElementsByTagName('p').length){
+      blk.parentNode.removeChild(blk);
+    }
+  }
 }
 function advTermScan(container){
   var logs=container.querySelectorAll('.adv-log');
@@ -785,6 +815,15 @@ function advTermScan(container){
     sig+=logs[i].innerHTML+'\n';
   }
   if(sig===container._termSig) return; /* nothing new appeared */
+  container._termSig=sig;
+  if(!logs.length) return;
+  /* A new message appeared: keep only the 3 most recent narration lines. */
+  advTermTrim(container);
+  /* Trimming changed the blocks; refresh the signature so the trim's own
+     DOM changes are not mistaken for a new message on the next scan. */
+  logs=container.querySelectorAll('.adv-log');
+  sig='';
+  for(i=0;i<logs.length;i++) sig+=logs[i].innerHTML+'\n';
   container._termSig=sig;
   if(!logs.length) return;
   /* The newest message is the last paragraph of the last log block;
