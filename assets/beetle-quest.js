@@ -136,9 +136,9 @@ function renderAdventure(){
    var h2=advHUD()+'<p style="font-size:17px;margin-top:0"><b>Dig down — choose wisely!</b> You only get <b>4 picks</b>, so choose 4 blocks out of the 9. Deeper blocks hide better treasure. What you find will make your pickaxe, armour and baseball bat stronger.</p><div class="adv-mine">';
    for(var j=0;j<9;j++){ var blk=adv.mine[j]; if(!blk.dug&&adv.dug>=4){ h2+='<div class="adv-block locked"><span class="adv-block-art">'+advIcon('block',46)+'</span><span class="adv-block-name">Block '+(j+1)+'</span><small>Locked — 4 picks used</small></div>'; } else if(!blk.dug){ h2+='<button class="adv-block" onclick="advDig('+j+')"><span class="adv-block-art">'+advIcon('block',46)+'</span><span class="adv-block-name">Block '+(j+1)+'</span><small>'+(j<3?'Top layer':j<6?'Middle layer':'Deep layer — rare!')+'</small></button>'; } else { h2+='<div class="adv-block dug'+(blk.rare?' rare':'')+'"><span class="adv-block-art">'+advIcon(blk.k,46)+'</span><span class="adv-block-name">'+blk.label+'</span><small>'+blk.note+'</small></div>'; } }
    h2+='</div>';
+   if(adv.dug<4) h2+='<div class="adv-log"><p>Choose '+(4-adv.dug)+' more block'+(4-adv.dug===1?'':'s')+' to continue — you get 4 picks in total.</p></div>';
    if(adv.log.length) h2+='<div class="adv-log"><p>'+adv.log[adv.log.length-1]+'</p></div>';
    if(adv.dug>=4) h2+='<div class="actions"><button class="btn primary" onclick="advGoCraft()">Continue to Crafting →</button></div>';
-   else h2+='<p style="color:var(--muted);font-size:14px">Choose '+(4-adv.dug)+' more block'+(4-adv.dug===1?'':'s')+' to continue — you get 4 picks in total.</p>';
    m.innerHTML=sceneHtml+h2; return;
  }
  if(adv.phase==='craft'){
@@ -180,12 +180,12 @@ function renderAdventure(){
  }
  if(adv.phase==='win'){
    advSetStatus('Quest complete!','Forest Trophy won ★');
-   m.innerHTML=sceneHtml+'<div class="adv-celebrate" style="text-align:center"><div class="adv-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="adv-celebrate-stars" aria-hidden="true"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div><span class="adv-trophy-art">'+advIcon('trophy',120)+'</span><span class="adv-celebrate-beetle">'+advIcon(adv.beetle.art,92)+'</span><p style="font-size:24px;font-weight:800;margin:6px 0">You won the Forest Trophy!</p><p style="font-size:17px;max-width:520px;margin:0 auto">'+adv.beetle.name+' is the new forest champion — bouncing with joy at Koshien! You dug deep, crafted gear, scored <b>'+adv.bb.runs+' run'+(adv.bb.runs===1?'':'s')+'</b> at baseball, and won the final battle with <b>'+Math.max(0,adv.hp)+' HP</b> left.</p><p style="font-size:14px;color:var(--muted);margin:10px 0 0">★ The trophy bounces, your beetle wiggles, and the stars twinkle — tap Play Again when you are ready ★</p></div>'+advHUD()+'<div class="actions" style="justify-content:center"><button class="btn primary" onclick="advNextQuest()">▶ Play Again — Harder Quest '+(adv.quest+1)+'</button></div>';
+   m.innerHTML=sceneHtml+'<div class="adv-celebrate" style="text-align:center"><div class="adv-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="adv-celebrate-stars" aria-hidden="true"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div><span class="adv-trophy-art">'+advIcon('trophy',120)+'</span><span class="adv-celebrate-beetle">'+advIcon(adv.beetle.art,92)+'</span></div><div class="adv-log"><p>You won the Forest Trophy!</p><p>'+adv.beetle.name+' is the new forest champion — bouncing with joy at Koshien! You dug deep, crafted gear, scored <b>'+adv.bb.runs+' run'+(adv.bb.runs===1?'':'s')+'</b> at baseball, and won the final battle with <b>'+Math.max(0,adv.hp)+' HP</b> left.</p></div><p style="font-size:14px;color:var(--muted);margin:10px 0 0;text-align:center">★ The trophy bounces, your beetle wiggles, and the stars twinkle — tap Play Again when you are ready ★</p>'+advHUD()+'<div class="actions" style="justify-content:center"><button class="btn primary" onclick="advNextQuest()">▶ Play Again — Harder Quest '+(adv.quest+1)+'</button></div>';
    return;
  }
  if(adv.phase==='lose'){
    advSetStatus('Beetle needs a rest','The champion was too strong this time');
-   m.innerHTML=sceneHtml+'<p style="font-size:20px;font-weight:800;margin-top:0">So close!</p><p style="font-size:17px">Your beetle is tired but proud — it dug, crafted and played baseball all the way to the final. Rest, heal up, and try the battle again. The champion will be waiting.</p>'+advHUD()+'<div class="actions"><button class="btn primary" onclick="advRetryBattle()">Rest &amp; Retry Battle →</button><button class="btn" onclick="resetAdventure()">Start a New Quest</button></div>';
+   m.innerHTML=sceneHtml+'<div class="adv-log"><p>So close!</p><p>Your beetle is tired but proud — it dug, crafted and played baseball all the way to the final. Rest, heal up, and try the battle again. The champion will be waiting.</p></div>'+advHUD()+'<div class="actions"><button class="btn primary" onclick="advRetryBattle()">Rest &amp; Retry Battle →</button><button class="btn" onclick="resetAdventure()">Start a New Quest</button></div>';
    return;
  }
 }
@@ -625,7 +625,7 @@ function renderOnline(){
   }
   if(net.phase==='loading'){
     advSetStatus('Online Battle','Getting ready…');
-    el.innerHTML='<p style="font-size:17px">Getting online battle ready — loading the connection tools…</p><div class="actions"><button class="btn" onclick="netQuitToLobby()">Cancel</button></div>';
+    el.innerHTML='<div class="adv-log"><p>Getting online battle ready — loading the connection tools…</p></div><div class="actions"><button class="btn" onclick="netQuitToLobby()">Cancel</button></div>';
     return;
   }
   if(net.phase==='error'){
@@ -635,17 +635,17 @@ function renderOnline(){
   }
   if(net.phase==='creating'){
     advSetStatus('Online Battle','Creating your game…');
-    el.innerHTML='<p style="font-size:17px">Creating your game — one moment…</p>';
+    el.innerHTML='<div class="adv-log"><p>Creating your game — one moment…</p></div>';
     return;
   }
   if(net.phase==='waiting'){
     advSetStatus('Online Battle · Code '+net.code,'Waiting for '+netOppLabel()+' to join');
-    el.innerHTML='<p style="font-size:17px;margin-top:0"><b>Your game is ready!</b> Tell your friend this code. They open Beetle Quest on their device, choose <b>Online Battle</b>, tap <b>Join a Game</b> and type:</p><div class="net-code" aria-label="Your game code is '+net.code+'">'+net.code+'</div><p style="font-size:16px">Waiting for '+netOppLabel()+' to join… keep this page open.</p><div class="actions"><button class="btn" onclick="netQuitToLobby()">Cancel Game</button></div>';
+    el.innerHTML='<p style="font-size:17px;margin-top:0"><b>Your game is ready!</b> Tell your friend this code. They open Beetle Quest on their device, choose <b>Online Battle</b>, tap <b>Join a Game</b> and type:</p><div class="net-code" aria-label="Your game code is '+net.code+'">'+net.code+'</div><div class="adv-log"><p>Waiting for '+netOppLabel()+' to join… keep this page open.</p></div><div class="actions"><button class="btn" onclick="netQuitToLobby()">Cancel Game</button></div>';
     return;
   }
   if(net.phase==='joining'){
     advSetStatus('Online Battle','Joining game '+net.code+'…');
-    el.innerHTML='<p style="font-size:17px">Joining game <b>'+net.code+'</b> — one moment…</p><div class="actions"><button class="btn" onclick="netQuitToLobby()">Cancel</button></div>';
+    el.innerHTML='<div class="adv-log"><p>Joining game <b>'+net.code+'</b> — one moment…</p></div><div class="actions"><button class="btn" onclick="netQuitToLobby()">Cancel</button></div>';
     return;
   }
   if(net.phase==='pick'){
@@ -653,19 +653,19 @@ function renderOnline(){
     h=advScene('forest');
     if(net.myBeetle>=0){
       b=ADV_BEETLES[net.myBeetle];
-      h+='<p style="font-size:17px;margin-top:0"><b>You picked '+b.name+'!</b> '+(net.oppBeetle>=0?netOppLabel()+' has picked too — the battle is about to start!':'Waiting for '+netOppLabel()+' to pick a beetle on their device…')+'</p><div style="display:flex;justify-content:center;padding:6px 0">'+advIcon(b.art,120)+'</div>';
+      h+='<div class="adv-log"><p><b>You picked '+b.name+'!</b> '+(net.oppBeetle>=0?netOppLabel()+' has picked too — the battle is about to start!':'Waiting for '+netOppLabel()+' to pick a beetle on their device…')+'</p></div><div style="display:flex;justify-content:center;padding:6px 0">'+advIcon(b.art,120)+'</div>';
     } else {
-      h+='<p style="font-size:17px;margin-top:0"><b>Connected! Pick your beetle.</b> '+netOppLabel()+' is picking on their device at the same time.</p><div class="adv-cards">';
+      h+='<div class="adv-log"><p><b>Connected! Pick your beetle.</b> '+netOppLabel()+' is picking on their device at the same time.</p></div><div class="adv-cards">';
       for(i=0;i<ADV_BEETLES.length;i++){ (function(idx,bb){ h+='<button class="adv-card" onclick="netPickBeetle('+idx+')"><span class="adv-card-art">'+advIcon(bb.art,62)+'</span><strong>'+bb.name+'</strong><span>'+bb.desc+'</span><b>HP '+bb.hp+' · Power '+bb.power+'</b><span>'+bb.trait+'</span></button>'; })(i,ADV_BEETLES[i]); }
       h+='</div>';
-      if(net.oppBeetle>=0) h+='<p style="font-size:15px;margin-top:10px"><b>'+netOppLabel()+' has picked their beetle</b> — now you pick yours!</p>';
+      if(net.oppBeetle>=0) h+='<div class="adv-log"><p><b>'+netOppLabel()+' has picked their beetle</b> — now you pick yours!</p></div>';
     }
     h+='<div class="actions adv-ctl-row"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn" onclick="netQuitToLobby()">Leave Game</button></div>';
     el.innerHTML=h; return;
   }
   if(net.phase==='battle'||net.phase==='over'){
     var myIdx=net.myBeetle, opIdx=net.oppBeetle;
-    if(myIdx<0||opIdx<0){ el.innerHTML='<p style="font-size:16px">Waiting for both players to pick a beetle…</p>'; return; }
+    if(myIdx<0||opIdx<0){ el.innerHTML='<div class="adv-log"><p>Waiting for both players to pick a beetle…</p></div>'; return; }
     var myB=ADV_BEETLES[myIdx], opB=ADV_BEETLES[opIdx];
     var myHp=net.role==='host'?net.hostHp:net.guestHp;
     var opHp=net.role==='host'?net.guestHp:net.hostHp;
@@ -676,28 +676,33 @@ function renderOnline(){
     advSetStatus(net.phase==='over'?'Online Battle · Finished':'Online Battle · Round '+net.round, 'You · '+myB.name+' vs '+netOppLabel()+' · '+opB.name);
     h=advScene(net.phase==='over'&&iWon?'win':'battle');
     h+='<div class="adv-versus"><div class="adv-fighter"><span class="adv-fighter-art">'+advIcon(myB.art,96)+'</span><div class="adv-fighter-name">You · '+myB.name+'</div><div class="adv-fighter-hp">HP '+Math.max(0,myHp)+' / '+myMax+'</div>'+advBar(myHp,myMax)+'</div><div class="adv-vs">VS</div><div class="adv-fighter"><span class="adv-fighter-art">'+advIcon(opB.art,96)+'</span><div class="adv-fighter-name">'+netOppLabel()+' · '+opB.name+'</div><div class="adv-fighter-hp">HP '+Math.max(0,opHp)+' / '+opMax+'</div>'+advBar(opHp,opMax)+'</div></div>';
-    if(net.log.length){ h+='<div class="adv-log">'; var st=Math.max(0,net.log.length-4); for(var t=st;t<net.log.length;t++) h+='<p>'+net.log[t]+'</p>'; h+='</div>'; }
     if(net.phase==='battle'){
       if(net.myMove){
-        h+='<p style="font-size:16px"><b>Your move is locked in — secret!</b> '+(net.oppLocked?'Both moves are in — revealing…':'Waiting for '+netOppLabel()+' to pick a move…')+'</p>';
+        h+='<div class="adv-log"><p><b>Your move is locked in — secret!</b> '+(net.oppLocked?'Both moves are in — revealing…':'Waiting for '+netOppLabel()+' to pick a move…')+'</p></div>';
+      } else if(net.oppLocked) {
+        h+='<div class="adv-log"><p><b>'+netOppLabel()+' has locked in a secret move.</b> Now pick yours:</p></div>';
       } else {
-        if(net.oppLocked) h+='<p style="font-size:16px"><b>'+netOppLabel()+' has locked in a secret move.</b> Now pick yours:</p>';
-        else h+='<p style="font-size:16px"><b>Round '+net.round+' — pick your move.</b> '+netOppLabel()+' is choosing on their device too. Moves stay secret until both are locked in.</p>';
+        h+='<div class="adv-log"><p><b>Round '+net.round+' — pick your move.</b> '+netOppLabel()+' is choosing on their device too. Moves stay secret until both are locked in.</p></div>';
+      }
+    }
+    if(net.log.length){ h+='<div class="adv-log">'; var st=Math.max(0,net.log.length-3); for(var t=st;t<net.log.length;t++) h+='<p>'+net.log[t]+'</p>'; h+='</div>'; }
+    if(net.phase==='battle'){
+      if(!net.myMove){
         h+=netMoveButtonsHTML(myB);
       }
       h+='<div class="actions adv-ctl-row"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span></div>';
     } else {
       if(isDraw){
-        h+='<p style="font-size:22px;font-weight:800;text-align:center">It\u2019s a draw!</p><p style="font-size:16px;text-align:center">Both beetles ran out of HP in the same round — what a battle!</p>';
+        h+='<div class="adv-log"><p>It\u2019s a draw!</p><p>Both beetles ran out of HP in the same round — what a battle!</p></div>';
       } else if(iWon){
-        h+='<div class="adv-celebrate" style="text-align:center"><div class="adv-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="adv-celebrate-stars" aria-hidden="true"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div><span class="adv-trophy-art">'+advIcon('trophy',110)+'</span><span class="adv-celebrate-beetle">'+advIcon(myB.art,88)+'</span><p style="font-size:24px;font-weight:800;margin:6px 0">You win the Online Battle!</p><p style="font-size:16px;margin:0">'+myB.name+' beats '+opB.name+' — champion of the internet forest!</p></div>';
+        h+='<div class="adv-celebrate" style="text-align:center"><div class="adv-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="adv-celebrate-stars" aria-hidden="true"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div><span class="adv-trophy-art">'+advIcon('trophy',110)+'</span><span class="adv-celebrate-beetle">'+advIcon(myB.art,88)+'</span></div><div class="adv-log"><p>You win the Online Battle!</p><p>'+myB.name+' beats '+opB.name+' — champion of the internet forest!</p></div>';
       } else {
-        h+='<p style="font-size:22px;font-weight:800;text-align:center">'+netOppLabel()+' wins this battle!</p><p style="font-size:16px;text-align:center">Your '+myB.name+' fought bravely. How about a rematch?</p>';
+        h+='<div class="adv-log"><p>'+netOppLabel()+' wins this battle!</p><p>Your '+myB.name+' fought bravely. How about a rematch?</p></div>';
       }
       if(net.rematchOffered){
         h+='<div class="adv-log"><p><b>'+netOppLabel()+' wants a rematch!</b> You will both pick beetles again.</p></div><div class="actions adv-ctl-row" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn primary" onclick="netAcceptRematch()">Accept Rematch</button><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
       } else if(net.rematchWanted){
-        h+='<p style="font-size:16px;text-align:center">Rematch requested — waiting for '+netOppLabel()+' to accept…</p><div class="actions adv-ctl-row" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
+        h+='<div class="adv-log"><p>Rematch requested — waiting for '+netOppLabel()+' to accept…</p></div><div class="actions adv-ctl-row" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
       } else {
         h+='<div class="actions adv-ctl-row" style="justify-content:center"><button class="adv-back-btn" onclick="advShowHome()">← Back · Change play mode</button><span class="adv-back-label">Online Battle · 2 Players</span><button class="btn primary" onclick="netRematch()">↻ Rematch</button><button class="btn" onclick="netQuitToLobby()">Leave</button></div>';
       }
@@ -706,7 +711,7 @@ function renderOnline(){
   }
   if(net.phase==='dropped'){
     advSetStatus('Online Battle','Connection ended');
-    el.innerHTML='<p style="font-size:20px;font-weight:800;margin-top:0">Connection ended</p><p style="font-size:16px">'+(net.status||'The connection was lost.')+'</p><div class="actions"><button class="btn primary" onclick="netBackToLobby()">Back to Online Lobby</button><button class="btn" onclick="advSetMode(\'solo\')">Play Solo Quest</button></div>';
+    el.innerHTML='<p style="font-size:20px;font-weight:800;margin-top:0">Connection ended</p><div class="adv-log"><p>'+(net.status||'The connection was lost.')+'</p></div><div class="actions"><button class="btn primary" onclick="netBackToLobby()">Back to Online Lobby</button><button class="btn" onclick="advSetMode(\'solo\')">Play Solo Quest</button></div>';
     return;
   }
   el.innerHTML='';
@@ -779,29 +784,24 @@ function advTermType(logEl, p, full){
   }, 32);
 }
 function advTermTrim(container){
-  /* Show at most the 3 most recent narration lines (the newest line plus
-     the 2 before it): collect every paragraph the container's log blocks
-     render, in order, and drop the oldest from the top until 3 remain.
-     The line currently typing is never dropped, and kept lines are left
-     untouched, so their final text stays complete and unchanged. */
+  /* Each terminal strip keeps at most its 3 most recent lines (the newest
+     line plus the 2 before it): older lines drop off the top of their own
+     block. A strip that holds a single replaced status line is untouched —
+     the 3-line rule only bites where messages accumulate. The line
+     currently typing is never dropped, and kept lines are left untouched,
+     so their final text stays complete and unchanged. A block left with
+     no lines at all goes too, so no empty strip is left behind. */
   var logs=container.querySelectorAll('.adv-log');
-  var paras=[], touched=[], i, j, ps;
-  for(i=0;i<logs.length;i++){
-    ps=logs[i].getElementsByTagName('p');
-    for(j=0;j<ps.length;j++) paras.push(ps[j]);
-  }
-  while(paras.length>3){
-    var old=paras[0];
-    if(old===advTermPara) break; /* never pull the line being typed */
-    paras.shift();
-    if(!old.parentNode) break;
-    if(touched.indexOf(old.parentNode)<0) touched.push(old.parentNode);
-    old.parentNode.removeChild(old);
-  }
-  /* A block whose lines were all trimmed away goes too, so no empty
-     terminal strip is left behind. */
-  for(i=0;i<touched.length;i++){
-    var blk=touched[i];
+  for(var i=0;i<logs.length;i++){
+    var blk=logs[i];
+    var ps=blk.getElementsByTagName('p');
+    while(ps.length>3){
+      var old=ps[0];
+      if(old===advTermPara) break; /* never pull the line being typed */
+      if(!old.parentNode) break;
+      old.parentNode.removeChild(old);
+      ps=blk.getElementsByTagName('p');
+    }
     if(blk!==advTermLog && blk.parentNode && !blk.getElementsByTagName('p').length){
       blk.parentNode.removeChild(blk);
     }
@@ -809,26 +809,36 @@ function advTermTrim(container){
 }
 function advTermScan(container){
   var logs=container.querySelectorAll('.adv-log');
-  var i, sig='';
+  var i;
   for(i=0;i<logs.length;i++){
     if(logs[i]._termBusy) return; /* our own typing, on a live block: leave it */
-    sig+=logs[i].innerHTML+'\n';
   }
-  if(sig===container._termSig) return; /* nothing new appeared */
-  container._termSig=sig;
-  if(!logs.length) return;
-  /* A new message appeared: keep only the 3 most recent narration lines. */
+  if(!logs.length){ container._termSigs=[]; return; }
+  /* Compare block by block with the previous render: the newest message
+     sits in the last block whose contents actually changed (or that is
+     new). Blocks re-rendered word-for-word are not new messages, so a
+     fresh status line types even when an older narration block below it
+     did not change — and a fresh narration line types even when the
+     status strip above it stayed the same. */
+  var sigs=[], prev=container._termSigs||null, changed=-1, same=!!prev && prev.length===logs.length;
+  for(i=0;i<logs.length;i++){
+    sigs.push(logs[i].innerHTML);
+    if(!prev || sigs[i]!==prev[i]){ changed=i; same=false; }
+  }
+  if(same) return; /* nothing new appeared */
+  /* A new message appeared: trim each strip to its 3 most recent lines. */
   advTermTrim(container);
-  /* Trimming changed the blocks; refresh the signature so the trim's own
+  /* Trimming changed the blocks; refresh the signatures so the trim's own
      DOM changes are not mistaken for a new message on the next scan. */
   logs=container.querySelectorAll('.adv-log');
-  sig='';
-  for(i=0;i<logs.length;i++) sig+=logs[i].innerHTML+'\n';
-  container._termSig=sig;
+  sigs=[];
+  for(i=0;i<logs.length;i++) sigs.push(logs[i].innerHTML);
+  container._termSigs=sigs;
   if(!logs.length) return;
-  /* The newest message is the last paragraph of the last log block;
+  if(changed<0||changed>=logs.length) changed=logs.length-1;
+  /* The newest message is the last paragraph of the last changed block;
      earlier paragraphs are already on the page in full. */
-  var lastLog=logs[logs.length-1];
+  var lastLog=logs[changed];
   var ps=lastLog.getElementsByTagName('p');
   if(!ps.length) return;
   var p=ps[ps.length-1];
