@@ -719,3 +719,102 @@ loadSudoku();
 newOthello();
 renderAdventure();
 advShowHome();
+
+/* ===== Beetle Quest narration: terminal typewriter =====
+   The narration/status messages live in .adv-log blocks inside #adv-main
+   (Solo) and #adv-online (Online Battle). Every render rebuilds those
+   blocks, so a MutationObserver spots each fresh block and types out its
+   newest message character by character, terminal-style. Display only:
+   no game state is read or changed, typing runs on a timer so buttons
+   and gameplay are never blocked, and the finished text is exactly the
+   message the game rendered. Plain ES5. */
+var advTermTimer=null;      /* active typing timer, if any */
+var advTermPara=null;       /* <p> currently being typed */
+var advTermFull='';         /* full text of the message being typed */
+var advTermLog=null;        /* .adv-log block that owns advTermPara */
+function advTermReducedMotion(){
+  try{ return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+  catch(e){ return false; }
+}
+function advTermStop(){
+  /* Cancel any typing in progress. If the half-typed paragraph is still on
+     the page, restore its full text so no message is ever left cut off. */
+  if(advTermTimer){ clearInterval(advTermTimer); advTermTimer=null; }
+  if(advTermPara){
+    if(document.body && document.body.contains && document.body.contains(advTermPara)){
+      advTermPara.textContent=advTermFull;
+    }
+    advTermPara=null;
+  }
+  if(advTermLog){ advTermLog._termBusy=false; advTermLog=null; }
+}
+function advTermType(logEl, p, full){
+  advTermStop();
+  var len=full.length;
+  if(!len) return;
+  /* ~16ms per character; longer messages type more characters per tick so
+     the whole message always lands within about 1.5 seconds. */
+  var perTick=Math.max(1, Math.ceil(len/90));
+  var pos=0;
+  var textNode=document.createTextNode('');
+  var cursor=document.createElement('span');
+  cursor.className='adv-term-cursor';
+  cursor.setAttribute('aria-hidden','true');
+  cursor.appendChild(document.createTextNode('\u258C'));
+  p.innerHTML='';
+  p.appendChild(textNode);
+  p.appendChild(cursor);
+  logEl._termBusy=true;
+  advTermPara=p; advTermFull=full; advTermLog=logEl;
+  advTermTimer=setInterval(function(){
+    pos+=perTick;
+    if(pos>=len){
+      var donePara=advTermPara;
+      advTermStop();
+      if(donePara) donePara.textContent=full;
+    } else {
+      textNode.data=full.substring(0,pos);
+    }
+  }, 16);
+}
+function advTermScan(container){
+  var logs=container.querySelectorAll('.adv-log');
+  var i, sig='';
+  for(i=0;i<logs.length;i++){
+    if(logs[i]._termBusy) return; /* our own typing, on a live block: leave it */
+    sig+=logs[i].innerHTML+'\n';
+  }
+  if(sig===container._termSig) return; /* nothing new appeared */
+  container._termSig=sig;
+  if(!logs.length) return;
+  /* The newest message is the last paragraph of the last log block;
+     earlier paragraphs are already on the page in full. */
+  var lastLog=logs[logs.length-1];
+  var ps=lastLog.getElementsByTagName('p');
+  if(!ps.length) return;
+  var p=ps[ps.length-1];
+  /* Safety: a message containing HTML markup is shown instantly, as-is.
+     Only a paragraph of pure text (no element children) is typed. */
+  if(p.children && p.children.length) return;
+  if(p.getElementsByTagName('*').length) return;
+  var full=p.textContent||'';
+  if(!full) return;
+  /* Reduced motion: no typing, no blinking — the message is already
+     rendered in full, so just leave it. */
+  if(advTermReducedMotion()) return;
+  advTermType(lastLog, p, full);
+}
+function advTermInit(){
+  try{
+    if(typeof MutationObserver==='undefined') return;
+    var ids=['adv-main','adv-online'];
+    for(var i=0;i<ids.length;i++){
+      (function(el){
+        if(!el) return;
+        var obs=new MutationObserver(function(){ advTermScan(el); });
+        obs.observe(el, {childList:true, subtree:true});
+      })(document.getElementById(ids[i]));
+    }
+  }catch(e){ /* no observer: messages simply appear in full, as before */ }
+}
+advTermInit();

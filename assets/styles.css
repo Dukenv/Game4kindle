@@ -181,9 +181,18 @@
   .adv-hud{ display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
   .adv-stat{ border:2px solid var(--line); padding:8px 12px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:14px; }
   .adv-stat b{ font-size:18px; }
-  .adv-log{ border:2px solid var(--line); background:var(--wash); padding:12px 14px; font-size:16px; line-height:1.5; margin:12px 0; }
+  /* Beetle Quest narration/status messages: terminal-style strip — dark
+     background, light monospace text, full width of the panel. The colours
+     stay #111 / #f5f5f5 in both colour schemes: it is a terminal screen. */
+  .adv-log{ border:2px solid var(--line); background:#111111; color:#f5f5f5; padding:12px 14px; font-family:"Courier New", Courier, monospace; font-size:16px; font-weight:700; letter-spacing:.04em; line-height:1.55; margin:12px 0; }
   .adv-log p{ margin:0 0 6px; }
   .adv-log p:last-child{ margin-bottom:0; }
+  .adv-log b{ color:#f5f5f5; }
+  /* Blinking block cursor shown only while a message is typing; the script
+     removes it the moment typing finishes, so nothing blinks on e-ink. */
+  .adv-term-cursor{ display:inline-block; animation:adv-term-blink .8s step-end infinite; }
+  @keyframes adv-term-blink{ 0%,100%{ opacity:1; } 50%{ opacity:0; } }
+  @media (prefers-reduced-motion: reduce){ .adv-term-cursor{ animation:none; } }
   .adv-bar{ height:18px; border:2px solid var(--line); background:var(--panel); margin:6px 0 12px; }
   .adv-bar i{ display:block; height:100%; background:var(--fill); }
   .adv-moves{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
