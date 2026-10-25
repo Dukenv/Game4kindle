@@ -17,6 +17,7 @@
       <button class="tab" role="tab" id="tab-sudoku" aria-selected="false" aria-controls="panel-sudoku" onclick="showGame('sudoku')"><strong>Sudoku</strong><span>6 × 6 or 9 × 9 · 3 puzzles each</span></button>
       <button class="tab" role="tab" id="tab-othello" aria-selected="false" aria-controls="panel-othello" onclick="showGame('othello')"><strong>Othello</strong><span>8 × 8 · 3 levels · you are ●</span></button>
       <button class="tab" role="tab" id="tab-adventure" aria-selected="false" aria-controls="panel-adventure" onclick="showGame('adventure')"><strong>Beetle Quest</strong><span>Beetles + Baseball + Mining</span></button>
+      <button class="tab" role="tab" id="tab-kanji" aria-selected="false" aria-controls="panel-kanji" onclick="showGame('kanji')"><strong>部首パズル</strong><span>4・5年生の漢字クイズ</span></button>
     </div>
   </div>
 
@@ -147,10 +148,27 @@
     </div>
   </section>
 
+  <!-- KANJI PUZZLE -->
+  <section class="panel hidden" id="panel-kanji" role="tabpanel" aria-labelledby="tab-kanji">
+    <div class="panel-head">
+      <div><h2>部首合体パズル</h2><p>お題の漢字になるように、2つのパーツをえらんで合体させよう！</p></div>
+      <div class="status" id="kanji-status">もんだい 1 / 10<small>スコア 0</small></div>
+    </div>
+    <div class="panel-body">
+      <div class="switcher-label" style="margin-bottom:8px">学年 — タップで切り替え（さいしょから始まります）</div>
+      <div class="level-row" role="group" aria-label="学年" style="margin-bottom:16px">
+        <button class="level-btn" id="kj-grade-4" aria-pressed="true" onclick="kjSetGrade(4)"><strong>4年生</strong><span>小4で習う漢字</span></button>
+        <button class="level-btn" id="kj-grade-5" aria-pressed="false" onclick="kjSetGrade(5)"><strong>5年生</strong><span>小5で習う漢字</span></button>
+        <button class="level-btn" id="kj-grade-mix" aria-pressed="false" onclick="kjSetGrade(0)"><strong>まぜる</strong><span>4・5年生ぜんぶ</span></button>
+      </div>
+      <div id="kj-main"></div>
+    </div>
+  </section>
+
   <div class="about" aria-label="About Ink &amp; Play">
   <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
   <h1>Ink <em>&amp;</em> Play</h1>
-  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just four turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
+  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just five turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
 
   <div class="specs" aria-label="Designed for e-ink">
     <div class="spec"><strong>✓ E-ink first</strong><p>Bold outlines and high contrast that stay clear on e-ink. Correct answers are told apart by fill and pattern, not by colour alone.</p></div>
@@ -159,12 +177,13 @@
   </div>
   </div>
 
-  <p class="plays-strip" aria-label="Plays so far">Plays so far — Word Guess: <span id="plays-word">–</span> · Sudoku: <span id="plays-sudoku">–</span> · Othello: <span id="plays-othello">–</span> · Beetle Quest: <span id="plays-adventure">–</span></p>
+  <p class="plays-strip" aria-label="Plays so far">Plays so far — Word Guess: <span id="plays-word">–</span> · Sudoku: <span id="plays-sudoku">–</span> · Othello: <span id="plays-othello">–</span> · Beetle Quest: <span id="plays-adventure">–</span> · 部首パズル: <span id="plays-kanji">–</span></p>
 
   <footer><span>Ink &amp; Play — Sample for Kindle Scribe</span><span>Black &amp; white · No timers · Tap to play</span></footer>
 </div>
 
 <script src="assets/games.js"></script>
+<script src="assets/kanji-puzzle.js"></script>
 <script src="assets/beetle-quest.js"></script>
 </body>
 </html>
