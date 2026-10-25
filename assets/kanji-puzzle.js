@@ -301,6 +301,6 @@ function kjResult(){
     +'<div class="kj-result-main">おわり！ 10問中 '+kjCorrectCount+'問 せいかい　スコア '+kjScore+'点</div>'
     +'<div class="kj-result-msg">'+msg+'</div>'
     +'<div class="actions" style="justify-content:center"><button class="btn primary" onclick="kjStartRound()">もう一度あそぶ</button></div>'
-    +'<p style="font-size:14px;color:var(--muted)">学年を変えたいときは、上の「4年生」「5年生」「まぜる」をタップしてね。</p></div>';
+    +'<p style="font-size:15.5px;font-weight:600;color:var(--ink)">学年を変えたいときは、上の「4年生」「5年生」「まぜる」をタップしてね。</p></div>';
 }
 kjStartRound();

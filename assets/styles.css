@@ -263,34 +263,44 @@
   /* KANJI PUZZLE — 部首合体パズル */
   .kj-topic{ border:2px solid var(--line); background:var(--wash); padding:12px 14px; text-align:center; margin-bottom:12px; }
   .kj-topic-main{ font-size:22px; font-weight:800; }
-  .kj-topic-hint{ display:block; font-size:15px; color:var(--muted); margin-top:4px; }
+  .kj-topic-hint{ display:block; font-size:17.5px; font-weight:600; color:var(--ink); margin-top:4px; }
   .kj-preview{ border:2px solid var(--line); background:var(--panel); min-height:90px; display:flex; align-items:center; justify-content:center; gap:10px; padding:8px; margin-bottom:14px; }
   .kj-preview.kj-tb{ flex-direction:column; gap:2px; }
   .kj-slot{ font-size:54px; font-weight:800; line-height:1.1; min-width:60px; text-align:center; }
   .kj-preview.kj-tb .kj-slot{ font-size:40px; min-width:0; }
   .kj-plus{ font-size:26px; color:var(--muted); }
   .kj-done{ font-size:72px; font-weight:800; line-height:1.1; }
-  .kj-rowlabel{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.14em; font-weight:700; margin:10px 0 6px; }
+  .kj-rowlabel{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:14px; letter-spacing:.14em; font-weight:700; margin:10px 0 6px; }
   .kj-tiles{ display:flex; gap:8px; margin-bottom:6px; }
   .kj-tile{ flex:1 1 0; min-width:0; min-height:64px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:10px; padding:6px 4px; }
   .kj-tile .kj-glyph{ display:block; font-size:40px; font-weight:800; line-height:1.15; }
-  .kj-tile .kj-name{ display:block; font-size:13px; color:var(--muted); margin-top:2px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  .kj-tile .kj-name{ display:block; font-size:15px; font-weight:600; color:var(--ink); margin-top:2px; font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
   .kj-tile.kj-sel{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
   .kj-tile.kj-sel .kj-name{ color:var(--fill-ink); opacity:.85; }
   .kj-tile:disabled{ opacity:.45; }
-  .kj-msg{ font-size:17px; font-weight:700; min-height:26px; margin:10px 0 4px; text-align:center; }
+  .kj-msg{ font-size:19px; font-weight:800; min-height:28px; margin:10px 0 4px; text-align:center; }
   .kj-decide{ width:100%; min-height:56px; font-size:18px; margin-top:8px; }
   .kj-decide:disabled{ opacity:.45; }
   .kj-next{ width:100%; min-height:56px; font-size:18px; margin-top:8px; }
   .kj-result{ text-align:center; padding:10px 0 4px; }
   .kj-result-main{ font-size:24px; font-weight:800; }
-  .kj-result-msg{ font-size:19px; margin-top:8px; }
+  .kj-result-msg{ font-size:20px; font-weight:600; margin-top:8px; }
   /* Hidden-kanji mask in the hint: solid black square, a little larger than the text */
   .kj-mask{ color:var(--ink); font-size:1.35em; line-height:1; vertical-align:-0.1em; }
   /* Kanji puzzle uses a kyokasho (school textbook) style font, like Japanese
      elementary school textbooks; falls back to built-in textbook faces */
   #panel-kanji, #tab-kanji{ font-family:"Klee One", "Hiragino Kyokasho", "UD Digi Kyokasho N", "BIZ UDPGothic", "Hiragino Maru Gothic ProN", "Yu Gothic UI", "Yu Gothic", sans-serif; }
   #panel-kanji .status, #panel-kanji .switcher-label, #panel-kanji .kj-rowlabel, #panel-kanji .kj-name, #tab-kanji span{ font-family:inherit; }
+  /* Non-kanji text around the kanji puzzle (intro, status, grade buttons,
+     tab caption): a little larger and bolder so kana stays readable on e-ink */
+  #panel-kanji .panel-head p{ font-size:16.5px; font-weight:600; color:var(--ink); }
+  #panel-kanji .status{ font-size:16px; }
+  #panel-kanji .status small{ font-size:13.5px; font-weight:600; color:var(--ink); }
+  #panel-kanji .switcher-label{ font-size:14px; }
+  #panel-kanji .level-btn strong{ font-size:17px; }
+  #panel-kanji .level-btn span{ font-size:14px; font-weight:600; color:var(--ink); }
+  #panel-kanji .level-btn[aria-pressed="true"] span{ color:var(--fill-ink); }
+  #tab-kanji span{ font-size:14px; font-weight:600; }
   /* About fold: the Ink & Play intro, play counts and footer start hidden
      behind the About button */
   .about-toggle-row{ margin-top:26px; border-top:3px solid var(--line); padding-top:14px; }
