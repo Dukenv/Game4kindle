@@ -7,6 +7,9 @@
 <link rel="icon" href="data:," />
 <title>Sample Game for Kindle Scribe — Ink &amp; Play</title>
 <link rel="stylesheet" href="assets/styles.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 <div class="wrap">
@@ -165,6 +168,10 @@
     </div>
   </section>
 
+  <div class="about-toggle-row">
+    <button class="about-toggle" id="about-toggle" aria-expanded="false" aria-controls="about-more" onclick="toggleAbout()">About — Ink &amp; Playについて ▾</button>
+  </div>
+  <div id="about-more" class="hidden">
   <div class="about" aria-label="About Ink &amp; Play">
   <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
   <h1>Ink <em>&amp;</em> Play</h1>
@@ -180,6 +187,7 @@
   <p class="plays-strip" aria-label="Plays so far">Plays so far — Word Guess: <span id="plays-word">–</span> · Sudoku: <span id="plays-sudoku">–</span> · Othello: <span id="plays-othello">–</span> · Beetle Quest: <span id="plays-adventure">–</span> · 部首パズル: <span id="plays-kanji">–</span></p>
 
   <footer><span>Ink &amp; Play — Sample for Kindle Scribe</span><span>Black &amp; white · No timers · Tap to play</span></footer>
+  </div>
 </div>
 
 <script src="assets/games.js"></script>

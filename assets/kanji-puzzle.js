@@ -238,7 +238,7 @@ function kjRender(){
   var gB=kjSelB>=0?kjOptsB[kjSelB][0]:'？';
   var html='';
   html+='<div class="kj-topic"><span class="kj-topic-main">『'+q.y+'』と読む漢字</span>'
-    +'<span class="kj-topic-hint">ヒント：'+q.h.split(q.k).join('□')+'（'+q.hr+'）</span></div>';
+    +'<span class="kj-topic-hint">ヒント：'+q.h.split(q.k).join('<span class="kj-mask">■</span>')+'（'+q.hr+'）</span></div>';
   if(kjLocked){
     html+='<div class="kj-preview"><span class="kj-done">'+q.k+'</span></div>';
   } else if(q.t==='tb'){

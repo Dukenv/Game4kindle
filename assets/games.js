@@ -356,3 +356,12 @@ function oCpuPick(){
   return pickH;
 }
 
+function toggleAbout(){
+  var box=document.getElementById('about-more');
+  var btn=document.getElementById('about-toggle');
+  if(!box||!btn) return;
+  var isHidden=(' '+box.className+' ').indexOf(' hidden ')!==-1;
+  box.className=isHidden?'':'hidden';
+  btn.setAttribute('aria-expanded', isHidden?'true':'false');
+  btn.textContent=isHidden?'About — Ink & Playについて ▴':'About — Ink & Playについて ▾';
+}

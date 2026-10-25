@@ -285,8 +285,18 @@
   .kj-result{ text-align:center; padding:10px 0 4px; }
   .kj-result-main{ font-size:24px; font-weight:800; }
   .kj-result-msg{ font-size:19px; margin-top:8px; }
+  /* Hidden-kanji mask in the hint: solid black square, a little larger than the text */
+  .kj-mask{ color:var(--ink); font-size:1.35em; line-height:1; vertical-align:-0.1em; }
+  /* Kanji puzzle uses a kyokasho (school textbook) style font, like Japanese
+     elementary school textbooks; falls back to built-in textbook faces */
+  #panel-kanji, #tab-kanji{ font-family:"Klee One", "Hiragino Kyokasho", "UD Digi Kyokasho N", "BIZ UDPGothic", "Hiragino Maru Gothic ProN", "Yu Gothic UI", "Yu Gothic", sans-serif; }
+  #panel-kanji .status, #panel-kanji .switcher-label, #panel-kanji .kj-rowlabel, #panel-kanji .kj-name, #tab-kanji span{ font-family:inherit; }
+  /* About fold: the Ink & Play intro, play counts and footer start hidden
+     behind the About button */
+  .about-toggle-row{ margin-top:26px; border-top:3px solid var(--line); padding-top:14px; }
+  .about-toggle{ min-height:50px; padding:0 18px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:999px; font-size:16px; font-weight:700; }
 
-  .about{ margin-top:26px; border-top:3px solid var(--line); padding-top:16px; }
+  .about{ margin-top:10px; }
   .about h1{ margin-top:14px; }
   @media (max-width:560px){
     h1{ font-size:40px; }
