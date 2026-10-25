@@ -38,7 +38,7 @@
   /* game switcher */
   .switcher{ margin:6px 0 0; }
   .switcher-label{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; margin-bottom:8px; }
-  .tabs{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+  .tabs{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
   .tab{ min-width:0; }
   .tab{ min-height:54px; background:var(--btn-bg); color:var(--btn-ink); border:2px solid var(--line); border-radius:var(--radius); padding:8px 12px; text-align:left; }
   .tab strong{ display:block; font-size:18px; line-height:1.1; }
@@ -301,6 +301,30 @@
   #panel-kanji .level-btn span{ font-size:14px; font-weight:600; color:var(--ink); }
   #panel-kanji .level-btn[aria-pressed="true"] span{ color:var(--fill-ink); }
   #tab-kanji span{ font-size:14px; font-weight:600; }
+  /* SENTENCE REPAIR — バラバラ文修復 */
+  .sr-rowlabel{ font-family: ui-sans-system, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:14px; letter-spacing:.14em; font-weight:700; margin:10px 0 6px; }
+  .sr-answer{ border:2px solid var(--line); background:var(--wash); min-height:64px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding:8px; margin-bottom:12px; }
+  .sr-answer-empty{ font-size:16.5px; font-weight:600; color:var(--ink); padding:0 6px; }
+  .sr-answer-done{ font-size:21px; font-weight:800; line-height:1.5; padding:0 6px; }
+  .sr-chip{ min-height:50px; padding:6px 12px; border:2px solid var(--fill); background:var(--fill); color:var(--fill-ink); border-radius:8px; font-size:20px; font-weight:700; }
+  .sr-cards{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+  .sr-card{ min-height:56px; padding:10px 16px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:10px; font-size:20px; font-weight:700; }
+  .sr-card:disabled{ opacity:.25; }
+  .sr-msg{ font-size:19px; font-weight:800; min-height:28px; margin:10px 0 4px; text-align:center; }
+  .sr-wide{ width:100%; min-height:56px; font-size:18px; margin-top:8px; }
+  .sr-wide:disabled{ opacity:.45; }
+  .sr-result{ text-align:center; padding:10px 0 4px; }
+  .sr-result-main{ font-size:24px; font-weight:800; }
+  .sr-result-msg{ font-size:20px; font-weight:600; margin-top:8px; }
+  /* Sentence repair uses the same kyokasho (school textbook) style font as
+     the kanji puzzle, with the same larger, bolder support text */
+  #panel-sentence, #tab-sentence{ font-family:"Klee One", "Hiragino Kyokasho", "UD Digi Kyokasho N", "BIZ UDPGothic", "Hiragino Maru Gothic ProN", "Yu Gothic UI", "Yu Gothic", sans-serif; }
+  #panel-sentence .status, #panel-sentence .sr-rowlabel, #tab-sentence span{ font-family:inherit; }
+  #panel-sentence .panel-head p{ font-size:16.5px; font-weight:600; color:var(--ink); }
+  #panel-sentence .status{ font-size:16px; }
+  #panel-sentence .status small{ font-size:13.5px; font-weight:600; color:var(--ink); }
+  #tab-sentence span{ font-size:14px; font-weight:600; }
+
   /* About fold: the Ink & Play intro, play counts and footer start hidden
      behind the About button */
   .about-toggle-row{ margin-top:26px; border-top:3px solid var(--line); padding-top:14px; }
@@ -326,6 +350,10 @@
     .tab strong{ font-size:15px; }
     .tab span{ font-size:11.5px; }
     .tab{ padding:7px 9px; }
+    .tabs{ grid-template-columns:repeat(3,1fr); }
+    .sr-card{ font-size:18px; padding:9px 12px; }
+    .sr-chip{ font-size:18px; }
+    .sr-answer-done{ font-size:19px; }
     .kj-tile .kj-glyph{ font-size:34px; }
     .kj-done{ font-size:60px; }
   }

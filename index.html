@@ -21,6 +21,7 @@
       <button class="tab" role="tab" id="tab-othello" aria-selected="false" aria-controls="panel-othello" onclick="showGame('othello')"><strong>Othello</strong><span>8 × 8 · 3 levels · you are ●</span></button>
       <button class="tab" role="tab" id="tab-adventure" aria-selected="false" aria-controls="panel-adventure" onclick="showGame('adventure')"><strong>Beetle Quest</strong><span>Beetles + Baseball + Mining</span></button>
       <button class="tab" role="tab" id="tab-kanji" aria-selected="false" aria-controls="panel-kanji" onclick="showGame('kanji')"><strong>部首パズル</strong><span>4・5年生の漢字クイズ</span></button>
+      <button class="tab" role="tab" id="tab-sentence" aria-selected="false" aria-controls="panel-sentence" onclick="showGame('sentence')"><strong>バラバラ文修復</strong><span>怪盗ストーリー・文の並び替え</span></button>
     </div>
   </div>
 
@@ -168,6 +169,17 @@
     </div>
   </section>
 
+  <!-- SENTENCE REPAIR -->
+  <section class="panel hidden" id="panel-sentence" role="tabpanel" aria-labelledby="tab-sentence">
+    <div class="panel-head">
+      <div><h2>バラバラ文修復</h2><p>怪盗にバラバラにされてしまった文を直そう！カードを正しい順番にタップすると、文が組み上がるよ。全10ステージの物語を進めよう。</p></div>
+      <div class="status" id="sentence-status">ステージ 1 / 10<small>スコア 0</small></div>
+    </div>
+    <div class="panel-body">
+      <div id="sr-main"></div>
+    </div>
+  </section>
+
   <div class="about-toggle-row">
     <button class="about-toggle" id="about-toggle" aria-expanded="false" aria-controls="about-more" onclick="toggleAbout()">About — Ink &amp; Playについて ▾</button>
   </div>
@@ -175,7 +187,7 @@
   <div class="about" aria-label="About Ink &amp; Play">
   <div class="kicker"><span>For Kindle Scribe</span><span>Open this page in the Scribe web browser</span></div>
   <h1>Ink <em>&amp;</em> Play</h1>
-  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just five turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
+  <p class="lede">A sample puzzle book that actually works on e-ink. <b>No timers. No colour tricks.</b> Just six turn-based games with big tap targets, solid black-and-white contrast, and almost no screen redraws — so the Scribe stays crisp and ghost-free.</p>
 
   <div class="specs" aria-label="Designed for e-ink">
     <div class="spec"><strong>✓ E-ink first</strong><p>Bold outlines and high contrast that stay clear on e-ink. Correct answers are told apart by fill and pattern, not by colour alone.</p></div>
@@ -184,7 +196,7 @@
   </div>
   </div>
 
-  <p class="plays-strip" aria-label="Plays so far">Plays so far — Word Guess: <span id="plays-word">–</span> · Sudoku: <span id="plays-sudoku">–</span> · Othello: <span id="plays-othello">–</span> · Beetle Quest: <span id="plays-adventure">–</span> · 部首パズル: <span id="plays-kanji">–</span></p>
+  <p class="plays-strip" aria-label="Plays so far">Plays so far — Word Guess: <span id="plays-word">–</span> · Sudoku: <span id="plays-sudoku">–</span> · Othello: <span id="plays-othello">–</span> · Beetle Quest: <span id="plays-adventure">–</span> · 部首パズル: <span id="plays-kanji">–</span> · バラバラ文修復: <span id="plays-sentence">–</span></p>
 
   <footer><span>Ink &amp; Play — Sample for Kindle Scribe</span><span>Black &amp; white · No timers · Tap to play</span></footer>
   </div>
@@ -192,6 +204,7 @@
 
 <script src="assets/games.js"></script>
 <script src="assets/kanji-puzzle.js"></script>
+<script src="assets/sentence-repair.js"></script>
 <script src="assets/beetle-quest.js"></script>
 </body>
 </html>

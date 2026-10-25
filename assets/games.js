@@ -1,7 +1,7 @@
 /* Ink & Play — shared page code plus Word Guess, Mini Sudoku and Othello.
    Plain ES5, no modules: loaded with a normal script tag before beetle-quest.js. */
 function showGame(name){
-  var games=['word','sudoku','othello','adventure','kanji'];
+  var games=['word','sudoku','othello','adventure','kanji','sentence'];
   for(var i=0;i<games.length;i++){
     var p=document.getElementById('panel-'+games[i]);
     var t=document.getElementById('tab-'+games[i]);
@@ -16,7 +16,7 @@ function showGame(name){
    service (namespace inkplay-dukenv). Plain XMLHttpRequest, ES5 only.
    Every failure is silent: if the service is unreachable the strip just
    keeps showing "–" (or the last value) and the games are unaffected. */
-var PLAY_KEYS={word:'wordguess',sudoku:'sudoku',othello:'othello',adventure:'beetlequest',kanji:'kanji'};
+var PLAY_KEYS={word:'wordguess',sudoku:'sudoku',othello:'othello',adventure:'beetlequest',kanji:'kanji',sentence:'sentence'};
 var PLAY_BASE='https://abacus.jasoncameron.dev';
 function playSet(game,val){
   try{ var el=document.getElementById('plays-'+game); if(el) el.textContent=val; }catch(e){}
@@ -46,7 +46,7 @@ function playHit(game){
 }
 function playLoadAll(){
   try{
-    var games=['word','sudoku','othello','adventure','kanji'];
+    var games=['word','sudoku','othello','adventure','kanji','sentence'];
     for(var i=0;i<games.length;i++) playRequest('get',games[i]);
   }catch(e){}
 }
