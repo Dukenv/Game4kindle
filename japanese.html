@@ -17,9 +17,10 @@
   <div class="back-row"><a class="back-link" href="index.html">← トップページ</a></div>
 
   <div class="switcher">
-    <div class="tabs tabs-2" role="tablist" aria-label="ゲーム">
+    <div class="tabs tabs-3" role="tablist" aria-label="ゲーム">
       <button class="tab" role="tab" id="tab-kanji" aria-selected="true" aria-controls="panel-kanji" onclick="showGame('kanji')"><strong>部首パズル</strong><span>4・5年生の漢字クイズ</span></button>
       <button class="tab" role="tab" id="tab-sentence" aria-selected="false" aria-controls="panel-sentence" onclick="showGame('sentence')"><strong>バラバラ文修復</strong><span>怪盗ストーリー・文の並び替え</span></button>
+      <button class="tab" role="tab" id="tab-quiz" aria-selected="false" aria-controls="panel-quiz" onclick="showGame('quiz')"><strong>国語クイズバトル</strong><span>1人・2人で対戦クイズ</span></button>
     </div>
   </div>
 
@@ -51,11 +52,23 @@
     </div>
   </section>
 
+  <!-- KOKUGO QUIZ BATTLE -->
+  <section class="panel hidden" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+    <div class="panel-head">
+      <div><h2>国語クイズバトル</h2><p>部首・読み方・ことわざなど、国語の3択クイズ！2人モードでは交代で答えて、外すと相手にお助けチャンス。最後は協力問題だよ。</p></div>
+      <div class="status" id="quiz-status">スタート<small>モードと学年をえらんでね</small></div>
+    </div>
+    <div class="panel-body">
+      <div id="qz-main"></div>
+    </div>
+  </section>
+
   <footer><span>Ink &amp; Play — Sample for Kindle Scribe</span><span>Black &amp; white · No timers · Tap to play</span></footer>
 </div>
 
 <script src="assets/games.js"></script>
 <script src="assets/kanji-puzzle.js"></script>
 <script src="assets/sentence-repair.js"></script>
+<script src="assets/kokugo-quiz.js"></script>
 </body>
 </html>

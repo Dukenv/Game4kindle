@@ -325,6 +325,39 @@
   #panel-sentence .status small{ font-size:13.5px; font-weight:600; color:var(--ink); }
   #tab-sentence span{ font-size:14px; font-weight:600; }
 
+  /* KOKUGO QUIZ BATTLE — 国語クイズバトル */
+  .qz-type-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .qz-type{ display:inline-block; border:2px solid var(--line); background:var(--wash); padding:4px 12px; font-size:15px; font-weight:700; letter-spacing:.08em; }
+  .qz-type-final{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
+  .qz-question{ font-size:24px; font-weight:800; line-height:1.5; margin-bottom:10px; }
+  .qz-turn{ font-size:17.5px; font-weight:700; color:var(--ink); margin-bottom:10px; }
+  .qz-choices{ display:flex; flex-direction:column; gap:10px; }
+  .qz-choice{ width:100%; min-height:64px; border:2px solid var(--line); background:var(--btn-bg); color:var(--btn-ink); border-radius:10px; padding:12px 16px; text-align:left; font-size:21px; font-weight:700; line-height:1.35; }
+  .qz-choice-label{ display:inline-block; border:2px solid var(--line); border-radius:50%; width:30px; height:30px; line-height:27px; text-align:center; font-size:16px; font-weight:800; margin-right:10px; vertical-align:1px; }
+  .qz-choice.qz-correct{ background:var(--fill); color:var(--fill-ink); border-color:var(--fill); }
+  .qz-choice.qz-correct .qz-choice-label{ border-color:var(--fill-ink); }
+  .qz-choice.qz-wrong{ background:var(--absent-bg); color:var(--absent-ink); border-color:var(--line-soft); text-decoration:line-through; }
+  .qz-choice:disabled{ opacity:1; }
+  .qz-msg{ font-size:19px; font-weight:800; min-height:28px; margin:12px 0 4px; text-align:center; }
+  .qz-explain{ border:2px solid var(--line); background:var(--wash); padding:12px 14px; font-size:17.5px; font-weight:600; line-height:1.55; margin:10px 0 4px; }
+  .qz-wide{ width:100%; min-height:56px; font-size:18px; margin-top:10px; }
+  .qz-rules{ font-size:17.5px; font-weight:600; color:var(--ink); line-height:1.55; margin:0 0 6px; }
+  .qz-result{ text-align:center; padding:10px 0 4px; }
+  .qz-result-main{ font-size:24px; font-weight:800; }
+  .qz-result-score{ font-size:20px; font-weight:600; margin-top:8px; }
+  /* Quiz battle uses the same kyokasho (school textbook) style font as the
+     other Japanese panels, with the same larger, bolder support text */
+  #panel-quiz, #tab-quiz{ font-family:"Klee One", "Hiragino Kyokasho", "UD Digi Kyokasho N", "BIZ UDPGothic", "Hiragino Maru Gothic ProN", "Yu Gothic UI", "Yu Gothic", sans-serif; }
+  #panel-quiz .status, #panel-quiz .switcher-label, #tab-quiz span{ font-family:inherit; }
+  #panel-quiz .panel-head p{ font-size:16.5px; font-weight:600; color:var(--ink); }
+  #panel-quiz .status{ font-size:16px; }
+  #panel-quiz .status small{ font-size:13.5px; font-weight:600; color:var(--ink); }
+  #panel-quiz .switcher-label{ font-size:14px; }
+  #panel-quiz .level-btn strong{ font-size:17px; }
+  #panel-quiz .level-btn span{ font-size:14px; font-weight:600; color:var(--ink); }
+  #panel-quiz .level-btn[aria-pressed="true"] span{ color:var(--fill-ink); }
+  #tab-quiz span{ font-size:14px; font-weight:600; }
+
   /* About fold: the Ink & Play intro, play counts and footer start hidden
      behind the About button */
   .about-toggle-row{ margin-top:26px; border-top:3px solid var(--line); padding-top:14px; }
@@ -332,6 +365,7 @@
 
   /* Split pages: tab rows sized to the games on the page */
   .tabs.tabs-4{ grid-template-columns:repeat(4,1fr); }
+  .tabs.tabs-3{ grid-template-columns:repeat(3,1fr); }
   .tabs.tabs-2{ grid-template-columns:repeat(2,1fr); }
 
   /* Top Page hub: two big link cards to the game pages */
@@ -367,7 +401,10 @@
     .tab{ padding:7px 9px; }
     .tabs{ grid-template-columns:repeat(3,1fr); }
     .tabs.tabs-4{ grid-template-columns:repeat(2,1fr); }
+    .tabs.tabs-3{ grid-template-columns:repeat(3,1fr); }
     .tabs.tabs-2{ grid-template-columns:repeat(2,1fr); }
+    .qz-question{ font-size:21px; }
+    .qz-choice{ font-size:19px; min-height:60px; padding:10px 12px; }
     .hub-card strong{ font-size:27px; }
     .sr-card{ font-size:18px; padding:9px 12px; }
     .sr-chip{ font-size:18px; }
