@@ -1,198 +1,221 @@
 {
- "updatedAt": "2026-11-27T00:13:12.135Z",
+ "updatedAt": "2026-11-27T01:48:05.303Z",
  "topicUrl": "https://news.web.nhk/newsweb/pl/news-nwa-topic-nationwide-E0000000520",
  "kodomo": [
   {
    "date": "2026-11-12T17:44:00+09:00",
+   "description": "秋は、クマが冬眠（とうみん）する前にたくさん食べ物をさがす季節のため、クマの活動が活発になり、人が住んでいる場所の近くにあらわれることがあります。",
    "section": "災害にそなえよう",
    "title": "秋はクマの活動がふえる！出会わないために気をつけることは？",
    "url": "https://news.web.nhk/newsweb/na/nd-20261110de73399"
   },
   {
    "date": "2026-11-02T18:04:00+09:00",
+   "description": "2026年11月2日に「防災庁（ぼうさいちょう）」という組織（そしき）が新しくできました。",
    "section": "災害にそなえよう",
    "title": "「防災庁」が新しくできた 災害への「備え」って？",
    "url": "https://news.web.nhk/newsweb/na/nd-20261029de67518"
   },
   {
    "date": "2026-10-16T12:12:00+09:00",
+   "description": "日本にはどのくらい火山があるか、知っていますか？実は日本には、111もの「活火山（かつかざん）＝活動（かつどう）している火山」があるんです。",
    "section": "災害にそなえよう",
    "title": "知っておきたい日本の火山 噴火するとどんな危険が？",
    "url": "https://news.web.nhk/newsweb/na/nd-20260929de53076"
   },
   {
    "date": "2026-10-23T15:22:00+09:00",
+   "description": "最近、会社やお店がサイバー攻撃（こうげき）を受けて、たくさんの人の名前や住所、メールアドレスなどの個人情報（こじんじょうほう）がもれてしまう被害（ひがい）がたくさん起きています。",
    "section": "オトナも気になる！こどもニュース",
    "title": "個人情報が流出する被害がふえている！どうしたらいいの？",
    "url": "https://news.web.nhk/newsweb/na/nd-20261022de63354"
   },
   {
    "date": "2026-10-05T12:18:00+09:00",
+   "description": "ノーベル賞（しょう）の発表が10月5日から始まり、日本から3年連続で選ばれるか注目されています。この時期、よくニュースで耳にするノーベル賞ですが、どんな賞か知っていますか？",
    "section": "オトナも気になる！こどもニュース",
    "title": "ノーベル賞ってなに？もらうとどうなるの？",
    "url": "https://news.web.nhk/newsweb/na/nd-20261002de53842"
   },
   {
+   "title": "「防災庁」が新しくできた 災害への「備え」って？ 11月2日 18:04",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261029de67518",
+   "date": "",
+   "section": "こどもニュース"
+  },
+  {
+   "title": "知っておきたい日本の火山 噴火するとどんな危険が？ 10月16日 12:12",
+   "url": "https://news.web.nhk/newsweb/na/nd-20260929de53076",
+   "date": "",
+   "section": "こどもニュース"
+  },
+  {
+   "title": "ノーベル賞ってなに？もらうとどうなるの？ 10月5日 12:18",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261002de53842",
+   "date": "",
+   "section": "こどもニュース"
+  },
+  {
    "title": "「軽傷」「重傷」境目は？ニュースで聞くことばを分かりやすく",
    "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBZRlRLbmtNX2RYbVhFd21WejI3SUk5Q3NfX05PY3BNYmhBUDNvMUdJSFRIWkd6SER0TWQ5eC10RGRtMWQ0TDhNRTlGMDlpQWFtUklTUDdrc1pqWVBMV2lINkJKVEJLSUw1TEZwTU5kQVlRVTc0VjREQ0pyNA?oc=5",
    "date": "2025-05-12T07:00:00.000Z",
-   "description": "<a href=\"https://news.google.com/rss/articles/CBMie0FVX3lxTFBZRlRLbmtNX2RYbVhFd21WejI3SUk5Q3NfX05PY3BNYmhBUDNvMUdJSFRIWkd6SER0TWQ5eC10RGRtMWQ0TDhNRTlGMDlpQWFtUklTUDdrc1pqWVBMV2lINkJKVEJLSUw1TEZwTU5kQVlRVTc0VjREQ0pyNA?oc=5\" target=\"_blank\">「軽傷」「重傷」境目は？ニュースで聞くことばを分かりやすく</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">NHKニュース</font>",
+   "description": "",
    "section": "こどもニュース"
   },
   {
    "title": "子どもの声がまちを変える?全国に先駆ける東京 町田のねらいは",
    "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1vTVBaZlM1TUFzeVpYcXFDekNzRnB1NFhERWx0eXdNY3NnY0NIY011MUhiZ3hWQXRHSzdad0o2WlBLYUdWVDhjRFNfWGs4bHNHNHdyUk96YTRtWXd0dHJJ?oc=5",
    "date": "2023-12-22T08:00:00.000Z",
-   "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE1vTVBaZlM1TUFzeVpYcXFDekNzRnB1NFhERWx0eXdNY3NnY0NIY011MUhiZ3hWQXRHSzdad0o2WlBLYUdWVDhjRFNfWGs4bHNHNHdyUk96YTRtWXd0dHJJ?oc=5\" target=\"_blank\">子どもの声がまちを変える?全国に先駆ける東京 町田のねらいは</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">NHKニュース</font>",
+   "description": "",
    "section": "こどもニュース"
   },
   {
    "title": "そろばん日本一へ 密着!子どもたちの熱い夏 今も人気の理由は?",
    "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5pbGVvb0ZXR2NINnhLLVNnREFLbHl4LUZEZmM1OGVFSUx0cEpzYVRmclRTY3BEbnZLM05QMEF5T0lKUnZfUjQ3Wm04QjdsWE5kUHpaeTNaZGFsSGtKYVJV?oc=5",
    "date": "2024-09-04T07:00:00.000Z",
-   "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE5pbGVvb0ZXR2NINnhLLVNnREFLbHl4LUZEZmM1OGVFSUx0cEpzYVRmclRTY3BEbnZLM05QMEF5T0lKUnZfUjQ3Wm04QjdsWE5kUHpaeTNaZGFsSGtKYVJV?oc=5\" target=\"_blank\">そろばん日本一へ 密着!子どもたちの熱い夏 今も人気の理由は?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">NHKニュース</font>",
+   "description": "",
    "section": "こどもニュース"
   },
   {
    "title": "1からわかる「新しいお札」なぜ変わる? 世界初 顔が動く?",
    "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFByRld3ZVlwZjh6ZHljV1RxcEZvbXRPWGtvdUNTLWJhY3Jfei1UeTZ2aFFjMUo5TWsxUzJtUHhPbVFreXdUMUZnUGhYRkNnVzFQRHBBZXlBeWk5UVRRN1Jn?oc=5",
    "date": "2024-04-26T07:00:00.000Z",
-   "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTFByRld3ZVlwZjh6ZHljV1RxcEZvbXRPWGtvdUNTLWJhY3Jfei1UeTZ2aFFjMUo5TWsxUzJtUHhPbVFreXdUMUZnUGhYRkNnVzFQRHBBZXlBeWk5UVRRN1Jn?oc=5\" target=\"_blank\">1からわかる「新しいお札」なぜ変わる? 世界初 顔が動く?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">NHKニュース</font>",
+   "description": "",
    "section": "こどもニュース"
   },
   {
    "title": "選べる色やデザイン100種類以上？広がる “イマドキ制服”とは",
    "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE14V01hUUFnb091N0ZGUFhEX0dUOWozUEJ2ZEN5MGZ4R0VyeGRIeXVscXZYbDZ4akl4ZDVFSklpOHlaRHpXc0szaVd3VEl3dEFHVjFtNWc5RVlHV2hLR0FN?oc=5",
    "date": "2025-02-06T08:00:00.000Z",
-   "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE14V01hUUFnb091N0ZGUFhEX0dUOWozUEJ2ZEN5MGZ4R0VyeGRIeXVscXZYbDZ4akl4ZDVFSklpOHlaRHpXc0szaVd3VEl3dEFHVjFtNWc5RVlHV2hLR0FN?oc=5\" target=\"_blank\">選べる色やデザイン100種類以上？広がる “イマドキ制服”とは</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">NHKニュース</font>",
+   "description": "",
    "section": "こどもニュース"
   },
   {
    "title": "子どもなのに骨や関節がおとろえる!? 運動していても要注意?",
    "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBMNEU2amhYRjY2d0FHZzVxc0JVNlNxTEI0ZV9YRWl0dVVXaVFwZF9hMUR6dmhEWGh3VGdZeUxsOUlzV0xLejg5X2h6WVJXdG5kZDRBbkpsQm9BLS10X09z?oc=5",
    "date": "2024-06-07T07:00:00.000Z",
-   "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTFBMNEU2amhYRjY2d0FHZzVxc0JVNlNxTEI0ZV9YRWl0dVVXaVFwZF9hMUR6dmhEWGh3VGdZeUxsOUlzV0xLejg5X2h6WVJXdG5kZDRBbkpsQm9BLS10X09z?oc=5\" target=\"_blank\">子どもなのに骨や関節がおとろえる!? 運動していても要注意?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">NHKニュース</font>",
+   "description": "",
    "section": "こどもニュース"
   }
  ],
  "latest": [
   {
-   "title": "台風13号 影響は長時間続く 警戒を 台風15号の動きは?",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015199841000.html",
-   "date": "2026-08-08T12:54:30.000Z",
-   "description": "大型で非常に強い台風13号は、沖縄本島の西の海上を進んでいます。沖縄・奄美では風や雨の影響が長時間続いていて、土砂災害などに厳重な警戒を続けてください。"
+   "title": "【更新中】関文科相問責決議案 採決へ 可否は見通せない情勢",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82148",
+   "date": "2026-11-27T01:40:49.000Z",
+   "description": "関文部科学大臣に対する問責決議案は、午前10時からの参議院本会議で趣旨説明や討論のあと、採決が行われます。 与野党とも可決か否決かギリギリの情勢だとみていて、党内の引き締めなどが行われました。"
   },
   {
-   "title": "北日本と東日本中心 9日も大気の状態が非常に不安定の見込み",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200211000.html",
-   "date": "2026-08-08T14:17:32.000Z",
-   "description": "8日は北日本から西日本にかけての広い範囲で大気の状態が非常に不安定になり、「記録的短時間大雨」の気象防災速報があわせて7回発表されるなど局地的な大雨となりました。9日も大気の状態が非常に不安定になる見込みで、低い土地の浸水や急な川の増水などに十分注意が必要です。"
+   "title": "エヌビディアが東南アジア4か国への輸出を停止 欧米メディア",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82164",
+   "date": "2026-11-26T23:00:00.000Z",
+   "description": "欧米の複数のメディアは、アメリカの半導体大手エヌビディアが取引先の企業に対し、先端半導体を搭載した製品の東南アジア4か国への輸出を停止させたと報じました。トランプ政権が中国へのう回輸出を防ぐための新た…"
   },
   {
-   "title": "愛知県内で水難事故相次ぐ 2人死亡",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200261000.html",
-   "date": "2026-08-08T14:06:51.000Z",
-   "description": "8日、愛知県内の海と川で水難事故が相次ぎ、2人が死亡しました。"
+   "title": "北海道新聞記者の妻の手記をロシアメディアも報じる",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82163",
+   "date": "2026-11-26T20:07:00.000Z",
+   "description": "ロシアの治安機関に拘束された北海道新聞の記者の妻が公開した手記の内容を複数のロシアのメディアが報じました。 夫妻について「2人ともロシア文化が好きだ」などと紹介し、ロシアへの愛着と理解がある記者が拘…"
   },
   {
-   "title": "熊本地震 10年前の地震と隣り合う領域で発生か 専門家分析",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200121000.html",
-   "date": "2026-08-08T11:53:49.000Z",
-   "description": "7月28日に発生した最大震度7の地震は、「日奈久断層帯」のうち、10年前の熊本地震の際に活動した場所と隣り合う領域がずれ動き、発生したとみられることが専門家の分析で分かりました。断層帯には割れ残っているところがあるとして、専門家は「いつかは分からないが、今後、地震を引き起こす可能性もあるため、注意が必要だ」と指摘しています。"
+   "title": "東京23区の11月の消費者物価指数 前年同月比2.9%上昇",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82195",
+   "date": "2026-11-27T00:02:54.000Z",
+   "description": "東京23区の11月の消費者物価指数の速報値は、天候による変動が大きい生鮮食品を除いた総合で、去年2025年の11月と比べて2.9％上昇しました。 上昇率は、10月と比べて、0.3ポイント拡大しました…"
   },
   {
-   "title": "ラグビーリーグワン フィジー出身選手が死亡 熱中症疑いで搬送",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200291000.html",
-   "date": "2026-08-08T11:29:37.000Z",
-   "description": "ラグビーリーグワンの2部にあたるディビジョン2の「九州電力キューデンヴォルテクス」は、チームに所属するサイモニ・ヴニランギ選手が熱中症の疑いで病院に搬送され、その後、死亡したと発表しました。"
+   "title": "学校のいじめ79万件超で過去最多 「性的いじめ」初調査 文科省",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82139",
+   "date": "2026-11-26T20:08:00.000Z",
+   "description": "2025年度、全国の学校で把握されたいじめは79万件余りと5年連続で過去最多を更新したことが文部科学省の調査で分かりました。 また「性的いじめ」を初めて調査した結果、8000件以上が確認されていて文部…"
   },
   {
-   "title": "「韓国サッカー協会が外国人審判員に性的接待」韓国メディア",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200271000.html",
-   "date": "2026-08-08T09:38:23.000Z",
-   "description": "韓国のサッカー協会が、代表チームの国際試合を担当した日本を含む外国の審判員などに「性的な接待を行っていた」と複数のメディアが伝え、協会は8日、組織運営に批判が高まっていることなどを含め、一連の騒動を謝罪しました。"
+   "title": "SUBARU「フォレスター」など17万台余 リコール",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261126de81797",
+   "date": "2026-11-26T06:17:18.000Z",
+   "description": "SUBARUは「フォレスター」など4車種およそ17万8000台のリコールを、国土交通省に届け出ました。 エンジン周辺の部品の強度が不足していて、最悪の場合、エンジンが停止するおそれがあるとしています…"
   },
   {
-   "title": "イチローさん マリナーズOBのホームラン競争でファンわかせる",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200331000.html",
-   "date": "2026-08-08T11:55:50.000Z",
-   "description": "大リーグ、マリナーズなどで活躍し去年アメリカで野球殿堂入りしたイチローさんが、マリナーズの創設50周年を記念したOBによるホームラン競争に参加し、フェンスを越える当たりを連発して多くのファンをわかせました。"
+   "title": "沖縄県で明け方に線状降水帯発生 レベル4危険警報も",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82176",
+   "date": "2026-11-27T00:08:19.000Z",
+   "description": "前線の影響で、沖縄県では27日明け方に線状降水帯が発生して非常に激しい雨が降りました。 これまでの雨でレベル4の危険警報が出されている地域があり、引き続き、土砂災害や川の氾濫などに厳重な警戒が必要で…"
   }
  ],
  "sports": [
   {
-   "title": "オープンAI 開発一時中断 AIみずからサイバー攻撃実行のおそれ",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200151000.html",
-   "date": "2026-08-08T06:10:11.000Z",
-   "description": "生成AIの「ChatGPT」の開発を手がけるアメリカのオープンAIは、AIモデル「アストラ」の開発の一時中断を7日、発表しました。理由について、AIの能力が大幅に向上し、みずからの判断で重大なサイバー攻撃を実行するおそれが排除できないとしています。"
+   "title": "東京23区の11月の消費者物価指数 前年同月比2.9%上昇",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82195",
+   "date": "2026-11-27T00:02:54.000Z",
+   "description": "東京23区の11月の消費者物価指数の速報値は、天候による変動が大きい生鮮食品を除いた総合で、去年2025年の11月と比べて2.9％上昇しました。 上昇率は、10月と比べて、0.3ポイント拡大しました…"
   },
   {
-   "title": "「なりすまし広告」詐欺対策強化を 政府がSNS事業者に要請",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015199771000.html",
-   "date": "2026-08-08T01:04:37.000Z",
-   "description": "SNS上で有名人の写真などを無断で使った「なりすまし広告」による詐欺の被害が相次ぐなか、政府は、SNSの運営事業者に対して、広告主の本人確認といった対策を強化するよう文書で要請しました。"
+   "title": "エヌビディアが東南アジア4か国への輸出を停止 欧米メディア",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82164",
+   "date": "2026-11-26T23:00:00.000Z",
+   "description": "欧米の複数のメディアは、アメリカの半導体大手エヌビディアが取引先の企業に対し、先端半導体を搭載した製品の東南アジア4か国への輸出を停止させたと報じました。トランプ政権が中国へのう回輸出を防ぐための新た…"
   },
   {
-   "title": "千葉 銚子 輸入サバ高騰で加工業者の約2割が倒産や廃業状態に",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015199891000.html",
-   "date": "2026-08-07T22:28:58.000Z",
-   "description": "サバの加工が盛んな千葉県銚子市では、原料の大半を占めるノルウェー産などの輸入サバの価格高騰で水産加工業者の採算が悪化し、およそ2割が倒産や、事実上の廃業状態にあることが分かりました。"
+   "title": "住宅購入の資金 贈与税の非課税措置を延長の方向で調整",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82144",
+   "date": "2026-11-26T22:29:45.000Z",
+   "description": "政府・与党は2026年の年末に期限を迎える祖父母や親から住宅の購入資金などの援助を受けた際、一定額まで贈与税を非課税とする措置について、延長する方向で調整に入りました。"
   },
   {
-   "title": "KDDI 楽天への回線提供の契約 9月で終了 一部では提供継続",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015199811000.html",
-   "date": "2026-08-07T15:04:09.000Z",
-   "description": "KDDIが楽天モバイルに回線を貸し出す「ローミング契約」について、KDDIの松田浩路社長は、決算会見で、現在の契約は9月末で終了するものの、過疎地などエリアを限定して通信回線の提供を続ける考えを明らかにしました。"
+   "title": "年末商戦前にダークパターンや詐欺サイトに注意呼びかけ",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261126de81876",
+   "date": "2026-11-26T12:37:02.000Z",
+   "description": "年末商戦が本格化するのを前に、専門家などで作る民間の団体が会見し、消費者を勘違いさせるようないわゆる「ダークパターン」と呼ばれる表示で宣伝する通販サイトなどが増えるおそれがあるとして、注意を呼びかけま…"
   },
   {
-   "title": "米就業者 市場予想に反し減少 利上げ観測後退で円高ドル安進む",
-   "url": "http://www3.nhk.or.jp/news/html/20260807/k10015199701000.html",
-   "date": "2026-08-07T14:53:24.000Z",
-   "description": "円相場や株価に影響を及ぼすアメリカの雇用統計が発表され、7月の農業分野以外の就業者は減少に転じ、市場の予想を大幅に下回りました。アメリカのFRB＝連邦準備制度理事会が早期に利上げに踏み切るという観測がいくぶん後退し、外国為替市場では、公表後にドルを売って円を買う動きが進みました。"
+   "title": "ワールド KARTE不正アクセスで個人情報900万余漏えい",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261126de82115",
+   "date": "2026-11-26T12:12:09.000Z",
+   "description": "アパレル大手のワールドは、外部の「KARTE」というサービスが不正アクセスを受け、漏えいした個人情報の内容や件数を新たに公表しました。 それによりますと、漏れたのは通販サイトの会員のメールアドレスの…"
   },
   {
-   "title": "石油元売りに新交付金案 原油の代替調達促す 経産省会合で",
-   "url": "http://www3.nhk.or.jp/news/html/20260807/k10015199711000.html",
-   "date": "2026-08-07T13:28:52.000Z",
-   "description": "原油の調達先を多角化するため、石油元売り会社がホルムズ海峡をはじめリスクの高いルートを避けて調達する場合、会社に対して交付金を支給するという案が7日に開かれた経済産業省の会合で新たに示されました。"
+   "title": "三井不動産アプリ 不正アクセスで個人情報311万人分漏えい",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261126de82098",
+   "date": "2026-11-26T11:33:17.000Z",
+   "description": "三井不動産は、グループが手がける商業施設のアプリ、「三井ショッピングパークアプリ」が不正アクセスを受け、漏えいした個人情報の内容や件数を新たに公表しました。 それによりますと、漏れたのは会員の氏名、…"
   }
  ],
  "science": [
   {
-   "title": "イチローさん マリナーズOBのホームラン競争でファンわかせる",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200331000.html",
-   "date": "2026-08-08T11:55:50.000Z",
-   "description": "大リーグ、マリナーズなどで活躍し去年アメリカで野球殿堂入りしたイチローさんが、マリナーズの創設50周年を記念したOBによるホームラン競争に参加し、フェンスを越える当たりを連発して多くのファンをわかせました。"
+   "title": "北朝鮮がロシアへの軍事支援を一時停止か ウクライナが分析",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82198",
+   "date": "2026-11-26T23:42:16.000Z",
+   "description": "ウクライナは、北朝鮮がウクライナへの軍事侵攻を続けるロシアに対する軍事支援を一時的に停止したという情報があると発表し、侵攻に影響を及ぼすかが焦点となります。"
   },
   {
-   "title": "【動画】中国 北京で人気のレトロ写真館",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015199681000.html",
-   "date": "2026-08-08T11:25:15.000Z",
-   "description": "中国の若者の間でひそかに広がるレトロブーム80年代、90年代の生活を体験しながら写真撮影ができる一風変わった北京の写真感を取材しました"
+   "title": "エヌビディアが東南アジア4か国への輸出を停止 欧米メディア",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82164",
+   "date": "2026-11-26T23:00:00.000Z",
+   "description": "欧米の複数のメディアは、アメリカの半導体大手エヌビディアが取引先の企業に対し、先端半導体を搭載した製品の東南アジア4か国への輸出を停止させたと報じました。トランプ政権が中国へのう回輸出を防ぐための新た…"
   },
   {
-   "title": "「韓国サッカー協会が外国人審判員に性的接待」韓国メディア",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200271000.html",
-   "date": "2026-08-08T09:38:23.000Z",
-   "description": "韓国のサッカー協会が、代表チームの国際試合を担当した日本を含む外国の審判員などに「性的な接待を行っていた」と複数のメディアが伝え、協会は8日、組織運営に批判が高まっていることなどを含め、一連の騒動を謝罪しました。"
+   "title": "クウェートが攻撃を受け外国人2人死亡 イランは関与否定",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82197",
+   "date": "2026-11-26T22:56:51.000Z",
+   "description": "中東のクウェートで26日、防空関連施設に攻撃があり、現地で作業をしていたイタリア人2人が死亡しました。クウェート政府はイランによる攻撃だとする一方、イラン側は攻撃への関与を否定しています。"
   },
   {
-   "title": "【詳細】ロシア ウクライナに軍事侵攻（8月8日の動き）",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015192491000.html",
-   "date": "2026-08-08T07:25:42.000Z",
-   "description": "ロシアによるウクライナに対する軍事侵攻が続いています。ウクライナの各地でロシア軍とウクライナ軍が戦闘を続けていて、大勢の市民が国外へ避難しています。戦闘の状況や関係各国の外交など、ウクライナ情勢をめぐる8日（日本時間）の動きを随時更新でお伝えします。（日本とウクライナ、およびロシアのモスクワとは6時間の時差があります）"
+   "title": "ロシア外務省 日ロ首脳の中国での意見交換の事実を認める",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82181",
+   "date": "2026-11-26T21:36:56.000Z",
+   "description": "高市総理大臣とロシアのプーチン大統領が11月18日、訪問先の中国で意見を交わしたことについて、ロシア外務省の報道官は「両国間の関係に多少の改善をもたらすことを期待している」と述べ、ロシア側としても接触…"
   },
   {
-   "title": "ロシアの攻撃でキーウ州3人死亡 ウクライナは物流インフラ攻撃",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200231000.html",
-   "date": "2026-08-08T07:10:48.000Z",
-   "description": "ウクライナのキーウ州では、ロシアによる攻撃が相次ぎ3人が死亡しました。一方、ウクライナは、ロシア内陸部の物流インフラをねらった攻撃を続けています。"
+   "title": "サウジアラビア南部の製油所をフーシ派攻撃か 操業一時停止",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82191",
+   "date": "2026-11-26T21:34:00.000Z",
+   "description": "サウジアラビアと、隣国イエメンの反政府勢力フーシ派による攻撃の応酬が続く中、サウジアラビア南部の製油所が攻撃を受けて操業を一時停止し、影響の拡大が懸念されています。"
   },
   {
-   "title": "オープンAI 開発一時中断 AIみずからサイバー攻撃実行のおそれ",
-   "url": "http://www3.nhk.or.jp/news/html/20260808/k10015200151000.html",
-   "date": "2026-08-08T06:10:11.000Z",
-   "description": "生成AIの「ChatGPT」の開発を手がけるアメリカのオープンAIは、AIモデル「アストラ」の開発の一時中断を7日、発表しました。理由について、AIの能力が大幅に向上し、みずからの判断で重大なサイバー攻撃を実行するおそれが排除できないとしています。"
+   "title": "欧州中央銀行次期総裁にスペインのデコス氏指名で合意",
+   "url": "https://news.web.nhk/newsweb/na/nd-20261127de82180",
+   "date": "2026-11-26T20:52:34.000Z",
+   "description": "EU＝ヨーロッパ連合は、ユーロ圏の金融政策を担うヨーロッパ中央銀行の新たな総裁に、スペインの中央銀行の総裁などを務めたデコス氏を指名することで合意しました。 現在のラガルド総裁の後任となる見通しで、…"
   }
  ]
 }

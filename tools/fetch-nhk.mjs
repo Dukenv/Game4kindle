@@ -97,7 +97,7 @@ async function kodomoFromGoogleNews() {
     const items = parseRSS(await fetchText(url), 20);
     const deny = ['こどもニュース', 'オトナも気になる！こどもニュース', 'ニュース一覧', '関連リンク', '速報・最新情報', 'NHK ONE'];
     return items
-      .map(it => ({ ...it, title: it.title.replace(/\s*[-|]\s*NHK.*$/, '').trim(), section: 'こどもニュース' }))
+      .map(it => ({ title: it.title.replace(/\s*[-|]\s*NHK.*$/, '').trim(), url: it.url, date: it.date, description: '', section: 'こどもニュース' }))
       .filter(it => it.title.length >= 8 && !deny.some(d => it.title.includes(d)));
   } catch (e) { console.log('google news NG:', e.message); return []; }
 }

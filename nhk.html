@@ -29,6 +29,14 @@
   .links a{display:block;font-size:20px;font-weight:800;color:#111;border:2px solid #111;border-radius:10px;padding:16px;margin:12px 0;text-decoration:none}
   .links a span{display:block;font-size:15px;font-weight:400;color:#444;margin-top:3px}
   .err{border:2px solid #111;padding:14px 16px;font-size:17px;margin:12px 0}
+  .item .read{font-size:15px;font-weight:800;margin-top:8px;text-decoration:underline}
+  .backbtn{min-height:56px;padding:0 22px;border:2px solid #111;background:#fff;color:#111;border-radius:999px;font-size:18px;font-weight:700;margin:10px 0}
+  .rdate{font-size:15px;color:#444;font-weight:700;margin-top:14px}
+  .rtitle{font-size:30px;line-height:1.35;margin:8px 0 10px}
+  .rstatus{font-size:15px;color:#444;border:1.5px solid #888;border-radius:8px;padding:8px 12px;margin:10px 0}
+  .rbody p{font-size:21px;line-height:1.9;margin:0 0 20px}
+  .official{display:block;font-size:19px;font-weight:800;color:#111;border:2px solid #111;border-radius:10px;padding:15px 16px;margin:16px 0;text-decoration:none;text-align:center}
+  #reader{display:none}
   footer{margin-top:36px;border-top:2px solid #111;padding-top:10px;font-size:14px;color:#444}
 </style>
 </head>
@@ -37,7 +45,8 @@
   <a class="back" href="index.html">← トップページ</a>
   <div class="kicker"><span>FOR KINDLE SCRIBE</span><span>NHKニュースを やさしく・大きく</span></div>
   <h1>NHK こどもニュース</h1>
-  <p class="lede">NHK「こどもニュース」の新しい記事と、NHKの最新ニュースを、Kindle Scribeで読みやすく並べたページです。記事をタップするとNHK公式の記事が開きます。</p>
+  <p class="lede">NHK「こどもニュース」の新しい記事と、NHKの最新ニュースを、Kindle Scribeで読みやすく並べたページです。記事をタップすると、NHKのサイトへ移動せず、このページの中で本文が読めます。</p>
+  <div id="list-wrap">
   <p class="updated" id="updated">読み込み中…</p>
   <button class="refresh" id="refresh-btn" type="button">↻ 最新のニュースに更新する</button>
 
@@ -52,7 +61,9 @@
     <a href="https://www.nhk.or.jp/school/">NHK for School<span>学校向けの動画・教材サイト</span></a>
   </div>
 
-  <p class="note">このページのニュース一覧は、NHKの公式RSSフィードなどから1時間ごとに自動で取り直しています。記事の本文はNHK公式サイトで読んでください（出典：NHK）。「更新する」ボタンを押すと、この端末でも最新の取り込み結果を読み直します。</p>
+  <p class="note">このページのニュース一覧は、NHKの公式RSSフィードなどから1時間ごとに自動で取り直しています。記事をタップすると、まず要約が表示され、本文が取り込めればそのままこのページで全文が読めます（出典：NHK）。取り込めなかった記事は「NHK公式で開く」から読んでください。「更新する」ボタンを押すと、この端末でも最新の取り込み結果を読み直します。</p>
+  </div>
+  <div id="reader"></div>
   <footer>NHK こどもニュース for Kindle Scribe — Ink &amp; Play</footer>
 </div>
 <script src="assets/nhk-news.js"></script>
