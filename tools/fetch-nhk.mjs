@@ -80,7 +80,7 @@ async function kodomoFromTopic() {
     const re = /href="(?:https:\/\/news\.web\.nhk)?(\/newsweb\/na\/(nd-[a-z0-9]+))"[^>]*>([\s\S]*?)<\/a>/gi;
     let m;
     while ((m = re.exec(html))) {
-      const title = cleanText(m[3]);
+      const title = cleanText(m[3]).replace(/\s*\d{1,2}月\d{1,2}日\s*\d{1,2}:\d{2}\s*$/, '').trim();
       if (title.length < 8 || seen.has(m[2])) continue;
       seen.set(m[2], { title, url: 'https://news.web.nhk/newsweb/na/' + m[2], date: '', section: 'こどもニュース' });
     }
@@ -90,8 +90,7 @@ async function kodomoFromTopic() {
   } catch (e) { console.log('topic page NG:', e.message); return []; }
 }
 
-async function kodomoFromGoogleNews() {
-  const q = encodeURIComponent('site:news.web.nhk "こどもニュース"');
+async function kodomoFromGoogleNews() {  const q = encodeURIComponent('site:news.web.nhk "こどもニュース"');
   const url = `https://news.google.com/rss/search?q=${q}&hl=ja&gl=JP&ceid=JP:ja`;
   try {
     const items = parseRSS(await fetchText(url), 20);
@@ -100,6 +99,37 @@ async function kodomoFromGoogleNews() {
       .map(it => ({ title: it.title.replace(/\s*[-|]\s*NHK.*$/, '').trim(), url: it.url, date: it.date, description: '', section: 'こどもニュース' }))
       .filter(it => it.title.length >= 8 && !deny.some(d => it.title.includes(d)));
   } catch (e) { console.log('google news NG:', e.message); return []; }
+}
+
+const BAD_PARA = ['関連リンク', 'プライバシー', '利用規約', 'NHKについて', '受信料', 'ご意見・お問い合わせ',
+  'Copyright', 'All rights reserved', '天気予報・防災情報', '新着ニュース', '深掘りコンテンツ', '動画を見る'];
+function extractBody(html, title) {
+  const out = [];
+  const seen = new Set();
+  const re = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+  let m, total = 0;
+  while ((m = re.exec(html))) {
+    const p = cleanText(m[1]);
+    if (p.length < 40 || p === title || seen.has(p)) continue;
+    if (BAD_PARA.some(b => p.includes(b))) continue;
+    seen.add(p); out.push(p); total += p.length;
+    if (out.length >= 14) break;
+  }
+  return total >= 300 ? out : null;
+}
+async function attachBodies(items, max) {
+  let done = 0;
+  for (const it of items) {
+    if (done >= max) break;
+    if (!/news\.web\.nhk\/newsweb\/na\/nd-/.test(it.url) && !/www3\.nhk\.or\.jp\/news\/html\//.test(it.url)) continue;
+    try {
+      const html = await fetchText(it.url, 20000);
+      if (html.includes('403 Forbidden')) throw new Error('403');
+      const body = extractBody(html, it.title);
+      if (body) { it.body = body; done++; console.log('body OK', it.title.slice(0, 24), body.length + '段落'); }
+      else console.log('body empty', it.title.slice(0, 24));
+    } catch (e) { console.log('body NG', it.title.slice(0, 24), e.message); }
+  }
 }
 
 async function main() {
@@ -120,6 +150,15 @@ async function main() {
     if (!byTitle.has(key)) byTitle.set(key, it);
   }
   const kodomo = [...byTitle.values()].slice(0, 20);
+
+  // Best-effort full text so the Scribe page can show articles in its reader
+  // without sending the reader to NHK. NHK blocks many automated requests,
+  // so whatever succeeds is stored; the page falls back to summaries + the
+  // official link for the rest.
+  await attachBodies(kodomo, 14);
+  await attachBodies(latest, 8);
+  await attachBodies(sports, 4);
+  await attachBodies(science, 4);
 
   if (!latest.length && !kodomo.length) {
     console.error('All sources failed; keeping previous nhk-news.json');

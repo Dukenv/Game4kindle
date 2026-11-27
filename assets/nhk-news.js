@@ -126,7 +126,7 @@
         return;
       }
       var st = steps[i++];
-      xhrGet(st.u, 20000, function (text) {
+      xhrGet(st.u, 9000, function (text) {
         var paras = null;
         if (text) { try { paras = st.f(text, it.title); } catch (e) { paras = null; } }
         if (paras && paras.length) {
@@ -148,7 +148,9 @@
     h += '<h1 class="rtitle">' + esc(it.title) + '</h1>';
     h += '<div class="rstatus" id="reader-status">本文を読み込み中…</div>';
     h += '<div class="rbody" id="reader-body">';
-    if (it.description) h += '<p>' + esc(it.description) + '</p>';
+    if (it.body && it.body.length) {
+      for (var b = 0; b < it.body.length; b++) h += '<p>' + esc(it.body[b]) + '</p>';
+    } else if (it.description) h += '<p>' + esc(it.description) + '</p>';
     h += '</div>';
     h += '<a class="official" href="' + esc(it.url) + '">NHK公式で開く →</a>';
     h += '<button class="backbtn" id="reader-back2" type="button">← 一覧にもどる</button>';
@@ -164,7 +166,11 @@
     };
     document.getElementById('reader-back').onclick = back;
     document.getElementById('reader-back2').onclick = back;
-    tryFetchBody(it, document.getElementById('reader-status'), document.getElementById('reader-body'));
+    if (it.body && it.body.length) {
+      document.getElementById('reader-status').innerHTML = '出典：NHK（記事の冒頭・要約をこのページで表示しています。全文は公式で読めます）';
+    } else {
+      tryFetchBody(it, document.getElementById('reader-status'), document.getElementById('reader-body'));
+    }
   }
 
   // ---------- list loading ----------
